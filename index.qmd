@@ -1,0 +1,7 @@
+# Preface {.unnumbered}
+
+The goal for this text is to be a snapshot in time of quantum technologies: the good, the bad, and the ugly. As of 2024, there has been a large amount of industry interest and progress to develop quantum technologies, and a student approaching this industry should have the basic knowledge to understand _what_ is trying to be achieved and _how_ they are trying to achieve it. To cut through the PR of industry, this text offers the author's personal perspective on what has been achieved, where things need to go, and the challenges to get there. This is not meant to be an authoritative guide on any one of the technologies presented here, but a jumping off point for the interested student.
+
+Finally, this is a Quarto book.
+
+To learn more about Quarto books visit <https://quarto.org/docs/books>.

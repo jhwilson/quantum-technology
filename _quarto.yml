@@ -1,0 +1,48 @@
+project:
+  type: book
+
+book:
+  title: "Quantum Technology"
+  author: "Justin H. Wilson"
+  date: "12/21/2024"
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - qubit.qmd
+    - summary.qmd
+    - references.qmd
+
+bibliography: references.bib
+csl: https://www.zotero.org/styles/american-physics-society
+
+filters:
+  - tikz
+
+crossref: 
+  eq-prefix: Eq.
+  fig-prefix: Fig.
+  fig-title: Fig.
+
+format:
+  html:
+    theme: 
+      light: flatly
+      dark: darkly
+  pdf:
+    documentclass: scrreprt
+    pdf-engine: lualatex
+    pdf-engine-opts: 
+      - --shell-escape
+    include-in-header: 
+      text: |
+        \usepackage{braket}
+
+
+tikz:
+  cache: false
+  save-tex: true  # Enable saving intermediate .tex files
+  tex-dir: tikz-tex  # Optional: Specify directory to save .tex files
+  format: svg
+
+execute:
+  freeze: auto

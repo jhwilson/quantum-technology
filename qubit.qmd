@@ -1,0 +1,145 @@
+# The Qubit 
+
+The fundamental building block of the classical computer was the bit: A 0 or 1 that could be manipulated by a classical computer (via transistors, see @sec-transistors).
+In a similar manner, quantum computation has the "quantum bit" or just _qubit_, for short.  This leads us to the linear algebra of $2\times 2$ matrices, as we will see. Despite the apparent simplicity, we can already see many of the key features of quantum mechanics in this simple system.
+
+## The qubit Hilbert space
+
+A qubit will be in two-dimensional complex vector space equipped with an inner product.
+
+### Qubit states
+
+For the qubit, we associate two states with two different basis vectors: $\ket{0}$ and $\ket{1}$. This will be called the _computational basis_. The magic[^1] of quantum mechanics is that a state need not be just one or the other, but could be _any_ linear superposition of these
+$$
+\ket{\psi} = \alpha \ket{0} + \beta \ket{1}.
+$$ {#eq-qubit}
+In this, we have adopted the _bra-ket_ notation due to Dirac. While it can be quite useful, we can write this in terms of matrices and vectors
+$$
+\ket{0} = \begin{bmatrix} 1 \\ 0 \end{bmatrix}, \quad \ket{1} = \begin{bmatrix} 0 \\ 1 \end{bmatrix}.
+$$
+This makes it clear that these states are _orthogonal_ $\braket{0|1} = 0$.
+
+In this case we have
+$$
+\ket{\psi} = \begin{bmatrix} \alpha \\ \beta \end{bmatrix}.
+$$
+We also need the conjugate transpose, the Hermitian conjugate, of this vector, which will be a row-vector
+$$
+\bra{\psi} = \begin{bmatrix} \alpha^* & \beta^* \end{bmatrix}.
+$$
+The key feature of quantum mechanics is that these states must be _normalized_, meaning that the probability of finding the system in any state must sum to 1. This means that
+$$
+\braket{\psi|\psi} = \begin{bmatrix} \alpha^* & \beta^* \end{bmatrix} \begin{bmatrix} \alpha \\ \beta \end{bmatrix} = |\alpha|^2 + |\beta|^2 = 1.
+$$
+In matrix notation, this is just the dot product of a vector with its complex conjugate.
+
+We can also write operators that act on these states. The simplest operator is the Pauli $Z$ operator, which in matrix form is
+$$
+Z = \begin{bmatrix} 1 & 0 \\ 0 & -1 \end{bmatrix}.
+$$
+When this operator acts on our basis states, we find
+$$
+Z\ket{0} = \ket{0}, \quad Z\ket{1} = -\ket{1}.
+$$
+This means that $\ket{0}$ and $\ket{1}$ are _eigenstates_ of $Z$ with eigenvalues $+1$ and $-1$ respectively. For a general state $\ket{\psi}$, measuring $Z$ will yield either $+1$ or $-1$, with probabilities determined by $|\alpha|^2$ and $|\beta|^2$ respectively.
+
+### Qubit operators
+
+Since this is linear algebra, we can write a general operator $\mathcal O$ as a matrix
+$$
+\mathcal O = \begin{bmatrix} a & b \\ c & d \end{bmatrix}.
+$$
+Often, we are interested in the eigenvalues and eigenstates of these operators $\mathcal O \ket{\psi_{i}} = \lambda_i \ket{\psi_i}$. 
+Generically, we can find these by solving a polynomial equation
+$$
+\det(\mathcal O - \lambda I) = 0.
+$$
+
+Solving this step-by-step
+$$
+\det(\mathcal O - \lambda I) = \begin{vmatrix} a-\lambda & b \\ c & d-\lambda \end{vmatrix} = 0,
+$$
+which gives us
+$$
+(a-\lambda)(d-\lambda) - bc = 0.
+$$
+This is a quadratic equation that we can solve:
+$$
+\lambda^2 - (a+d)\lambda + (ad-bc) = 0.
+$$
+
+The eigenvalues are therefore
+$$
+\lambda_{\pm} = \frac{a+d \pm \sqrt{(a-d)^2 + 4bc}}{2}.
+$$ {#eq-evals-two-by-two}
+
+For quantum mechanical **observables** (see @sec-postulate-observable), we are particularly interested in _Hermitian_ operators where $\mathcal O = \mathcal O^\dagger$, 
+$$
+\begin{bmatrix} a & b \\ c & d \end{bmatrix} = \begin{bmatrix} a^* & c^* \\ b^* & d^* \end{bmatrix}
+$$
+This means that $a$ and $d$ must be real and $c = b^*$. In this case, the eigenvalues are always real, as we can see from the @eq-evals-two-by-two.
+
+A particularly important class of operators are **unitary operators**, where $U^\dagger U = UU^\dagger = I$. These are what we use for time-evolution, see @sec-postulate-unitary.
+
+These operators preserve the inner product between states:
+$$
+\braket{U\psi|U\phi} = \braket{\psi|\phi}
+$$
+For a $2\times 2$ matrix
+$$
+U = \begin{bmatrix} a & b \\ c & d \end{bmatrix},
+$$
+the unitarity condition means that
+$$
+\begin{bmatrix} a^* & c^* \\ b^* & d^* \end{bmatrix} \begin{bmatrix} a & b \\ c & d \end{bmatrix} = \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}.
+$$
+
+This gives us several conditions:
+
+1. $|a|^2 + |c|^2 = 1$ (normalization of first column)
+2. $|b|^2 + |d|^2 = 1$ (normalization of second column)
+3. $ab^* + cd^* = 0$ (orthogonality of columns)
+
+This immediately gives us some insight into these operators. If we define,
+$$
+\ket{\psi_1} = \begin{bmatrix} a \\ b \end{bmatrix}, \quad \ket{\psi_2} = \begin{bmatrix} c \\ d \end{bmatrix},
+$$
+then we have $\braket{\psi_1|\psi_1} = 1 = \braket{\psi_2|\psi_2}$ and $\braket{\psi_1|\psi_2} = 0$.
+
+An important property of unitary operators is that their eigenvalues always have magnitude 1, meaning they can be written as $e^{i\theta}$ for some real $\theta$. This makes them natural operators for describing quantum evolution, as we will see later.
+
+
+A particularly important set of operators are the Pauli operators. We've already seen the Pauli $Z$ operator. The other two are
+$$
+X = \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}, \quad Y = \begin{bmatrix} 0 & -i \\ i & 0 \end{bmatrix}.
+$$
+These operators satisfy some important algebraic relations:
+$$
+X^2 = Y^2 = Z^2 = I, \quad XY = iZ, \quad YZ = iX, \quad ZX = iY.
+$$
+
+These operators form a complete basis for $2\times 2$ matrices, meaning we can write any operator as
+$$
+\mathcal O = aI + bX + cY + dZ,
+$$
+where $a$, $b$, $c$, and $d$ are complex numbers (though they must satisfy certain conditions if we want $\mathcal O$ to be Hermitian).
+
+
+<!-- 
+```{.tikz #fig-single-qubit}
+%%| filename: qubit-identity
+%%| caption: A single qubit 
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}
+\lstick{$\ket{0}$} &&&&&
+\end{quantikz}
+``` -->
+
+[^1]: Magic is a technical term in quantum computing, though we're using it in a colloquial sense here, see @BravyiKitaev2005.
+
+<!-- $$
+\ket{1}
+$$ {#eq-qubit}
+
+We refer to this with @eq-qubit -->
