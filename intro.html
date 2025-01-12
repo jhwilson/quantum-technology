@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.39">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>1&nbsp; Introduction – Quantum Technology</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./qubit.html" rel="next">
+<link href="./index.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-d166b450ba5a8e9f7a0ab969bf6592c1.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-b7c2d8834e08b04a63bb76a724ffbcac.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-c1966a8c70583a3816b1e3a216c1caf1.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./intro.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Quantum Technology</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./qubit.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Qubit</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#the-quantum-classical-arms-race" id="toc-the-quantum-classical-arms-race" class="nav-link active" data-scroll-target="#the-quantum-classical-arms-race"><span class="header-section-number">1.1</span> The Quantum-Classical Arms Race</a></li>
+  <li><a href="#sec-transistors" id="toc-sec-transistors" class="nav-link" data-scroll-target="#sec-transistors"><span class="header-section-number">1.2</span> Early Computing: The Lesson of Transistors</a>
+  <ul class="collapse">
+  <li><a href="#the-dream-field-effect-transistors" id="toc-the-dream-field-effect-transistors" class="nav-link" data-scroll-target="#the-dream-field-effect-transistors"><span class="header-section-number">1.2.1</span> The Dream: Field Effect Transistors</a></li>
+  <li><a href="#the-point-contact-transistor" id="toc-the-point-contact-transistor" class="nav-link" data-scroll-target="#the-point-contact-transistor"><span class="header-section-number">1.2.2</span> The Point Contact Transistor</a></li>
+  <li><a href="#surface-physics-and-transistors" id="toc-surface-physics-and-transistors" class="nav-link" data-scroll-target="#surface-physics-and-transistors"><span class="header-section-number">1.2.3</span> Surface physics and transistors</a></li>
+  <li><a href="#where-are-we-with-quantum-computing" id="toc-where-are-we-with-quantum-computing" class="nav-link" data-scroll-target="#where-are-we-with-quantum-computing"><span class="header-section-number">1.2.4</span> Where are we with quantum computing?</a></li>
+  </ul></li>
+  <li><a href="#review-of-the-postulates-of-quantum-mechanics" id="toc-review-of-the-postulates-of-quantum-mechanics" class="nav-link" data-scroll-target="#review-of-the-postulates-of-quantum-mechanics"><span class="header-section-number">1.3</span> Review of the Postulates of Quantum Mechanics</a>
+  <ul class="collapse">
+  <li><a href="#postulate-i-the-hilbert-space" id="toc-postulate-i-the-hilbert-space" class="nav-link" data-scroll-target="#postulate-i-the-hilbert-space"><span class="header-section-number">1.3.1</span> Postulate I: The Hilbert space</a></li>
+  <li><a href="#sec-postulate-observable" id="toc-sec-postulate-observable" class="nav-link" data-scroll-target="#sec-postulate-observable"><span class="header-section-number">1.3.2</span> Postulate II: Physical Observables and Measurements</a></li>
+  <li><a href="#sec-postulate-unitary" id="toc-sec-postulate-unitary" class="nav-link" data-scroll-target="#sec-postulate-unitary"><span class="header-section-number">1.3.3</span> Postulate III: Time-evolution of a system</a></li>
+  </ul></li>
+  <li><a href="#quantum-technologies" id="toc-quantum-technologies" class="nav-link" data-scroll-target="#quantum-technologies"><span class="header-section-number">1.4</span> Quantum Technologies</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>In 2019 <span class="citation" data-cites="AruteMartinis2019">&nbsp;[<a href="references.html#ref-AruteMartinis2019" role="doc-biblioref">1</a>]</span>, Google reached a significant milestone in quantum computing when they achieved “Quantum Advantage”–demonstrating for the first time that a quantum computer could surpass the capabilities of classical computers, albeit for a specific, specialized task. Using their Sycamore processor with 53 qubits, they showed that sampling from a quantum circuit a million times took only 200 seconds, while the equivalent task would take approximately 10,000 years on a classical supercomputer. This breakthrough marked a turning point in quantum computing, igniting increased interest and investment in quantum technologies. Building on this success, in December 2024, Google announced their new Willow chip <span class="citation" data-cites="GoogleQuantumAIandCollaboratorsZobrist2024">&nbsp;[<a href="references.html#ref-GoogleQuantumAIandCollaboratorsZobrist2024" role="doc-biblioref">2</a>]</span>, representing their latest advancement in quantum hardware. Today, numerous companies and research institutions worldwide are racing to develop quantum hardware, each pursuing different technological approaches to challenge the computational limits of classical computers.</p>
+<p>This text aims to give undergraduate students a comprehensive introduction to quantum technology and computation. We will begin by exploring the fundamental mathematical framework that underlies quantum computing, building from basic principles to more advanced concepts. Crucially, we will see what specific things a quantum computer can achieve that a classical computer would struggle with. With this foundation, we will examine three of the most promising current quantum computing technologies: superconducting qubits, photonic quantum computing, and ion traps. Each of these approaches offers unique advantages and faces distinct challenges, which we will analyze in detail.</p>
+<p>To bridge theory with practice, we will utilize IBM’s Qiskit software platform to implement basic quantum computations, providing hands-on experience with quantum programming. As we progress, we will explore critical practical considerations in quantum computing, including error mitigation and correction strategies. Time permitting, we will venture into the cutting-edge field of topological quantum computing, which offers a potentially more robust approach to quantum computation.</p>
+<p>Throughout this text, we will maintain a balanced perspective, examining both the tremendous potential and significant challenges facing quantum computing technology. Our goal is to equip students with both theoretical understanding and practical insights into this rapidly evolving field.</p>
+<section id="the-quantum-classical-arms-race" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="the-quantum-classical-arms-race"><span class="header-section-number">1.1</span> The Quantum-Classical Arms Race</h2>
+<p>The story of Google’s quantum supremacy claim illustrates a fascinating dynamic in the field of quantum computing–an ongoing arms race between quantum and classical algorithms. When Google first announced their achievement with the Sycamore processor <span class="citation" data-cites="AruteMartinis2019">&nbsp;[<a href="references.html#ref-AruteMartinis2019" role="doc-biblioref">1</a>]</span>, they estimated that their quantum sampling task would take a classical supercomputer approximately 10,000 years. However, within months, IBM researchers developed improved classical algorithms that could potentially perform the same calculation in just 2.5 days <span class="citation" data-cites="PednaultWisnieff2019">&nbsp;[<a href="references.html#ref-PednaultWisnieff2019" role="doc-biblioref">3</a>]</span>. Further work even demonstrated that using tensor networks, the problem could be solved <em>faster</em> on a modern superconductor with ExaFLOPS performance <span class="citation" data-cites="PanZhang2022">&nbsp;[<a href="references.html#ref-PanZhang2022" role="doc-biblioref">4</a>]</span>.</p>
+<p>This back-and-forth highlights several important lessons. First, it demonstrates the remarkable adaptability of classical computing. As quantum computers advance, classical algorithm developers find increasingly clever ways to simulate quantum systems or solve specific problems more efficiently. This competition drives innovation in both fields–quantum hardware must continually improve to maintain its advantage, while classical algorithms become more sophisticated in response.</p>
+<p>Second, it serves as a cautionary tale about interpreting quantum computing announcements, particularly those aimed at the general public. While the achievement of quantum advantage represents a genuine milestone, the initial 10,000-year estimate proved overly optimistic. This pattern has repeated with various quantum computing companies, where marketing claims sometimes outpace peer-reviewed scientific validation. For students and researchers in the field, it’s crucial to maintain a balanced perspective–acknowledging genuine breakthroughs while critically evaluating bold claims.</p>
+<p>The recent announcement of Google’s Willow chip <span class="citation" data-cites="GoogleQuantumAIandCollaboratorsZobrist2024">&nbsp;[<a href="references.html#ref-GoogleQuantumAIandCollaboratorsZobrist2024" role="doc-biblioref">2</a>]</span> represents another step forward, but should be viewed within this context of ongoing competition and careful validation. This healthy tension between quantum and classical approaches ultimately benefits both fields, pushing the boundaries of what’s computationally possible while maintaining rigorous scientific standards.</p>
+</section>
+<section id="sec-transistors" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="sec-transistors"><span class="header-section-number">1.2</span> Early Computing: The Lesson of Transistors</h2>
+<p>In Ref. <span class="citation" data-cites="NielsenChuang2011">&nbsp;[<a href="references.html#ref-NielsenChuang2011" role="doc-biblioref">5</a>]</span> there are a few quotes about early computing</p>
+<blockquote class="blockquote">
+<p><em>“Computers in the future may weigh no more than 1.5 tons.”</em> –Popular Mechanics, forecasting the relentless marcho f science, 1949</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><em>“I think there is a world market for maybe five computers.”</em> –Thomas Watson, chairman of IBM, 1943</p>
+</blockquote>
+<p>These quotes raise important points about early technology. While the theory of modern computing really took off with Turing in 1937 <span class="citation" data-cites="Turing1937">&nbsp;[<a href="references.html#ref-Turing1937" role="doc-biblioref">6</a>]</span>, the technological advancement necessary for modern computurs would not occur until later: when the transistor came about.</p>
+<section id="the-dream-field-effect-transistors" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="the-dream-field-effect-transistors"><span class="header-section-number">1.2.1</span> The Dream: Field Effect Transistors</h3>
+<div id="fig-MOSFETs" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-MOSFETs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-MOSFETs" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-P-MOSFETenh" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-P-MOSFETenh-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/P-Channel IGFET Diagram.svg" class="img-fluid figure-img" style="width:50.0%" data-ref-parent="fig-MOSFETs">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-P-MOSFETenh-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) P-channel
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-MOSFETs" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-N-MOSFETenh" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-N-MOSFETenh-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/N-Channel IGFET Diagram.svg" class="img-fluid figure-img" style="width:50.0%" data-ref-parent="fig-MOSFETs">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-N-MOSFETenh-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) N-channel
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-MOSFETs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Fig.&nbsp;1.1: Example Circuit diagrams for MOSFETs (<em>enh</em>)
+</figcaption>
+</figure>
+</div>
+<p>To enable classical computing, we need something like a “switch” that can be on and off, keeping track of whether or not something like, current is flowing. This is hard to do with traditional circuit elements like resistors, capacitors, and inductors. It requires something more nonlinear: A switch that only allows current flow when a voltage is applied, a <strong>transistor</strong>.</p>
+<p><a href="#fig-MOSFETs" class="quarto-xref">Fig.&nbsp;<span>1.1</span></a> shows two of the types of circuit diagrams for a bipolar junction transistor (G = gate, S = source, and D = drain)<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. A voltage applied at the gate enables a larger current to flow between collector and emitter. There are also <em>bipolar junction transistors</em> that use a smaller current to enable a larger current, in this case there is “base”, “collector”, and “emitter”.</p>
+<p>With these building blocks, logical gates can be created, but <em>how</em> to build these? Which device can be made small and in abundance? And what challenges were encountered on the way.</p>
+<p>Keep in mind that the iPhone has within it 19 <em>billion</em> transistors (with the A17 pro).</p>
+<p>It was recognized early on that semiconductors provided an ideal platform for these kinds of circuits, and much work was done to try and create the above “field effect transistors.” Schematically, these take the form:</p>
+<div id="fig-FET-schematic" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-FET-schematic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/FET Cross Section.svg" class="img-fluid figure-img" style="width:50.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-FET-schematic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Fig.&nbsp;1.2: Schematic of Field Effect Transistor<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>
+</figcaption>
+</figure>
+</div>
+<p>In <a href="#fig-FET-schematic" class="quarto-xref">Fig.&nbsp;<span>1.2</span></a>, electrons flow from source to drain, but only when the “gate” has an applied voltage to it (effectively “lowering the barrier” for electrons to get through). This theory was sound and based on the recently developed quantum electron theory of metals developed by Wolfgang Pauli, Werner Heisenberg, Arnold Sommerfeld, Felix Bloch, and Rudolf Peierls <span class="citation" data-cites="Hoddeson1981">&nbsp;[<a href="references.html#ref-Hoddeson1981" role="doc-biblioref">7</a>]</span>. And indeed, the people at Bell labs worked on this problem theoretically and experimentally for the beginning in the 1930s (for a full history, see <span class="citation" data-cites="Hoddeson1981">&nbsp;[<a href="references.html#ref-Hoddeson1981" role="doc-biblioref">7</a>]</span>). Despite the strong foundations though, creating a field effect transistor turned out to be difficult, and in the process Brattain and Schockley instead created the point-contact transistor.</p>
+</section>
+<section id="the-point-contact-transistor" class="level3" data-number="1.2.2">
+<h3 data-number="1.2.2" class="anchored" data-anchor-id="the-point-contact-transistor"><span class="header-section-number">1.2.2</span> The Point Contact Transistor</h3>
+<div id="fig-point-contact-transistor" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-point-contact-transistor-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-point-contact-transistor" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-PCT-schematic" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-PCT-schematic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/Point Contact Transistor.svg" class="img-fluid figure-img" style="width:80.0%" data-ref-parent="fig-point-contact-transistor">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-PCT-schematic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Schematic of the point contact transistor<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-point-contact-transistor" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-PCT-replica" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-PCT-replica-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/First Transistor Replica.jpg" class="img-fluid figure-img" data-ref-parent="fig-point-contact-transistor">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-PCT-replica-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Replica of first transistor
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-point-contact-transistor-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Fig.&nbsp;1.3: The point contact transistor.
+</figcaption>
+</figure>
+</div>
+<p>The point-contact transistor, invented in 1947, worked quite differently from the field-effect design. Instead of using a voltage at a gate to control current flow, it used two very closely spaced metal contacts pressed against a semiconductor (typically germanium). One contact, called the emitter, would inject positive charge carriers (holes) into the semiconductor. The second contact, called the collector, would collect these carriers - but crucially, the amount of current that could flow through the collector could be controlled by small changes in the emitter current<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>. A schematic and image of a replica of the original device are illustrated in <a href="#fig-point-contact-transistor" class="quarto-xref">Fig.&nbsp;<span>1.3</span></a>.</p>
+<p>This amplification effect, where a small current controls a larger one, was revolutionary–though the exact physics behind it wasn’t fully understood at the time. The key was that the metal contacts created special regions in the semiconductor where the positive carriers modified the barrier for current flow from the bulk material. While the detailed quantum mechanics is complex, you can think of it like creating “paths” that electrons prefer to take through the material, with the emitter current controlling how easily electrons can flow along these paths to the collector.</p>
+<p>While point-contact transistors were eventually superseded by more reliable and easier-to-manufacture designs, they represented a crucial breakthrough in electronics. They proved that solid-state devices could indeed amplify electrical signals. However, they were quite large. The original design for a field effect transistor would be needed, and they key resided in understanding and control the <em>surface physics</em> of semiconductors.</p>
+</section>
+<section id="surface-physics-and-transistors" class="level3" data-number="1.2.3">
+<h3 data-number="1.2.3" class="anchored" data-anchor-id="surface-physics-and-transistors"><span class="header-section-number">1.2.3</span> Surface physics and transistors</h3>
+<p>The key challenge in creating field effect transistors lay in understanding and controlling the surface properties of semiconductors. To understand why this was so difficult, let’s break it down:</p>
+<p>When a semiconductor crystal (like silicon) ends at a surface, something interesting happens. The regular pattern of atoms is suddenly interrupted - imagine a neat stack of blocks suddenly ending in mid-air. This interruption creates what we call “surface states” - special energy levels that electrons can occupy right at the surface of the material.</p>
+<p>These surface states turned out to be extremely problematic for making transistors. Remember that in a field effect transistor, we want to control the flow of electrons using an electric field from the gate (see <a href="#fig-FET-schematic" class="quarto-xref">Fig.&nbsp;<span>1.2</span></a>). However, these surface states acted like tiny electron traps, capturing and holding onto electrons. When electrons got stuck in these states, they effectively “screened” or blocked the electric field from the gate, preventing it from controlling the current flow through the semiconductor.</p>
+<p>This screening effect was so strong that early attempts at field effect transistors simply didn’t work–no matter how strong a voltage was applied to the gate, it couldn’t effectively control the current flow. It was like trying to control a water flow with a valve, but having something constantly blocking the valve from moving.</p>
+<p>The breakthrough came in the 1950s when researchers, particularly at Bell Labs, realized they needed to chemically “passivate” the semiconductor surface–essentially finding ways to neutralize these problematic surface states. The key discovery was that growing a thin layer of silicon dioxide (SiO₂) on silicon created a much more stable interface with far fewer problematic surface states. This oxide layer also served as an excellent insulator between the gate and the semiconductor.</p>
+<p>This seemingly simple solution–growing an oxide layer–was actually a remarkable achievement that required precise control of material chemistry and manufacturing processes. It finally allowed the creation of practical field effect transistors, leading to the modern MOSFET (Metal-Oxide-Semiconductor Field Effect Transistor) that forms the backbone of today’s electronics.</p>
+<p>The success of this approach also highlights an important lesson in technology development: sometimes the biggest breakthroughs come not from changing the fundamental design, but from finding ways to control and manage the subtle physical effects that prevent a good design from working in practice.</p>
+</section>
+<section id="where-are-we-with-quantum-computing" class="level3" data-number="1.2.4">
+<h3 data-number="1.2.4" class="anchored" data-anchor-id="where-are-we-with-quantum-computing"><span class="header-section-number">1.2.4</span> Where are we with quantum computing?</h3>
+<p>Imagine that this course existed back in the 1950s and we called it “Computing Technology.” Transistors were still coming online to enable computation at scale and we had both the information science and material theory to achieve it:</p>
+<ol type="1">
+<li>We knew what was needed to do universal classical computation.</li>
+<li>We had the quantum theory of metals to describe how to build components (transistors) to achieve classical computation.</li>
+</ol>
+<p>However, the engineering challenges took decades to resolve. It was only when we resolved those that computation as we currently envision it took off and we could have classical computers.</p>
+<p>For quantum computing, we are in a similar situation:</p>
+<ol type="1">
+<li>We know what is needed to do universal quantum computation.</li>
+<li>We have the quantum theory of photons, atoms, and superconductivity to achieve quantum computation.</li>
+</ol>
+<p>However, as we will see in what follows, we have significant engineering challenges to achieve these in practice. While we will be largely concerned with the physics that make #2 possible in this course (and we’ll touch on #1 for the first part of the course), we will pay attention to the strengths and weaknesses in the physics that lead to more pressing engineering challenges.</p>
+</section>
+</section>
+<section id="review-of-the-postulates-of-quantum-mechanics" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="review-of-the-postulates-of-quantum-mechanics"><span class="header-section-number">1.3</span> Review of the Postulates of Quantum Mechanics</h2>
+<p>Quantum mechanics is built out of some basic postulates which are crucial to understand for quantum computation. When we talk about a “system” in these postulates, we will be thinking of two-level systems which we can label 0 or 1 (for our qubit). However, we will state them generally since many applications require some basic work to reduce the complicated system down to just the qubits we are interested in.</p>
+<section id="postulate-i-the-hilbert-space" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="postulate-i-the-hilbert-space"><span class="header-section-number">1.3.1</span> Postulate I: The Hilbert space</h3>
+<blockquote class="blockquote">
+<p>A state in an isolated physical system <span class="math inline">\(S\)</span> can be described by a set of <em>normalized state vectors</em>–<span class="math inline">\(\ket{\psi}\)</span> and all vectors related by a phase <span class="math inline">\(\ket{\psi'} = e^{i\phi}\ket{\psi}\)</span>–belonging in the Hilbert space <span class="math inline">\(\mathcal H_S\)</span>.</p>
+</blockquote>
+<p>importantly, a Hilbert space is equipped with an inner product (much like the dot product in three-dimensions) <span class="math inline">\(\braket{\alpha | \beta}\)</span>.</p>
+<p>We also need rules for attaching Hilbert spaces to one another. Afterall, we will need to use more than one qubit to do anything interesting.</p>
+<blockquote class="blockquote">
+<p>The Hilbert space of a composite system is the <em>tensor product</em> of the two individual systems <span class="math inline">\(\mathcal H_{AB} = \mathcal H_A \otimes \mathcal H_B\)</span>.</p>
+</blockquote>
+</section>
+<section id="sec-postulate-observable" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="sec-postulate-observable"><span class="header-section-number">1.3.2</span> Postulate II: Physical Observables and Measurements</h3>
+<p>This postulate is also sometimes called the <strong>Born rule</strong>.</p>
+<p>In order to measure the system (e.g., “where is the particle?” or “Is the qubit a 0 or 1?”), we need to know what <em>physical observables</em> are</p>
+<blockquote class="blockquote">
+<ol type="i">
+<li>Every physical observable <span class="math inline">\(a\)</span> can be described as a Hermitian operator <span class="math inline">\(A\)</span> acting in the Hilbert Space.</li>
+</ol>
+</blockquote>
+<p>Formally, a Hermitian operator has <span class="math inline">\(A = A^\dagger\)</span> where <span class="math inline">\(A^\dagger\)</span> is the <em>conjugate transpose</em> of <span class="math inline">\(A\)</span>. These operators have a whole set of orthonormal eigenstates <span class="math inline">\(A\ket{a_n} = a_n\ket{a_n}\)</span> for a <em>real</em> number <span class="math inline">\(a_n\)</span> (orthonormal means <span class="math inline">\(\braket{a_n| a_m} = \delta_{nm}\)</span>). These mathematical details are important for how we will perform measurements</p>
+<blockquote class="blockquote">
+<ol start="2" type="i">
+<li>When a physical observable with operator <span class="math inline">\(A\)</span> is measured on a normalized eigenstate <span class="math inline">\(\ket{\psi}\)</span>, the result is an eigenvalue <span class="math inline">\(a_n\)</span> of that operator with probability <span class="math inline">\(p_n = \lvert \braket{a_n |\psi} \rvert^2\)</span> (or in the case of a degeneracy <span class="math inline">\(d\)</span>, <span class="math inline">\(p_n = \sum_{i=1}^d \lvert \braket{a_n, i | \psi}\vert^2\)</span>).</li>
+</ol>
+</blockquote>
+<p>If we measure <span class="math inline">\(A\)</span> repeatedly, we are naturally lead to the expectation value <span class="math inline">\(\braket{\psi | A |\psi} = a = \sum_n a_n p_n\)</span>, the average result of repeated quantum mechanical measurements. Once a measurement is performed, however, the state is changed, for this we need an operator <span class="math inline">\(P_n\)</span> which projects onto the eigenspace of <span class="math inline">\(A\)</span> associated with the eigenvalue <span class="math inline">\(a_n\)</span>.</p>
+<blockquote class="blockquote">
+<ol start="3" type="i">
+<li>When a measurement of the observable <span class="math inline">\(A\)</span> gives a results <span class="math inline">\(a_n\)</span>, the state is changed to be the <em>normalized projection</em> of <span class="math inline">\(\ket{\psi}\)</span> to the eigenspace associated with <span class="math inline">\(a_n\)</span> <span class="math display">\[ \ket{\psi} \quad \implies \quad \frac{P_n \ket{\psi}}{\sqrt{\braket{\psi|P_n | \psi}}} \]</span></li>
+</ol>
+</blockquote>
+<p>If the eigenstates are not degenerate, then <span class="math inline">\(\ket{\psi} \implies \ket{a_n}\)</span>. However, we will find that we will often have degenerate states, and in that case <span class="math display">\[
+\ket{\psi} \implies \frac{\sum_{i=1}^d \braket{a_n, i | \psi} \ket{a_n, i}}{\sqrt{\sum_{i=1}^d \lvert \braket{a_n,i | \psi}\rvert^2}}.
+\]</span> One comfortable with the braket notation might notice that within this, <span class="math inline">\(P_n = \sum_{i=1}^d \ket{a_n,i}\bra{a_n,i}\)</span>.</p>
+</section>
+<section id="sec-postulate-unitary" class="level3" data-number="1.3.3">
+<h3 data-number="1.3.3" class="anchored" data-anchor-id="sec-postulate-unitary"><span class="header-section-number">1.3.3</span> Postulate III: Time-evolution of a system</h3>
+<p>While we will talk about Hamiltonians, often in quantum computation we have gates that do not require these. In this case, we state this postulate as abstractly as possible</p>
+<blockquote class="blockquote">
+<p>The time evolution of a closed system from some time <span class="math inline">\(t_0\)</span> and state <span class="math inline">\(\ket{\psi_0}\)</span> to a final time <span class="math inline">\(t\)</span> and state <span class="math inline">\(\ket{\psi}\)</span> can be described as a unitary transformation <span class="math display">\[ \ket{\psi} = U(t,t_0) \ket{\psi_0}.\]</span></p>
+</blockquote>
+<p>This postulate is necessary for us to maintain probabilities. Unitary operators have the property that <span class="math inline">\(UU^\dagger = U^\dagger U = \mathbb{1}\)</span>, and so <span class="math display">\[1 = \braket{\psi_0|\psi_0} = \braket{\psi_0|U^\dagger U| \psi_0} = \braket{\psi|\psi}.\]</span></p>
+<p>In the case of time-independent <em>Hamiltonian dynamics,</em> the operator takes the form <span class="math inline">\(U = e^{-i H t/\hbar}\)</span> for a hermitian energy operator <span class="math inline">\(H\)</span> called the <em>Hamiltonian</em>.</p>
+</section>
+</section>
+<section id="quantum-technologies" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="quantum-technologies"><span class="header-section-number">1.4</span> Quantum Technologies</h2>
+<p>One major difference between the hindsight-history we have for classical computation and the current state of quantum computers is that are many platforms vying to enable quantum computation. There are arguments for and against each platform, and even arguments for using a combination of platforms. Here we give a list of some of the technologies and highlight the ones we will be surveying in this course.</p>
+<p><strong>Platforms covered in this course</strong></p>
+<ul>
+<li><p><strong>Superconducting qubits</strong>: Artificial atoms made from superconducting circuits that operate at ultra-low temperatures. Currently the most mature platform, used by companies like IBM and Google.</p></li>
+<li><p><strong>Trapped ions</strong>: Individual atoms held in place by electromagnetic fields. Known for having very long coherence times and high-fidelity gates. Major players include IonQ and Quantinuum (formerly of Honeywell).</p></li>
+<li><p><strong>Photonic quantum computers</strong>: Use particles of light (photons) as qubits. Can operate at room temperature and naturally interface with quantum communication systems. Being developed by companies like PsiQuantum and Xanadu.</p></li>
+</ul>
+<p><strong>Other platforms we will not cover</strong></p>
+<ul>
+<li><p><strong>Silicon quantum dots</strong>: Quantum bits made from individual electrons trapped in silicon, similar to classical semiconductor technology. Could potentially leverage existing manufacturing processes.</p></li>
+<li><p><strong>Neutral atoms and Rydberg arrays</strong>: Individual neutral atoms arranged in arrays using laser beams. When excited to high-energy Rydberg states, atoms can interact strongly with their neighbors. Can create large numbers of identical qubits with programmable interactions. Companies like QuEra are pursuing this approach.</p></li>
+<li><p><strong>NV centers</strong>: Quantum bits made from nitrogen-vacancy defects in diamond. Can operate at room temperature and have long coherence times, making them particularly promising for quantum sensing and networking applications.</p></li>
+</ul>
+<p><strong>A platform we will cover if time permits</strong></p>
+<ul>
+<li><strong>Topological qubits</strong>: A theoretical approach that would use special quantum states of matter to create error-protected qubits. Still in early research stages but could offer significant advantages if realized.</li>
+</ul>
+<p>Each platform has its own advantages and challenges in terms of scalability, error rates, coherence times, and manufacturing complexity. The field is still evolving, and it’s possible that different platforms may be optimal for different applications.</p>
+
+
+<div id="refs" class="references csl-bib-body" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-AruteMartinis2019" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">F. Arute et al., <a href="https://doi.org/10.1038/s41586-019-1666-5">Quantum supremacy using a programmable superconducting processor</a>, Nature <strong>574</strong>, 505 (2019).</div>
+</div>
+<div id="ref-GoogleQuantumAIandCollaboratorsZobrist2024" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">Google Quantum AI and Collaborators et al., <a href="https://doi.org/10.1038/s41586-024-08449-y">Quantum error correction below the surface code threshold</a>, Nature (2024).</div>
+</div>
+<div id="ref-PednaultWisnieff2019" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">E. Pednault, J. A. Gunnels, G. Nannicini, L. Horesh, and R. Wisnieff, <a href="https://doi.org/10.48550/arXiv.1910.09534">Leveraging <span>Secondary Storage</span> to <span>Simulate Deep</span> 54-qubit <span>Sycamore Circuits</span></a>, arXiv:1910.09534 (2019).</div>
+</div>
+<div id="ref-PanZhang2022" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">F. Pan, K. Chen, and P. Zhang, <a href="https://doi.org/10.1103/PhysRevLett.129.090502">Solving the <span>Sampling Problem</span> of the <span>Sycamore Quantum Circuits</span></a>, Physical Review Letters <strong>129</strong>, 090502 (2022).</div>
+</div>
+<div id="ref-NielsenChuang2011" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[5] </div><div class="csl-right-inline">M. A. Nielsen and I. L. Chuang, <em>Quantum <span>Computation</span> and <span>Quantum Information</span>: 10th <span>Anniversary Edition</span></em>, Anniversary edition (Cambridge University Press, Cambridge ; New York, 2011).</div>
+</div>
+<div id="ref-Turing1937" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[6] </div><div class="csl-right-inline">A. M. Turing, <a href="https://doi.org/10.1112/plms/s2-42.1.230">On <span>Computable Numbers</span>, with an <span>Application</span> to the <span>Entscheidungsproblem</span></a>, Proceedings of the London Mathematical Society <strong>s2-42</strong>, 230 (1937).</div>
+</div>
+<div id="ref-Hoddeson1981" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[7] </div><div class="csl-right-inline">L. Hoddeson, <a href="https://doi.org/10.2307/27757489">The <span>Discovery</span> of the <span>Point-Contact Transistor</span></a>, Historical Studies in the Physical Sciences <strong>12</strong>, 41 (1981).</div>
+</div>
+</div>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Note that P or N stands for positive or negative carriers.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Made by <a href="https://commons.wikimedia.org/wiki/User:VectorVoyager">VectorVoyager</a> and licensed under Creative Commons <a href="https://creativecommons.org/licenses/by-sa/3.0/deed.en">Attribution-Share Alike 3.0 Unported</a><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Licensed under Creative Commons <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.en">CC0 1.0 Universal Public Domain Dedication</a>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>For details on how this was made, see <a href="https://spectrum.ieee.org/transistor-history">How the first transistor worked</a><a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link" aria-label="Preface">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Preface</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./qubit.html" class="pagination-link" aria-label="The Qubit">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Qubit</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

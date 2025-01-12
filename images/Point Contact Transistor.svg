@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 360 360" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g id="Layer1">
+        <rect id="background" x="0" y="0" width="360" height="360" style="fill:#fff;fill-opacity:0.498039;"/>
+        <g>
+            <g id="frame-lower">
+                <path d="M336.5,271.75L66.5,271.75L26.5,291.75L296.5,291.75L336.5,271.75Z" style="fill:url(#_Linear1);stroke:#000;stroke-width:0.33px;"/>
+                <path d="M26.5,335L26.5,291.75L296.5,292L296,335L26.5,335Z" style="fill:url(#_Linear2);stroke:#000;stroke-width:0.33px;"/>
+                <path d="M296.5,291.75L336.5,271.75L336.5,315L296,335L296.5,291.75Z" style="fill:url(#_Linear3);stroke:#000;stroke-width:0.33px;"/>
+            </g>
+            <g id="base">
+                <g>
+                    <path d="M296.5,255L86.5,255L66.5,265L276.5,265L296.5,255Z" style="fill:url(#_Linear4);stroke:#000;stroke-width:0.33px;"/>
+                    <rect x="66.5" y="265" width="209.5" height="22" style="fill:url(#_Linear5);stroke:#000;stroke-width:0.33px;"/>
+                    <path d="M276,265L296.5,255L296.5,277L276,287L276,265Z" style="fill:url(#_Linear6);stroke:#000;stroke-width:0.33px;"/>
+                </g>
+                <g>
+                    <path d="M82.016,259.439C82.005,259.294 82,259.148 82,259C82,255.689 84.689,253 88,253C91.311,253 94,255.689 94,259C94,259.148 93.995,259.294 93.984,259.439C92.193,259.797 90.157,260 88,260C85.843,260 83.807,259.797 82.016,259.439Z" style="fill:url(#_Linear7);stroke:#000;stroke-width:0.33px;"/>
+                    <path d="M87.854,253.076C87.948,248.026 95.666,241.251 92.591,234.203C88.796,225.505 80.673,232.686 66.019,230.057" style="fill:none;stroke:#000;stroke-width:1.27px;"/>
+                </g>
+            </g>
+            <g id="germanium">
+                <path d="M264.5,222L111.5,222L98.5,228.25L252,228.25L264.5,222Z" style="fill:url(#_Linear8);stroke:#000;stroke-width:0.33px;"/>
+                <rect x="98.5" y="228.25" width="153.5" height="34.75" style="fill:url(#_Linear9);stroke:#000;stroke-width:0.33px;"/>
+                <path d="M252,228.25L264.5,222L264.5,257L252,263.25L252,228.25Z" style="fill:url(#_Linear10);stroke:#000;stroke-width:0.33px;"/>
+            </g>
+            <g id="charge-carriers">
+                <g id="holes">
+                    <g>
+                        <circle cx="108" cy="235" r="5" style="fill:#d10000;fill-opacity:0;stroke:#fff;stroke-width:1px;"/>
+                        <g>
+                            <path d="M108,232L108,238" style="fill:none;stroke:#fff;stroke-width:1.27px;"/>
+                            <path d="M105,235L111,235" style="fill:none;stroke:#fff;stroke-width:1.27px;"/>
+                        </g>
+                    </g>
+                    <g>
+                        <circle cx="123" cy="235" r="5" style="fill:#d10000;fill-opacity:0;stroke:#fff;stroke-width:1px;"/>
+                        <g>
+                            <path d="M123,232L123,238" style="fill:none;stroke:#fff;stroke-width:1.27px;"/>
+                            <path d="M120,235L126,235" style="fill:none;stroke:#fff;stroke-width:1.27px;"/>
+                        </g>
+                    </g>
+                    <g>
+                        <circle cx="138" cy="235" r="5" style="fill:#d10000;fill-opacity:0;stroke:#fff;stroke-width:1px;"/>
+                        <g>
+                            <path d="M138,232L138,238" style="fill:none;stroke:#fff;stroke-width:1.27px;"/>
+                            <path d="M135,235L141,235" style="fill:none;stroke:#fff;stroke-width:1.27px;"/>
+                        </g>
+                    </g>
+                    <g>
+                        <circle cx="153" cy="235" r="5" style="fill:#d10000;fill-opacity:0;stroke:#fff;stroke-width:1px;"/>
+                        <g>
+                            <path d="M153,232L153,238" style="fill:none;stroke:#fff;stroke-width:1.27px;"/>
+                            <path d="M150,235L156,235" style="fill:none;stroke:#fff;stroke-width:1.27px;"/>
+                        </g>
+                    </g>
+                    <g>
+                        <circle cx="168" cy="235" r="5" style="fill:#d10000;fill-opacity:0;stroke:#fff;stroke-width:1px;"/>
+                        <g>
+                            <path d="M168,232L168,238" style="fill:none;stroke:#fff;stroke-width:1.27px;"/>
+                            <path d="M165,235L171,235" style="fill:none;stroke:#fff;stroke-width:1.27px;"/>
+                        </g>
+                    </g>
+                    <g>
+                        <circle cx="183" cy="235" r="5" style="fill:#d10000;fill-opacity:0;stroke:#fff;stroke-width:1px;"/>
+                        <g>
+                            <path d="M183,232L183,238" style="fill:none;stroke:#fff;stroke-width:1.27px;"/>
+                            <path d="M180,235L186,235" style="fill:none;stroke:#fff;stroke-width:1.27px;"/>
+                        </g>
+                    </g>
+                    <g>
+                        <circle cx="198" cy="235" r="5" style="fill:#d10000;fill-opacity:0;stroke:#fff;stroke-width:1px;"/>
+                        <g>
+                            <path d="M198,232L198,238" style="fill:none;stroke:#fff;stroke-width:1.27px;"/>
+                            <path d="M195,235L201,235" style="fill:none;stroke:#fff;stroke-width:1.27px;"/>
+                        </g>
+                    </g>
+                    <g>
+                        <circle cx="213" cy="235" r="5" style="fill:#d10000;fill-opacity:0;stroke:#fff;stroke-width:1px;"/>
+                        <g>
+                            <path d="M213,232L213,238" style="fill:none;stroke:#fff;stroke-width:1.27px;"/>
+                            <path d="M210,235L216,235" style="fill:none;stroke:#fff;stroke-width:1.27px;"/>
+                        </g>
+                    </g>
+                    <g>
+                        <circle cx="228" cy="235" r="5" style="fill:#d10000;fill-opacity:0;stroke:#fff;stroke-width:1px;"/>
+                        <g>
+                            <path d="M228,232L228,238" style="fill:none;stroke:#fff;stroke-width:1.27px;"/>
+                            <path d="M225,235L231,235" style="fill:none;stroke:#fff;stroke-width:1.27px;"/>
+                        </g>
+                    </g>
+                    <g>
+                        <circle cx="243" cy="235" r="5" style="fill:#d10000;fill-opacity:0;stroke:#fff;stroke-width:1px;"/>
+                        <g>
+                            <path d="M243,232L243,238" style="fill:none;stroke:#fff;stroke-width:1.27px;"/>
+                            <path d="M240,235L246,235" style="fill:none;stroke:#fff;stroke-width:1.27px;"/>
+                        </g>
+                    </g>
+                </g>
+                <g id="electrons">
+                    <g>
+                        <circle cx="108" cy="249" r="5" style="fill:#0003c7;fill-opacity:0;stroke:#fff;stroke-width:1px;"/>
+                        <path d="M105,249L111,249" style="fill:none;stroke:#fff;stroke-width:1.27px;"/>
+                    </g>
+                    <g>
+                        <circle cx="123" cy="249" r="5" style="fill:#0003c7;fill-opacity:0;stroke:#fff;stroke-width:1px;"/>
+                        <path d="M120,249L126,249" style="fill:none;stroke:#fff;stroke-width:1.27px;"/>
+                    </g>
+                    <g>
+                        <circle cx="138" cy="249" r="5" style="fill:#0003c7;fill-opacity:0;stroke:#fff;stroke-width:1px;"/>
+                        <path d="M135,249L141,249" style="fill:none;stroke:#fff;stroke-width:1.27px;"/>
+                    </g>
+                    <g>
+                        <circle cx="153" cy="249" r="5" style="fill:#0003c7;fill-opacity:0;stroke:#fff;stroke-width:1px;"/>
+                        <path d="M150,249L156,249" style="fill:none;stroke:#fff;stroke-width:1.27px;"/>
+                    </g>
+                    <g>
+                        <circle cx="168" cy="249" r="5" style="fill:#0003c7;fill-opacity:0;stroke:#fff;stroke-width:1px;"/>
+                        <path d="M165,249L171,249" style="fill:none;stroke:#fff;stroke-width:1.27px;"/>
+                    </g>
+                    <g>
+                        <circle cx="183" cy="249" r="5" style="fill:#0003c7;fill-opacity:0;stroke:#fff;stroke-width:1px;"/>
+                        <path d="M180,249L186,249" style="fill:none;stroke:#fff;stroke-width:1.27px;"/>
+                    </g>
+                    <g>
+                        <circle cx="198" cy="249" r="5" style="fill:#0003c7;fill-opacity:0;stroke:#fff;stroke-width:1px;"/>
+                        <path d="M195,249L201,249" style="fill:none;stroke:#fff;stroke-width:1.27px;"/>
+                    </g>
+                    <g>
+                        <circle cx="213" cy="249" r="5" style="fill:#0003c7;fill-opacity:0;stroke:#fff;stroke-width:1px;"/>
+                        <path d="M210,249L216,249" style="fill:none;stroke:#fff;stroke-width:1.27px;"/>
+                    </g>
+                    <g>
+                        <circle cx="228" cy="249" r="5" style="fill:#0003c7;fill-opacity:0;stroke:#fff;stroke-width:1px;"/>
+                        <path d="M225,249L231,249" style="fill:none;stroke:#fff;stroke-width:1.27px;"/>
+                    </g>
+                    <g>
+                        <circle cx="243" cy="249" r="5" style="fill:#0003c7;fill-opacity:0;stroke:#fff;stroke-width:1px;"/>
+                        <path d="M240,249L246,249" style="fill:none;stroke:#fff;stroke-width:1.27px;"/>
+                    </g>
+                </g>
+            </g>
+            <g id="emitter">
+                <path d="M139.501,166.559C124.154,173.769 109.895,176.939 98.63,170.505C87.365,164.07 74.492,166.171 69.46,172.278" style="fill:none;stroke:#000;stroke-width:1.27px;"/>
+                <path d="M142.133,159.224C141.998,159.279 141.865,159.34 141.733,159.406C138.769,160.883 137.562,164.489 139.04,167.452C140.517,170.416 144.123,171.623 147.086,170.145C147.219,170.079 147.347,170.009 147.472,169.935C146.994,168.172 146.267,166.26 145.305,164.329C144.342,162.399 143.253,160.668 142.133,159.224Z" style="fill:url(#_Linear11);stroke:#000;stroke-width:0.33px;"/>
+                <path d="M149.306,149.136L175.859,203.086L175.495,226.903L172.801,228.25L136.416,155.581L149.306,149.136Z" style="fill:url(#_Linear12);stroke:#000;stroke-width:0.33px;"/>
+            </g>
+            <g id="wedge">
+                <path d="M235,128.5L141,128.5L128,135L222,135L235,128.5Z" style="fill:url(#_Linear13);stroke:#000;stroke-width:0.33px;"/>
+                <path d="M235,128.5L188,222L175.5,228.25L222,135L235,128.5Z" style="fill:url(#_Linear14);stroke:#000;stroke-width:0.33px;"/>
+                <path d="M222,135L175.5,228.25L174.5,228.25L128,135L222,135Z" style="fill:url(#_Linear15);stroke:#000;stroke-width:0.33px;"/>
+            </g>
+            <g id="collector">
+                <path d="M226.427,149.136L189.8,222L177.3,228.25L213.537,155.581L226.427,149.136Z" style="fill:url(#_Linear16);stroke:#000;stroke-width:0.33px;"/>
+                <path d="M216.808,159.224C216.942,159.279 217.076,159.34 217.208,159.406C220.172,160.883 221.378,164.489 219.901,167.452C218.424,170.416 214.818,171.623 211.854,170.145C211.722,170.079 211.593,170.009 211.468,169.935C211.947,168.172 212.674,166.26 213.636,164.329C214.599,162.399 215.688,160.668 216.808,159.224Z" style="fill:url(#_Linear17);stroke:#000;stroke-width:0.33px;"/>
+                <path d="M219.899,167.2C220.846,167.706 221.809,168.196 222.784,168.668C235.392,174.778 251.868,179.625 259.439,170.974C266.545,162.855 273.462,154.109 283.166,152.966" style="fill:none;stroke:#000;stroke-width:1.27px;"/>
+            </g>
+            <path id="spring" d="M170.651,85C170.651,90.297 188,94.079 188,88.833C188,83.588 170.651,87.495 170.651,92.667C170.651,97.839 188,101.456 188,96.5C188,91.544 170.651,95.156 170.651,100.333C170.651,105.631 188,109.412 188,104.167C188,98.921 170.651,102.828 170.651,108C170.651,113.172 188,116.789 188,111.833C188,106.878 170.651,110.49 170.651,115.667C170.651,120.964 188,124.745 188,119.5C188,114.255 170.651,118.161 170.651,123.333C170.651,128.505 188,132.122 188,127.167C188,122.211 170.651,125.823 170.651,131" style="fill:none;stroke:#000;stroke-width:1.27px;"/>
+            <g id="frame-upper">
+                <path d="M336.5,23.375L66.5,23.375L26.5,43.375L297,43.375L336.5,23.375Z" style="fill:url(#_Linear18);stroke:#000;stroke-width:0.33px;"/>
+                <rect x="26.5" y="43.375" width="270.5" height="43.25" style="fill:url(#_Linear19);stroke:#000;stroke-width:0.33px;"/>
+                <path d="M336.5,23.375L336.5,66.625L297,86.625L297,43.375L336.5,23.375Z" style="fill:url(#_Linear20);stroke:#000;stroke-width:0.33px;"/>
+            </g>
+            <g id="arrows">
+                <g>
+                    <path d="M117,202L117,213" style="fill:none;stroke:#000;stroke-width:3.33px;stroke-linecap:butt;"/>
+                    <path d="M117,220.349L112.651,210.5L121.349,210.5L117,220.349Z"/>
+                </g>
+                <g>
+                    <path d="M288.891,226.525L277.891,226.525" style="fill:none;stroke:#000;stroke-width:3.33px;stroke-linecap:butt;"/>
+                    <path d="M270.542,226.525L280.391,222.176L280.391,230.875L270.542,226.525Z"/>
+                </g>
+                <g>
+                    <path d="M217.612,194.54L206.612,194.54" style="fill:none;stroke:#000;stroke-width:3.33px;stroke-linecap:butt;"/>
+                    <path d="M199.262,194.54L209.112,190.191L209.112,198.889L199.262,194.54Z"/>
+                </g>
+                <g>
+                    <path d="M288.891,243.525L277.891,243.525" style="fill:none;stroke:#000;stroke-width:3.33px;stroke-linecap:butt;"/>
+                    <path d="M270.542,243.525L280.391,239.176L280.391,247.875L270.542,243.525Z"/>
+                </g>
+            </g>
+        </g>
+        <g id="annotations">
+            <g transform="matrix(1,0,0,1,-81,130.156)">
+                <text x="235.389px" y="26.104px" style="font-family:'DroidSans', 'Droid Sans', sans-serif;font-size:14.667px;">Plastic</text>
+                <text x="235.074px" y="40.77px" style="font-family:'DroidSans', 'Droid Sans', sans-serif;font-size:14.667px;">wedge</text>
+            </g>
+            <text x="132.83px" y="66.104px" style="font-family:'DroidSans', 'Droid Sans', sans-serif;font-size:14.667px;">Plastic frame</text>
+            <g transform="matrix(1,0,0,1,48.6617,118.67)">
+                <text x="227.079px" y="26.104px" style="font-family:'DroidSans', 'Droid Sans', sans-serif;font-size:14.667px;">Collector</text>
+                <text x="242.479px" y="40.77px" style="font-family:'DroidSans', 'Droid Sans', sans-serif;font-size:14.667px;">lead</text>
+            </g>
+            <text x="139.675px" y="279.575px" style="font-family:'DroidSans', 'Droid Sans', sans-serif;font-size:14.667px;">Metal base</text>
+            <text x="63.649px" y="198.46px" style="font-family:'DroidSans', 'Droid Sans', sans-serif;font-size:14.667px;">Germanium</text>
+            <text x="222.737px" y="199.332px" style="font-family:'DroidSans', 'Droid Sans', sans-serif;font-size:14.667px;">Gold foil</text>
+            <text x="122.525px" y="111.423px" style="font-family:'DroidSans', 'Droid Sans', sans-serif;font-size:14.667px;">Spring</text>
+            <text x="292.65px" y="229.793px" style="font-family:'DroidSans', 'Droid Sans', sans-serif;font-size:14.667px;">p-type</text>
+            <text x="292.65px" y="248.069px" style="font-family:'DroidSans', 'Droid Sans', sans-serif;font-size:14.667px;">n-type</text>
+            <g transform="matrix(1,0,0,1,-211.114,141.864)">
+                <text x="232.26px" y="26.104px" style="font-family:'DroidSans', 'Droid Sans', sans-serif;font-size:14.667px;">Emitter</text>
+                <text x="242.479px" y="40.77px" style="font-family:'DroidSans', 'Droid Sans', sans-serif;font-size:14.667px;">lead</text>
+            </g>
+            <g transform="matrix(1,0,0,1,-212.724,201.255)">
+                <text x="240.811px" y="26.104px" style="font-family:'DroidSans', 'Droid Sans', sans-serif;font-size:14.667px;">Base</text>
+                <text x="242.479px" y="40.77px" style="font-family:'DroidSans', 'Droid Sans', sans-serif;font-size:14.667px;">lead</text>
+            </g>
+            <text x="132.83px" y="318.527px" style="font-family:'DroidSans', 'Droid Sans', sans-serif;font-size:14.667px;">Plastic frame</text>
+        </g>
+    </g>
+    <defs>
+        <linearGradient id="_Linear1" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(284,0,0,284,42,286)"><stop offset="0" style="stop-color:#85caf9;stop-opacity:1"/><stop offset="1" style="stop-color:#59a3d1;stop-opacity:1"/></linearGradient>
+        <linearGradient id="_Linear2" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(2.44929e-15,40,-40,2.44929e-15,191,295)"><stop offset="0" style="stop-color:#85caf9;stop-opacity:1"/><stop offset="1" style="stop-color:#59a3d1;stop-opacity:1"/></linearGradient>
+        <linearGradient id="_Linear3" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(14,35,-35,14,304,288)"><stop offset="0" style="stop-color:#85caf9;stop-opacity:1"/><stop offset="1" style="stop-color:#59a3d1;stop-opacity:1"/></linearGradient>
+        <linearGradient id="_Linear4" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(231,0,0,231,64,259)"><stop offset="0" style="stop-color:#e2d1b6;stop-opacity:1"/><stop offset="0.41" style="stop-color:#bb7f3f;stop-opacity:1"/><stop offset="0.69" style="stop-color:#dd8b33;stop-opacity:1"/><stop offset="1" style="stop-color:#674118;stop-opacity:1"/></linearGradient>
+        <linearGradient id="_Linear5" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1.28588e-15,21,-21,1.28588e-15,233,266)"><stop offset="0" style="stop-color:#e2d1b6;stop-opacity:1"/><stop offset="0.41" style="stop-color:#bb7f3f;stop-opacity:1"/><stop offset="0.69" style="stop-color:#dd8b33;stop-opacity:1"/><stop offset="1" style="stop-color:#674118;stop-opacity:1"/></linearGradient>
+        <linearGradient id="_Linear6" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(9,18,-18,9,281,263)"><stop offset="0" style="stop-color:#e2d1b6;stop-opacity:1"/><stop offset="0.41" style="stop-color:#bb7f3f;stop-opacity:1"/><stop offset="0.69" style="stop-color:#dd8b33;stop-opacity:1"/><stop offset="1" style="stop-color:#674118;stop-opacity:1"/></linearGradient>
+        <linearGradient id="_Linear7" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(12,-6.66134e-16,3.88578e-16,7,82,256.5)"><stop offset="0" style="stop-color:#b6d3e2;stop-opacity:1"/><stop offset="0.41" style="stop-color:#3f90bb;stop-opacity:1"/><stop offset="0.69" style="stop-color:#33a1dd;stop-opacity:1"/><stop offset="1" style="stop-color:#184b67;stop-opacity:1"/></linearGradient>
+        <linearGradient id="_Linear8" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(-165,2.02067e-14,0,-165,264,223)"><stop offset="0" style="stop-color:#b90000;stop-opacity:1"/><stop offset="1" style="stop-color:#ff3838;stop-opacity:1"/></linearGradient>
+        <linearGradient id="_Linear9" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(2.0819e-15,34,-34,2.0819e-15,174,229)"><stop offset="0" style="stop-color:#6f1313;stop-opacity:1"/><stop offset="0.31" style="stop-color:#fc3535;stop-opacity:1"/><stop offset="0.39" style="stop-color:#c56beb;stop-opacity:1"/><stop offset="0.49" style="stop-color:#3156ea;stop-opacity:1"/><stop offset="1" style="stop-color:#092b8b;stop-opacity:1"/></linearGradient>
+        <linearGradient id="_Linear10" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(15,27,-27,15,253,228)"><stop offset="0" style="stop-color:#6f1313;stop-opacity:1"/><stop offset="0.31" style="stop-color:#fc3535;stop-opacity:1"/><stop offset="0.39" style="stop-color:#c56beb;stop-opacity:1"/><stop offset="0.49" style="stop-color:#3156ea;stop-opacity:1"/><stop offset="1" style="stop-color:#092b8b;stop-opacity:1"/></linearGradient>
+        <linearGradient id="_Linear11" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(5.35359,10.7396,6.26477,-3.12293,139.495,160.521)"><stop offset="0" style="stop-color:#b6d3e2;stop-opacity:1"/><stop offset="0.41" style="stop-color:#3f90bb;stop-opacity:1"/><stop offset="0.69" style="stop-color:#33a1dd;stop-opacity:1"/><stop offset="1" style="stop-color:#184b67;stop-opacity:1"/></linearGradient>
+        <linearGradient id="_Linear12" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(39,72,-72,39,144.472,153)"><stop offset="0" style="stop-color:#f8e56a;stop-opacity:1"/><stop offset="0.13" style="stop-color:#f3c94e;stop-opacity:1"/><stop offset="0.19" style="stop-color:#faeeba;stop-opacity:1"/><stop offset="0.38" style="stop-color:#efd16e;stop-opacity:1"/><stop offset="0.46" style="stop-color:#faf8d6;stop-opacity:1"/><stop offset="0.69" style="stop-color:#f4dd92;stop-opacity:1"/><stop offset="0.74" style="stop-color:#eeac49;stop-opacity:1"/><stop offset="1" style="stop-color:#e7d2a9;stop-opacity:1"/></linearGradient>
+        <linearGradient id="_Linear13" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(112,0,0,112,130,131)"><stop offset="0" style="stop-color:#85caf9;stop-opacity:1"/><stop offset="1" style="stop-color:#59a3d1;stop-opacity:1"/></linearGradient>
+        <linearGradient id="_Linear14" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(21,11,-11,21,194,171)"><stop offset="0" style="stop-color:#85caf9;stop-opacity:1"/><stop offset="1" style="stop-color:#59a3d1;stop-opacity:1"/></linearGradient>
+        <linearGradient id="_Linear15" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(6.4294e-15,105,-105,6.4294e-15,183,130)"><stop offset="0" style="stop-color:#85caf9;stop-opacity:1"/><stop offset="1" style="stop-color:#59a3d1;stop-opacity:1"/></linearGradient>
+        <linearGradient id="_Linear16" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(25,61,-61,25,200.466,159)"><stop offset="0" style="stop-color:#f8e56a;stop-opacity:1"/><stop offset="0.13" style="stop-color:#f3c94e;stop-opacity:1"/><stop offset="0.19" style="stop-color:#faeeba;stop-opacity:1"/><stop offset="0.38" style="stop-color:#efd16e;stop-opacity:1"/><stop offset="0.46" style="stop-color:#faf8d6;stop-opacity:1"/><stop offset="0.69" style="stop-color:#f4dd92;stop-opacity:1"/><stop offset="0.74" style="stop-color:#eeac49;stop-opacity:1"/><stop offset="1" style="stop-color:#e7d2a9;stop-opacity:1"/></linearGradient>
+        <linearGradient id="_Linear17" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(-5.35359,10.7396,-6.26477,-3.12293,219.445,160.521)"><stop offset="0" style="stop-color:#b6d3e2;stop-opacity:1"/><stop offset="0.41" style="stop-color:#3f90bb;stop-opacity:1"/><stop offset="0.69" style="stop-color:#33a1dd;stop-opacity:1"/><stop offset="1" style="stop-color:#184b67;stop-opacity:1"/></linearGradient>
+        <linearGradient id="_Linear18" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(284,0,0,284,42,286)"><stop offset="0" style="stop-color:#85caf9;stop-opacity:1"/><stop offset="1" style="stop-color:#59a3d1;stop-opacity:1"/></linearGradient>
+        <linearGradient id="_Linear19" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(2.6483e-15,43.25,-43.25,2.6483e-15,222,43.375)"><stop offset="0" style="stop-color:#85caf9;stop-opacity:1"/><stop offset="1" style="stop-color:#59a3d1;stop-opacity:1"/></linearGradient>
+        <linearGradient id="_Linear20" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(14,36,-36,14,306,36)"><stop offset="0" style="stop-color:#85caf9;stop-opacity:1"/><stop offset="1" style="stop-color:#59a3d1;stop-opacity:1"/></linearGradient>
+    </defs>
+</svg>
