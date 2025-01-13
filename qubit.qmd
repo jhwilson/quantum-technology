@@ -555,23 +555,7 @@ A large part of the course will consist of finding physical systems where we can
 
 However, algorithms need these qubits to talk to each other, so we will now proceed to two qubits, and beyond!
 
-<!-- 
-```{.tikz #fig-single-qubit}
-%%| filename: qubit-identity
-%%| caption: A single qubit 
-%%| header-includes: \usetikzlibrary{quantikz2}
-%%| additionalPackages: \usepackage{braket}
-\begin{quantikz}
-\lstick{$\ket{0}$} &&&&&
-\end{quantikz}
-``` -->
 
 [^1]: Magic is a technical term in quantum computing, though we're using it in a colloquial sense here, see @BravyiKitaev2005.
 [^2]: In some literature, these are matrices are denoted by $\sigma_{x}$, $\sigma_y$, and $\sigma_z$ and related to spin operators via $S_i =\frac12 \sigma_i$. This insight can help bridge the idea of these operators and the Bloch sphere.
 [^3]: The divide-by-two for the angles will become clear as we go through this section.
-
-<!-- $$
-\ket{1}
-$$ {#eq-qubit}
-
-We refer to this with @eq-qubit -->
