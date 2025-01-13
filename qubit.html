@@ -209,12 +209,19 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#the-qubit-hilbert-space" id="toc-the-qubit-hilbert-space" class="nav-link active" data-scroll-target="#the-qubit-hilbert-space"><span class="header-section-number">2.1</span> The qubit Hilbert space</a>
+  <li><a href="#the-qubit-hilbert-space" id="toc-the-qubit-hilbert-space" class="nav-link active" data-scroll-target="#the-qubit-hilbert-space"><span class="header-section-number">2.1</span> The Qubit Hilbert space</a>
   <ul class="collapse">
   <li><a href="#qubit-states" id="toc-qubit-states" class="nav-link" data-scroll-target="#qubit-states"><span class="header-section-number">2.1.1</span> Qubit states</a></li>
   <li><a href="#qubit-operators" id="toc-qubit-operators" class="nav-link" data-scroll-target="#qubit-operators"><span class="header-section-number">2.1.2</span> Qubit operators</a></li>
   <li><a href="#the-pauli-operators" id="toc-the-pauli-operators" class="nav-link" data-scroll-target="#the-pauli-operators"><span class="header-section-number">2.1.3</span> The Pauli operators</a></li>
   </ul></li>
+  <li><a href="#the-bloch-sphere" id="toc-the-bloch-sphere" class="nav-link" data-scroll-target="#the-bloch-sphere"><span class="header-section-number">2.2</span> The Bloch sphere</a>
+  <ul class="collapse">
+  <li><a href="#general-unitary-rotations" id="toc-general-unitary-rotations" class="nav-link" data-scroll-target="#general-unitary-rotations"><span class="header-section-number">2.2.1</span> General Unitary Rotations</a></li>
+  <li><a href="#the-phase-gate" id="toc-the-phase-gate" class="nav-link" data-scroll-target="#the-phase-gate"><span class="header-section-number">2.2.2</span> The Phase Gate</a></li>
+  </ul></li>
+  <li><a href="#quantum-circuits" id="toc-quantum-circuits" class="nav-link" data-scroll-target="#quantum-circuits"><span class="header-section-number">2.3</span> Quantum Circuits</a></li>
+  <li><a href="#qubits-in-quantum-technology" id="toc-qubits-in-quantum-technology" class="nav-link" data-scroll-target="#qubits-in-quantum-technology"><span class="header-section-number">2.4</span> Qubits in quantum technology</a></li>
   </ul>
 </nav>
     </div>
@@ -242,7 +249,7 @@ window.Quarto = {
 
 <p>The fundamental building block of the classical computer was the bit: A 0 or 1 that could be manipulated by a classical computer (via transistors, see <a href="intro.html#sec-transistors" class="quarto-xref"><span>Section 1.2</span></a>). In a similar manner, quantum computation has the “quantum bit” or just <em>qubit</em>, for short. This leads us to the linear algebra of <span class="math inline">\(2\times 2\)</span> matrices, as we will see. Despite the apparent simplicity, we can already see many of the key features of quantum mechanics in this simple system.</p>
 <section id="the-qubit-hilbert-space" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="the-qubit-hilbert-space"><span class="header-section-number">2.1</span> The qubit Hilbert space</h2>
+<h2 data-number="2.1" class="anchored" data-anchor-id="the-qubit-hilbert-space"><span class="header-section-number">2.1</span> The Qubit Hilbert space</h2>
 <p>A qubit will be in two-dimensional complex vector space equipped with an inner product.</p>
 <section id="qubit-states" class="level3" data-number="2.1.1">
 <h3 data-number="2.1.1" class="anchored" data-anchor-id="qubit-states"><span class="header-section-number">2.1.1</span> Qubit states</h3>
@@ -479,21 +486,333 @@ H\ket{0} &amp;= \frac{1}{\sqrt{2}}\begin{bmatrix} 1 &amp; 1 \\ 1 &amp; -1 \end{b
 \]</span></p>
 </div>
 </div>
-<!-- 
-```{.tikz #fig-single-qubit}
-%%| filename: qubit-identity
-%%| caption: A single qubit 
-%%| header-includes: \usetikzlibrary{quantikz2}
-%%| additionalPackages: \usepackage{braket}
-\begin{quantikz}
-\lstick{$\ket{0}$} &&&&&
-\end{quantikz}
-``` -->
-<!-- $$
-\ket{1}
-$$ {#eq-qubit}
-
-We refer to this with @eq-qubit -->
+</section>
+</section>
+<section id="the-bloch-sphere" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="the-bloch-sphere"><span class="header-section-number">2.2</span> The Bloch sphere</h2>
+<p>The qubit itself is more than just a probability of being a 1 or a 0. A crucial bit of <em>quantum</em> information is the relative phase between the two states for instance <span class="math display">\[
+\ket{\psi} = \tfrac1{\sqrt2}( \ket 0 + e^{i\phi} \ket 1),
+\]</span> and since all states are equivalent up to a <em>total</em> phase, we can write the amplitude of each state with a real number. In this case, if we set <span class="math inline">\(\ket{\psi} = x \ket{0} + y e^{i\phi} \ket 1\)</span>, then we have <span class="math inline">\(\braket{\psi|\psi} = x^2 + y^2 = 1\)</span> for normalization. This is the equation for a circle, and writing out <span class="math inline">\(x = \cos(\theta/2)\)</span> and <span class="math inline">\(y = \sin(\theta/2)\)</span><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>, we are lead to an angular representation of our state. <span id="eq-bloch-sphere"><span class="math display">\[
+\ket{\psi} = \cos(\theta/2) \ket{0} + \sin(\theta/2)e^{i\phi} \ket{1}.
+\tag{2.3}\]</span></span> Let’s see how this state relates to our Pauli operators. If we calculate the expectation values of each operator:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\langle X \rangle &amp;= \bra{\psi}X\ket{\psi} \\
+&amp;= (\cos(\theta/2) \bra{0} + \sin(\theta/2)e^{-i\phi} \bra{1})
+   X
+   (\cos(\theta/2) \ket{0} + \sin(\theta/2)e^{i\phi} \ket{1}) \\
+&amp;= (\cos(\theta/2) \bra{0} + \sin(\theta/2)e^{-i\phi} \bra{1})
+   (\cos(\theta/2) \ket{1} + \sin(\theta/2)e^{i\phi} \ket{0}) \\
+&amp;= \sin(\theta/2)\cos(\theta/2) e^{i\phi} + \cos(\theta/2)\sin(\theta/2)e^{-i\phi} \\
+&amp;= \sin(\theta/2)\cos(\theta/2) (e^{i\phi} + e^{-i\phi}) \\
+&amp;= 2\sin(\theta/2)\cos(\theta/2) \cos\phi \\
+&amp;= \sin \theta \cos\phi.
+\end{aligned}
+\]</span> We can carry out a similar calculation for <span class="math inline">\(Y\)</span> and <span class="math inline">\(Z\)</span> to obtain <span class="math display">\[
+\begin{aligned}
+\langle X \rangle &amp;= \bra{\psi}X\ket{\psi} = \sin\theta\cos\phi \\
+\langle Y \rangle &amp;= \bra{\psi}Y\ket{\psi} = \sin\theta\sin\phi \\
+\langle Z \rangle &amp;= \bra{\psi}Z\ket{\psi} = \cos\theta
+\end{aligned}
+\]</span></p>
+<p>These expectation values give us coordinates , which are precisely the coordinates of a point on a unit sphere! This is why we call it the Bloch sphere. The angles <span class="math inline">\(\theta\)</span> and <span class="math inline">\(\phi\)</span> are the usual spherical coordinates.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The Bloch Sphere Geometry
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>The north pole (<span class="math inline">\(\theta=0\)</span>) corresponds to <span class="math inline">\(\ket{0}\)</span></li>
+<li>The south pole (<span class="math inline">\(\theta=\pi\)</span>) corresponds to <span class="math inline">\(\ket{1}\)</span></li>
+<li>The equator (<span class="math inline">\(\theta=\pi/2\)</span>) contains equal superposition of computational basis states:
+<ul>
+<li><span class="math inline">\(\phi=0\)</span> gives <span class="math inline">\(\ket{+}\)</span> (positive x-axis)</li>
+<li><span class="math inline">\(\phi=\pi\)</span> gives <span class="math inline">\(\ket{-}\)</span> (negative x-axis)</li>
+<li><span class="math inline">\(\phi=\pi/2\)</span> gives <span class="math inline">\(\ket{+i}\)</span> (positive y-axis)</li>
+<li><span class="math inline">\(\phi=3\pi/2\)</span> gives <span class="math inline">\(\ket{-i}\)</span> (negative y-axis)</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="fig-bloch-sphere" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-bloch-sphere-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="qubit_files/mediabag/bloch-sphere.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bloch-sphere-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Fig.&nbsp;2.1: The Bloch sphere showing eigenstates of X, Y, and Z Pauli operators
+</figcaption>
+</figure>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example: Hadamard Gate on <span class="math inline">\(\ket{0}\)</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The Hadamard gate <span class="math inline">\(H\)</span> takes the state <span class="math inline">\(\ket{0}\)</span> (north pole) to <span class="math inline">\(\ket{+}\)</span> (on the equator at <span class="math inline">\(\phi=0\)</span>). In terms of the Bloch sphere coordinates, this means:</p>
+<ul>
+<li>Starting point: <span class="math inline">\(\theta=0\)</span> (north pole)</li>
+<li>Ending point: <span class="math inline">\(\theta=\pi/2\)</span>, <span class="math inline">\(\phi=0\)</span> (positive x-axis)</li>
+</ul>
+<p>The gate effectively rotates the state by 90° around the y-axis. Similarly, <span class="math inline">\(H\ket{1}\)</span> takes the south pole to <span class="math inline">\(\ket{-}\)</span> on the negative x-axis.</p>
+</div>
+</div>
+<section id="general-unitary-rotations" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="general-unitary-rotations"><span class="header-section-number">2.2.1</span> General Unitary Rotations</h3>
+<p>The Hadamard example shows how unitary gates can rotate states on the Bloch sphere. More generally, any single-qubit unitary operation can be thought of as a rotation of the Bloch sphere. Let’s see how this works.</p>
+<p>A general rotation around a unit vector <span class="math inline">\(\vec{n} = (n_x, n_y, n_z)\)</span> by angle <span class="math inline">\(\theta\)</span> is given by <span class="math display">\[
+R_{\vec{n}}(\theta) = \cos(\theta/2)I - i\sin(\theta/2)(n_xX + n_yY + n_zZ).
+\]</span></p>
+<p>For example:</p>
+<ul>
+<li>Rotation around z-axis: <span class="math display">\[ R_z(\theta) = e^{-i\theta Z/2} = \begin{bmatrix} e^{-i\theta/2} &amp; 0 \\ 0 &amp; e^{i\theta/2} \end{bmatrix} \]</span></li>
+<li>Rotation around x-axis: <span class="math display">\[ R_x(\theta) = e^{-i\theta X/2} = \begin{bmatrix} \cos(\theta/2) &amp; -i\sin(\theta/2) \\ -i\sin(\theta/2) &amp; \cos(\theta/2) \end{bmatrix} \]</span></li>
+<li>Rotation around y-axis: <span class="math display">\[R_y(\theta) = e^{-i\theta Y/2} = \begin{bmatrix} \cos(\theta/2) &amp; -\sin(\theta/2) \\ \sin(\theta/2) &amp; \cos(\theta/2) \end{bmatrix}\]</span></li>
+</ul>
+<p>A remarkable fact is that any single-qubit unitary operation can be decomposed into three rotations around two different axes. This is known as the Euler angle decomposition: <span class="math display">\[
+U = e^{i\alpha}R_z(\phi)R_y(\theta)R_z(\psi)
+\]</span> where <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\phi\)</span>, <span class="math inline">\(\theta\)</span>, and <span class="math inline">\(\psi\)</span> are real numbers. The global phase <span class="math inline">\(e^{i\alpha}\)</span> is often unimportant for quantum computing purposes.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Visualizing Rotations
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The Euler angle decomposition has a nice geometric interpretation:</p>
+<ol type="1">
+<li>First rotation (<span class="math inline">\(R_z(\psi)\)</span>): Rotate around z-axis</li>
+<li>Second rotation (<span class="math inline">\(R_y(\theta)\)</span>): Tilt to new latitude</li>
+<li>Third rotation (<span class="math inline">\(R_z(\phi)\)</span>): Rotate to final longitude</li>
+<li>Global phase (<span class="math inline">\(e^{i\alpha}\)</span>): Invisible in measurements</li>
+</ol>
+<p>This is similar to how we specify points on Earth using latitude and longitude!</p>
+</div>
+</div>
+</section>
+<section id="the-phase-gate" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="the-phase-gate"><span class="header-section-number">2.2.2</span> The Phase Gate</h3>
+<p>The phase gate (often denoted as <span class="math inline">\(S\)</span>) is another important single-qubit gate that adds a phase of <span class="math inline">\(i\)</span> to the <span class="math inline">\(\ket{1}\)</span> state while leaving <span class="math inline">\(\ket{0}\)</span> unchanged:</p>
+<p><span class="math display">\[
+S = \begin{bmatrix} 1 &amp; 0 \\ 0 &amp; i \end{bmatrix}
+\]</span></p>
+<p>When acting on basis states: <span class="math display">\[
+S\ket{0} = \ket{0}, \quad S\ket{1} = i\ket{1}
+\]</span></p>
+<p>The phase gate is equivalent to a <span class="math inline">\(\pi/2\)</span> rotation around the z-axis: <span class="math inline">\(S = R_z(\pi/2)\)</span>. On the Bloch sphere, this corresponds to rotating a state by 90° around the z-axis.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<strong>Example</strong>: Phase Gate on Superposition
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let’s see what happens when we apply <span class="math inline">\(S\)</span> to an equal superposition state:</p>
+<p><span class="math display">\[
+\begin{aligned}
+S\ket{+} &amp;= S\left(\frac{1}{\sqrt{2}}(\ket{0} + \ket{1})\right) \\
+&amp;= \frac{1}{\sqrt{2}}(S\ket{0} + S\ket{1}) \\
+&amp;= \frac{1}{\sqrt{2}}(\ket{0} + i\ket{1})
+\end{aligned}
+\]</span></p>
+<p>This transforms <span class="math inline">\(\ket{+}\)</span> into <span class="math inline">\(\ket{+i}\)</span>, rotating it from the positive x-axis to the positive y-axis on the Bloch sphere.</p>
+</div>
+</div>
+<p>The phase gate is particularly important in quantum error correction and quantum algorithms where controlled phase operations are needed.</p>
+<p>More generically, we can create any <span class="math inline">\(R_z(\phi)\)</span> gate to perform rotations about the <span class="math inline">\(z\)</span>-axis (this is very useful for Shor’s algorithm). However, a common variant is the <span class="math inline">\(T\)</span> gate, which is simply <span class="math inline">\(R_z(\pi/4)\)</span> and is one of the minimal components needed to achieve universal quantum computation.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Phase gate leaves computational basis states alone
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note that these gates only change superposition of computational basis states, so <span class="math inline">\(S \ket{0} = \ket{0}\)</span> and <span class="math inline">\(S\ket{1} = i \ket{1}\)</span>. (Similarly for any gate made from rotations about the z-axis.)</p>
+</div>
+</div>
+</section>
+</section>
+<section id="quantum-circuits" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="quantum-circuits"><span class="header-section-number">2.3</span> Quantum Circuits</h2>
+<p>Now that we’ve covered the key single-qubit operations, we can start to think about how to represent sequences of these operations graphically using quantum circuits. In quantum circuits:</p>
+<ul>
+<li>Qubits are represented as horizontal lines (called “wires”, see <a href="#fig-single-qubit" class="quarto-xref">Fig.&nbsp;<span>2.2</span></a>).</li>
+<li>Gates are boxes or symbols placed on these wires (see <a href="#fig-qubit-XZ-gates" class="quarto-xref">Fig.&nbsp;<span>2.3</span></a> and <a href="#fig-qubit-HS-gates" class="quarto-xref">Fig.&nbsp;<span>2.4</span></a>).</li>
+<li>Time flows from left to right.</li>
+<li>Measurements are represented by meters (see <a href="#fig-qubit-measure" class="quarto-xref">Fig.&nbsp;<span>2.5</span></a>).</li>
+</ul>
+<p>Often, unless we are preparing a specific state for an algorithm, we may leave off the states from the ends of the “wire.” This wire, <a href="#fig-single-qubit" class="quarto-xref">Fig.&nbsp;<span>2.2</span></a>, you can think of as the identity.</p>
+<div id="fig-single-qubit" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-single-qubit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="qubit_files/mediabag/qubit-identity-0.svg" class="img-fluid figure-img"></p>
+<figcaption>Identity on <span class="math inline">\(\ket{0}\)</span></figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="qubit_files/mediabag/qubit-identity-1.svg" class="img-fluid figure-img"></p>
+<figcaption>Identity on <span class="math inline">\(\ket{1}\)</span></figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="qubit_files/mediabag/qubit-identity.svg" class="img-fluid figure-img"></p>
+<figcaption>Identity on <span class="math inline">\(\ket{\psi}\)</span></figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-single-qubit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Fig.&nbsp;2.2: Lines representing the evolution of a qubit (no gates applied)
+</figcaption>
+</figure>
+</div>
+<p>While in quantum state evolution we apply operators right-to-left, the two operations <span class="math inline">\(X \ket{0} = \ket{1}\)</span> and <span class="math inline">\(Z \ket{+} = \ket{-}\)</span> are represented in <a href="#fig-qubit-XZ-gates" class="quarto-xref">Fig.&nbsp;<span>2.3</span></a>.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The Pauli operators are both unitary and Hermitian, so they operator both as good quantum gates (which require unitary as <a href="intro.html#sec-postulate-unitary" class="quarto-xref"><span>Section 1.3.3</span></a> stipulates) and as good observables (as <a href="intro.html#sec-postulate-observable" class="quarto-xref"><span>Section 1.3.2</span></a> stipulates).</p>
+</div>
+</div>
+<div id="fig-qubit-XZ-gates" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-qubit-XZ-gates-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="qubit_files/mediabag/qubit-X-gate.svg" class="img-fluid figure-img"></p>
+<figcaption>Application of the <span class="math inline">\(X\)</span> gate.</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="qubit_files/mediabag/qubit-Z-gate.svg" class="img-fluid figure-img"></p>
+<figcaption>Application of the <span class="math inline">\(Z\)</span> gate.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-qubit-XZ-gates-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Fig.&nbsp;2.3: Examples of the Pauli operators as gates.
+</figcaption>
+</figure>
+</div>
+<p>The Hadamard and phase gates can also be mixed in, <a href="#fig-qubit-HS-gates" class="quarto-xref">Fig.&nbsp;<span>2.4</span></a>, and we can even introduce the meter symbol for measurements, <a href="#fig-qubit-measure" class="quarto-xref">Fig.&nbsp;<span>2.5</span></a>.</p>
+<div id="fig-qubit-HS-gates" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-qubit-HS-gates-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="qubit_files/mediabag/qubit-H-gate.svg" class="img-fluid figure-img"></p>
+<figcaption>Application of the Hadamard gate</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="qubit_files/mediabag/qubit-S-gate.svg" class="img-fluid figure-img"></p>
+<figcaption>Application of the phase gate</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-qubit-HS-gates-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Fig.&nbsp;2.4: Examples of the Hadamard and phase gates.
+</figcaption>
+</figure>
+</div>
+<div id="fig-qubit-measure" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-qubit-measure-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="qubit_files/mediabag/qubit-X-gate-measure.svg" class="img-fluid figure-img"></p>
+<figcaption>Will measure 1 with 100% probability</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="qubit_files/mediabag/qubit-H-gate-measure.svg" class="img-fluid figure-img"></p>
+<figcaption>Will measure 1 with 50% probability</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-qubit-measure-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Fig.&nbsp;2.5: Examples of measurements. The meter is assumed to be measuring in the computational basis unless otherwise noted (i.e., measuring the <span class="math inline">\(Z\)</span> operator).
+</figcaption>
+</figure>
+</div>
+<p>Whenever measurements are performed, we will often transform to the computational basis <span class="math inline">\(\ket{0}\)</span> and <span class="math inline">\(\ket{1}\)</span> to perform a measurement. By playing tricks with unitary transformations, we can measure other observables by mixing unitaries and measurements of the computational basis; dependent on the platform, this may or may not be necessary. In terms of diagrams, you should assume meters are measurements in the computational basis unless it is noted otherwise.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Reading Quantum Circuits
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Quantum circuits are read from left to right, just like reading text. Each horizontal line represents a qubit’s journey through time, and the boxes show what operations happen and when.</p>
+<p>The measurement symbol at the end indicates when we extract classical information from our quantum system.</p>
+</div>
+</div>
+<p>These diagrams give us a powerful visual language for describing quantum computations. Even complex algorithms can be broken down into sequences of these basic operations.</p>
+</section>
+<section id="qubits-in-quantum-technology" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="qubits-in-quantum-technology"><span class="header-section-number">2.4</span> Qubits in quantum technology</h2>
+<p>A large part of the course will consist of finding physical systems where we can identify certain states as <span class="math inline">\(\ket{0}\)</span> and <span class="math inline">\(\ket{1}\)</span>, and then proceed to figure out how to perform the gates we need for quantum algorithms. In this way, this course could be called “two-level systems and where to find them.”</p>
+<p>However, algorithms need these qubits to talk to each other, so we will now proceed to two qubits, and beyond!</p>
 
 
 <div id="refs" class="references csl-bib-body" data-entry-spacing="0" role="list" style="display: none">
@@ -502,12 +821,12 @@ We refer to this with @eq-qubit -->
 </div>
 </div>
 </section>
-</section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
 <li id="fn1"><p>Magic is a technical term in quantum computing, though we’re using it in a colloquial sense here, see <span class="citation" data-cites="BravyiKitaev2005">&nbsp;[<a href="references.html#ref-BravyiKitaev2005" role="doc-biblioref">1</a>]</span>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>In some literature, these are matrices are denoted by <span class="math inline">\(\sigma_{x}\)</span>, <span class="math inline">\(\sigma_y\)</span>, and <span class="math inline">\(\sigma_z\)</span> and related to spin operators via <span class="math inline">\(S_i =\frac12 \sigma_i\)</span>. This insight can help bridge the idea of these operators and the Bloch sphere.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>The divide-by-two for the angles will become clear as we go through this section.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
