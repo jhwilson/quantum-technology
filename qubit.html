@@ -215,13 +215,18 @@ window.Quarto = {
   <li><a href="#qubit-operators" id="toc-qubit-operators" class="nav-link" data-scroll-target="#qubit-operators"><span class="header-section-number">2.1.2</span> Qubit operators</a></li>
   <li><a href="#the-pauli-operators" id="toc-the-pauli-operators" class="nav-link" data-scroll-target="#the-pauli-operators"><span class="header-section-number">2.1.3</span> The Pauli operators</a></li>
   </ul></li>
-  <li><a href="#the-bloch-sphere" id="toc-the-bloch-sphere" class="nav-link" data-scroll-target="#the-bloch-sphere"><span class="header-section-number">2.2</span> The Bloch sphere</a>
+  <li><a href="#sec-bloch-sphere" id="toc-sec-bloch-sphere" class="nav-link" data-scroll-target="#sec-bloch-sphere"><span class="header-section-number">2.2</span> The Bloch sphere</a>
   <ul class="collapse">
   <li><a href="#general-unitary-rotations" id="toc-general-unitary-rotations" class="nav-link" data-scroll-target="#general-unitary-rotations"><span class="header-section-number">2.2.1</span> General Unitary Rotations</a></li>
   <li><a href="#the-phase-gate" id="toc-the-phase-gate" class="nav-link" data-scroll-target="#the-phase-gate"><span class="header-section-number">2.2.2</span> The Phase Gate</a></li>
   </ul></li>
   <li><a href="#quantum-circuits" id="toc-quantum-circuits" class="nav-link" data-scroll-target="#quantum-circuits"><span class="header-section-number">2.3</span> Quantum Circuits</a></li>
-  <li><a href="#qubits-in-quantum-technology" id="toc-qubits-in-quantum-technology" class="nav-link" data-scroll-target="#qubits-in-quantum-technology"><span class="header-section-number">2.4</span> Qubits in quantum technology</a></li>
+  <li><a href="#noise-and-decoherence" id="toc-noise-and-decoherence" class="nav-link" data-scroll-target="#noise-and-decoherence"><span class="header-section-number">2.4</span> Noise and decoherence</a>
+  <ul class="collapse">
+  <li><a href="#the-density-matrix" id="toc-the-density-matrix" class="nav-link" data-scroll-target="#the-density-matrix"><span class="header-section-number">2.4.1</span> The Density Matrix</a></li>
+  <li><a href="#modeling-noise" id="toc-modeling-noise" class="nav-link" data-scroll-target="#modeling-noise"><span class="header-section-number">2.4.2</span> Modeling Noise</a></li>
+  <li><a href="#physical-qubit-implementations" id="toc-physical-qubit-implementations" class="nav-link" data-scroll-target="#physical-qubit-implementations"><span class="header-section-number">2.4.3</span> Physical Qubit Implementations</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -248,6 +253,25 @@ window.Quarto = {
 
 
 <p>The fundamental building block of the classical computer was the bit: A 0 or 1 that could be manipulated by a classical computer (via transistors, see <a href="intro.html#sec-transistors" class="quarto-xref"><span>Section 1.2</span></a>). In a similar manner, quantum computation has the “quantum bit” or just <em>qubit</em>, for short. This leads us to the linear algebra of <span class="math inline">\(2\times 2\)</span> matrices, as we will see. Despite the apparent simplicity, we can already see many of the key features of quantum mechanics in this simple system.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Common Qubit Misconceptions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>A qubit is not just a probabilistic classical bit.</li>
+<li>You cannot directly access of the amplitudes of <span class="math inline">\(\ket{0}\)</span> and <span class="math inline">\(\ket{1}\)</span> through a single measurement.</li>
+<li>Superposition states collapse upon measurement.</li>
+<li>No-cloning theorem <span class="citation" data-cites="WoottersZurek1982">&nbsp;[<a href="references.html#ref-WoottersZurek1982" role="doc-biblioref">1</a>]</span> means you cannot perfectly copy an unknown quantum state.</li>
+<li>Entanglement is not the same as classical correlation (see next chapter).</li>
+</ul>
+</div>
+</div>
 <section id="the-qubit-hilbert-space" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="the-qubit-hilbert-space"><span class="header-section-number">2.1</span> The Qubit Hilbert space</h2>
 <p>A qubit will be in two-dimensional complex vector space equipped with an inner product.</p>
@@ -488,8 +512,8 @@ H\ket{0} &amp;= \frac{1}{\sqrt{2}}\begin{bmatrix} 1 &amp; 1 \\ 1 &amp; -1 \end{b
 </div>
 </section>
 </section>
-<section id="the-bloch-sphere" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="the-bloch-sphere"><span class="header-section-number">2.2</span> The Bloch sphere</h2>
+<section id="sec-bloch-sphere" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="sec-bloch-sphere"><span class="header-section-number">2.2</span> The Bloch sphere</h2>
 <p>The qubit itself is more than just a probability of being a 1 or a 0. A crucial bit of <em>quantum</em> information is the relative phase between the two states for instance <span class="math display">\[
 \ket{\psi} = \tfrac1{\sqrt2}( \ket 0 + e^{i\phi} \ket 1),
 \]</span> and since all states are equivalent up to a <em>total</em> phase, we can write the amplitude of each state with a real number. In this case, if we set <span class="math inline">\(\ket{\psi} = x \ket{0} + y e^{i\phi} \ket 1\)</span>, then we have <span class="math inline">\(\braket{\psi|\psi} = x^2 + y^2 = 1\)</span> for normalization. This is the equation for a circle, and writing out <span class="math inline">\(x = \cos(\theta/2)\)</span> and <span class="math inline">\(y = \sin(\theta/2)\)</span><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>, we are lead to an angular representation of our state. <span id="eq-bloch-sphere"><span class="math display">\[
@@ -707,7 +731,7 @@ Important
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The Pauli operators are both unitary and Hermitian, so they operator both as good quantum gates (which require unitary as <a href="intro.html#sec-postulate-unitary" class="quarto-xref"><span>Section 1.3.3</span></a> stipulates) and as good observables (as <a href="intro.html#sec-postulate-observable" class="quarto-xref"><span>Section 1.3.2</span></a> stipulates).</p>
+<p>The Pauli operators are both unitary and Hermitian, so they perform as quantum gates (which require unitary as <a href="intro.html#sec-postulate-unitary" class="quarto-xref"><span>Section 1.3.3</span></a> stipulates) and as observables (as <a href="intro.html#sec-postulate-observable" class="quarto-xref"><span>Section 1.3.2</span></a> stipulates).</p>
 </div>
 </div>
 <div id="fig-qubit-XZ-gates" class="quarto-layout-panel">
@@ -808,23 +832,361 @@ Reading Quantum Circuits
 </div>
 </div>
 <p>These diagrams give us a powerful visual language for describing quantum computations. Even complex algorithms can be broken down into sequences of these basic operations.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<strong>Example</strong>: Gate Sequences
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Consider applying <span class="math inline">\(H\)</span> then <span class="math inline">\(Z\)</span> then <span class="math inline">\(H\)</span> to <span class="math inline">\(\ket{0}\)</span>:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="qubit_files/mediabag/qubit-HZH-gate-measure.svg" class="img-fluid figure-img"></p>
+<figcaption>Implementing an <span class="math inline">\(X\)</span> gate with <span class="math inline">\(Z\)</span> and <span class="math inline">\(H\)</span>.</figcaption>
+</figure>
+</div>
+<ol type="1">
+<li><span class="math inline">\(H\ket{0} = \ket{+}\)</span> (move to +x axis)</li>
+<li><span class="math inline">\(Z\ket{+} = \frac{1}{\sqrt{2}}(\ket{0} + i\ket{1})\)</span> (rotate around z by 90°)</li>
+<li><span class="math inline">\(H(\frac{1}{\sqrt{2}}(\ket{0} + i\ket{1})) = \ket{1}\)</span> (move to -z axis)</li>
+</ol>
+<p>This sequence effectively implements the <span class="math inline">\(X\)</span> gate!</p>
+</div>
+</div>
 </section>
-<section id="qubits-in-quantum-technology" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="qubits-in-quantum-technology"><span class="header-section-number">2.4</span> Qubits in quantum technology</h2>
-<p>A large part of the course will consist of finding physical systems where we can identify certain states as <span class="math inline">\(\ket{0}\)</span> and <span class="math inline">\(\ket{1}\)</span>, and then proceed to figure out how to perform the gates we need for quantum algorithms. In this way, this course could be called “two-level systems and where to find them.”</p>
-<p>However, algorithms need these qubits to talk to each other, so we will now proceed to two qubits, and beyond!</p>
+<section id="noise-and-decoherence" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="noise-and-decoherence"><span class="header-section-number">2.4</span> Noise and decoherence</h2>
+<p>A large part of the course will consist of finding physical systems where we can identify certain states as <span class="math inline">\(\ket{0}\)</span> and <span class="math inline">\(\ket{1}\)</span>, and then proceed to figure out how to perform the gates we need for quantum algorithms. In this way, this course could be called “two-level systems and where to find them.” However, these states are not pristine and so we need a way to talk about states that subject to noisy environments and loss of information.</p>
+<p>In fact, environmental interactions can cause, amongst other issues:</p>
+<ul>
+<li>Loss of phase information (dephasing)</li>
+<li>Loss of energy (amplitude damping)</li>
+<li>Random bit flips</li>
+</ul>
+<p>To properly describe these noise processes, we need to move beyond pure state descriptions and introduce the density matrix formalism.</p>
+<section id="the-density-matrix" class="level3" data-number="2.4.1">
+<h3 data-number="2.4.1" class="anchored" data-anchor-id="the-density-matrix"><span class="header-section-number">2.4.1</span> The Density Matrix</h3>
+<p>For a pure quantum state <span class="math inline">\(\ket{\psi}\)</span>, the density matrix is defined as <span class="math display">\[
+\rho = \ket{\psi}\bra{\psi}
+\]</span> For example, the computational basis states have density matrices: <span class="math display">\[
+\ket{0}\bra{0} = \begin{bmatrix} 1 &amp; 0 \\ 0 &amp; 0 \end{bmatrix}, \quad
+\ket{1}\bra{1} = \begin{bmatrix} 0 &amp; 0 \\ 0 &amp; 1 \end{bmatrix}
+\]</span></p>
+<p>The density matrix also provides a convenient way to calculate expectation values of observables. For any observable <span class="math inline">\(A\)</span>, the expectation value is given by: <span class="math display">\[
+\langle A \rangle = \tr(A\rho)
+\]</span> For a pure state <span class="math inline">\(\ket{\psi}\)</span>, this reduces to our familiar expression: <span class="math display">\[
+\tr(A\ket{\psi}\bra{\psi}) = \bra{\psi}A\ket{\psi}
+\]</span></p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<strong>Example</strong>: Measuring <span class="math inline">\(Z\)</span> with the Density Matrix
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Consider measuring <span class="math inline">\(Z\)</span> for the state <span class="math inline">\(\ket{+} = \frac{1}{\sqrt{2}}(\ket{0} + \ket{1})\)</span>:</p>
+<p>The density matrix is: <span class="math display">\[
+\rho_+ = \frac{1}{2}\begin{bmatrix} 1 &amp; 1 \\ 1 &amp; 1 \end{bmatrix}
+\]</span></p>
+<p>Using the trace formula with <span class="math inline">\(Z = \begin{bmatrix} 1 &amp; 0 \\ 0 &amp; -1 \end{bmatrix}\)</span>: <span class="math display">\[
+\langle Z \rangle = \tr(Z\rho_+) = \tr\left(\frac{1}{2}\begin{bmatrix} 1 &amp; 0 \\ 0 &amp; -1 \end{bmatrix}\begin{bmatrix} 1 &amp; 1 \\ 1 &amp; 1 \end{bmatrix}\right) = 0
+\]</span></p>
+<p>This matches what we expect: <span class="math inline">\(\ket{+}\)</span> has equal probability of measuring <span class="math inline">\(\pm 1\)</span> for <span class="math inline">\(Z\)</span>.</p>
+</div>
+</div>
+<p>The real power of density matrices comes from describing <em>mixed states</em>, which are statistical mixtures of pure states: <span class="math display">\[
+\rho = \sum_i p_i \ket{\psi_i}\bra{\psi_i}
+\]</span> where <span class="math inline">\(p_i\)</span> are classical probabilities (<span class="math inline">\(p_i \geq 0\)</span>, <span class="math inline">\(\sum_i p_i = 1\)</span>).</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Properties of Density Matrices
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Any valid density matrix must satisfy:</p>
+<ol type="1">
+<li>Hermiticity: <span class="math inline">\(\rho = \rho^\dagger\)</span></li>
+<li>Positive semidefinite: <span class="math inline">\(\bra{\phi}\rho\ket{\phi} \geq 0\)</span> for all <span class="math inline">\(\ket{\phi}\)</span></li>
+<li>Unit trace: <span class="math inline">\(\tr(\rho) = 1\)</span></li>
+<li>For pure states: <span class="math inline">\(\tr(\rho^2) = 1\)</span></li>
+<li>For mixed states: <span class="math inline">\(\tr(\rho^2) &lt; 1\)</span></li>
+</ol>
+</div>
+</div>
+<section id="quantum-operations-with-density-matrices" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="quantum-operations-with-density-matrices">Quantum Operations with Density Matrices</h4>
+<p>Just as we can evolve pure states with unitary operators, we can evolve density matrices. For a unitary operation <span class="math inline">\(U\)</span>, the density matrix transforms as: <span class="math display">\[
+\rho \rightarrow U\rho U^\dagger
+\]</span> This preserves all the properties of the density matrix we discussed above.</p>
+<p>When we make a measurement, we use projection operators <span class="math inline">\(\{P_m\}\)</span> (like <span class="math inline">\(\ket{0}\bra{0}\)</span> and <span class="math inline">\(\ket{1}\bra{1}\)</span> for measuring in the computational basis). The probability of getting outcome <span class="math inline">\(m\)</span> is: <span class="math display">\[
+p(m) = \tr(P_m \rho)
+\]</span> After measuring and getting outcome <span class="math inline">\(m\)</span>, the state “collapses” to: <span class="math display">\[
+\rho_m = \frac{P_m \rho P_m}{\tr(P_m \rho)}
+\]</span> where the denominator ensures the trace remains 1.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Quantum Channels
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The density matrix formalism really shines when describing general quantum evolution, including noise. Any physical process (unitary or not) can be described by a quantum channel <span class="math inline">\(\mathcal{E}\)</span>: <span class="math display">\[
+\rho \rightarrow \mathcal{E}(\rho) = \sum_k E_k \rho E_k^\dagger
+\]</span> The operators <span class="math inline">\(E_k\)</span> (called Kraus operators) satisfy <span class="math inline">\(\sum_k E_k^\dagger E_k = I\)</span> to preserve probability. This includes both ideal unitary evolution (one <span class="math inline">\(E_k = U\)</span>) and noise processes (multiple <span class="math inline">\(E_k\)</span>), as we’ll see in the next section.</p>
+</div>
+</div>
+</section>
+<section id="density-matrices-and-the-bloch-sphere" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="density-matrices-and-the-bloch-sphere">Density Matrices and the Bloch Sphere</h4>
+<p>The density matrix formalism provides a beautiful geometric picture when combined with the Bloch sphere representation in <a href="#sec-bloch-sphere" class="quarto-xref"><span>Section 2.2</span></a>. While pure states live on the surface of the Bloch sphere, mixed states live <em>inside</em> it. Any density matrix for a single qubit can be written as: <span class="math display">\[
+\rho = \frac{1}{2}(I + \vec{r}\cdot\vec{\sigma})
+\]</span> where <span class="math inline">\(\vec{r} = (r_x, r_y, r_z)\)</span> is called the Bloch vector and <span class="math inline">\(\vec{\sigma} = (X,Y,Z)\)</span> are the Pauli matrices.</p>
+<p>The length of <span class="math inline">\(\vec{r}\)</span> determines how mixed the state is:</p>
+<ul>
+<li>For pure states, <span class="math inline">\(|\vec{r}| = 1\)</span> (surface of sphere)</li>
+<li>For mixed states, <span class="math inline">\(|\vec{r}| &lt; 1\)</span> (inside sphere)</li>
+<li>For the maximally mixed state, <span class="math inline">\(\vec{r} = 0\)</span> (center of sphere)</li>
+</ul>
+<p>This gives us an intuitive picture of decoherence: noise processes like dephasing and bit flips move the Bloch vector inward from the surface, representing the loss of quantum information. The maximally mixed state at the center represents complete loss of information–equal probabilities for all measurement outcomes.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Connection to Purity
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The length of the Bloch vector is directly related to the purity <span class="math inline">\(\tr(\rho^2)\)</span> we discussed earlier: <span class="math display">\[
+\tr(\rho^2) = \frac{1 + |\vec{r}|^2}{2}
+\]</span> This confirms that pure states (<span class="math inline">\(|\vec{r}| = 1\)</span>) have purity 1, while mixed states have purity less than 1.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="modeling-noise" class="level3" data-number="2.4.2">
+<h3 data-number="2.4.2" class="anchored" data-anchor-id="modeling-noise"><span class="header-section-number">2.4.2</span> Modeling Noise</h3>
+<p>A full discussion of different quantum channels can be found in <span class="citation" data-cites="Wilde2017">&nbsp;[<a href="references.html#ref-Wilde2017" role="doc-biblioref">3</a>]</span>. Here, we discuss some of the ones relevant for loss of quantum information.</p>
+<p>The language of density matrices allows us to describe some of the errors that can occur in a precise manner</p>
+<section id="random-bit-flips" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="random-bit-flips">Random bit-flips</h4>
+<p>If there is probability <span class="math inline">\(p\)</span> that a bit is flipped, we can encode this within a change of the density matrix: <span class="math display">\[
+\rho \rightarrow (1-p)\rho + p X\rho X,
+\]</span> where the first term describes the probability that the density matrix remains unchanged and the second describe the process of randomly flipping a bit.</p>
+</section>
+<section id="dephasing" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="dephasing">Dephasing</h4>
+<p>As we’ve already mentioned the phase between <span class="math inline">\(\ket{0}\)</span> and <span class="math inline">\(\ket{1}\)</span> is useful information that we will take advantage of. However, some physical processes can scramble this phase in a way that could be inherently difficult to parse, in that case we can describe these processes with “dephasing” <span class="math display">\[
+\rho \rightarrow (1-p)\rho + p Z \rho Z.
+\]</span> This process has a clear action on <span class="math inline">\(\rho\)</span> when <span class="math inline">\(p=1/2\)</span>. To illustrate this, consider <span class="math inline">\(\ket{\psi} = \alpha \ket{0} + \beta \ket{1}\)</span>, this has a probability of measuring <span class="math inline">\(0\)</span> of <span class="math inline">\(|\alpha|^2\)</span> and a probabilty of measuring <span class="math inline">\(1\)</span> of <span class="math inline">\(|\beta|^2\)</span>, but there is also phase information between <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> that tells us where on the Bloch sphere the state is located. Dephasing will eliminate this phase information.</p>
+<p>To see this, the full density matrix before we apply dephasing is <span class="math display">\[
+\rho = \begin{bmatrix} |\alpha|^2 &amp; \alpha\beta^* \\ \alpha^*\beta &amp; |\beta|^2 \end{bmatrix},
+\]</span> and after dephasing we will have the density matrix <span class="math display">\[
+\frac12 \rho + \frac12 Z \rho Z = \begin{bmatrix} |\alpha|^2 &amp; 0 \\ 0 &amp; |\beta|^2 \end{bmatrix}.
+\]</span> The off-diagonal components carried the relative phase information and it is now entirely lost, leaving us with a classical mixture of <span class="math inline">\(\ket{0}\)</span> and <span class="math inline">\(\ket{1}\)</span></p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Measurement as Dephasing
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This process of losing phase information is exactly what happens when we measure a quantum state in a particular basis! When we measure in the computational basis (<span class="math inline">\(\{\ket{0}, \ket{1}\}\)</span>), we are effectively performing complete dephasing - we destroy all phase information between the basis states and are left with only the classical probabilities. This is why measurement is often described as “collapsing” the quantum state into classical information.</p>
+<p>This connection between measurement and dephasing illustrates a fundamental aspect of quantum mechanics: the act of gaining classical information about a quantum system necessarily destroys some of its quantum properties, as formalized in the measurement postulates we discussed earlier.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<strong>Example</strong>: Dephasing of a Superposition State
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Consider the state <span class="math inline">\(\ket{+} = \frac{1}{\sqrt{2}}(\ket{0} + \ket{1})\)</span> under dephasing:</p>
+<p>Initial density matrix: <span class="math display">\[
+\rho_0 = \frac{1}{2}\begin{bmatrix} 1 &amp; 1 \\ 1 &amp; 1 \end{bmatrix}
+\]</span></p>
+<p>After dephasing with probability <span class="math inline">\(p\)</span>: <span class="math display">\[
+\rho(p) = \frac{1}{2}\begin{bmatrix} 1 &amp; (1-2p) \\ (1-2p) &amp; 1 \end{bmatrix}
+\]</span></p>
+<p>Complete dephasing (<span class="math inline">\(p=\frac{1}{2}\)</span>) yields the maximally mixed state: <span class="math display">\[
+\rho(\tfrac{1}{2}) = \frac{1}{2}\begin{bmatrix} 1 &amp; 0 \\ 0 &amp; 1 \end{bmatrix}
+\]</span></p>
+</div>
+</div>
+</section>
+<section id="depolarizing" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="depolarizing">Depolarizing</h4>
+<p>The depolarizing channel represents one of the most severe forms of noise in quantum systems, often considered the “worst-case scenario” for quantum information. This channel transforms any input state into a mixture of itself and the maximally mixed state: <span class="math display">\[
+\rho \rightarrow (1-p)\rho + p \frac{I}{2},
+\]</span> where <span class="math inline">\(p\)</span> represents the probability of depolarization. When <span class="math inline">\(p=1\)</span>, the state becomes completely mixed regardless of the input: <span class="math display">\[
+\rho \rightarrow \frac{1}{2}I.
+\]</span></p>
+<p>Note that this has eliminated any information about <span class="math inline">\(\ket{\psi}\)</span>!</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<strong>Example</strong>: The Pauli Twirl
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>An interesting way to understand the depolarizing channel is through what’s called the “Pauli twirl”. The depolarizing channel can be written as a random application of Pauli operators: <span class="math display">\[
+\rho \rightarrow (1-p)\rho + \frac{p}{3}(X\rho X + Y\rho Y + Z\rho Z).
+\]</span></p>
+<p>This means we can implement depolarizing noise by randomly applying X, Y, or Z gates with probability <span class="math inline">\(p/3\)</span> each. This is particularly useful in quantum error correction, where we often want to simulate noise in a way that’s easy to analyze.</p>
+</div>
+</div>
+</section>
+<section id="amplitude-damping" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="amplitude-damping">Amplitude Damping</h4>
+<p>In many physical systems, one can lose information by having emission of energy. Physically, this could be an atom in some energy level and it emits a photon, falling to a lower energy level. One can imagine a process like this occuring with an operator <span class="math display">\[
+E_0 = \sqrt{\gamma} \ket{0} \bra{1},
+\]</span> which describes the process of taking an occupied state <span class="math inline">\(\ket{1}\)</span> and transforming it to <span class="math inline">\(\ket{0}\)</span> with probability <span class="math inline">\(\gamma\)</span>. To fully encode this into a change in the density matrix, we need one other operator: the chance that nothing happens. A natural guess would be <span class="math display">\[
+E_1 = \ket{0}\bra{0} + \sqrt{1-\gamma} \ket{1}\bra{1},
+\]</span> which describes that there is unit probability of remaining <span class="math inline">\(\ket{0}\)</span> and probaiblity <span class="math inline">\(1-\gamma\)</span> of remaining in <span class="math inline">\(\ket{1}\)</span> if you start there.</p>
+<p>The full operation on the density matrix is then <span class="math display">\[
+\rho \rightarrow E_1 \rho E_1^\dagger + E_0 \rho E_0^\dagger
+\]</span></p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<strong>Example</strong>: Amplitude Damping in Action
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let’s see how amplitude damping affects a simple superposition state. Consider the initial state <span class="math display">\[
+\ket{\psi} = \frac{1}{\sqrt{2}}(\ket{0} + \ket{1}),
+\]</span> which has density matrix <span class="math display">\[
+\rho = \frac{1}{2}\begin{bmatrix} 1 &amp; 1 \\ 1 &amp; 1 \end{bmatrix}.
+\]</span></p>
+<p>After applying amplitude damping with probability <span class="math inline">\(\gamma\)</span>, the state becomes <span class="math display">\[
+\begin{aligned}
+\rho' &amp;= E_1 \rho E_1^\dagger + E_0 \rho E_0^\dagger \\
+&amp;= \frac{1}{2}\begin{bmatrix} 1+\gamma &amp; \sqrt{1-\gamma} \\ \sqrt{1-\gamma} &amp; 1-\gamma \end{bmatrix}.
+\end{aligned}
+\]</span></p>
+<p>We can see that:</p>
+<ul>
+<li>The probability of being in <span class="math inline">\(\ket{1}\)</span> decreases by <span class="math inline">\(\gamma\)</span></li>
+<li>The probability of being in <span class="math inline">\(\ket{0}\)</span> increases by <span class="math inline">\(\gamma\)</span></li>
+<li>The off-diagonal coherence terms decay by <span class="math inline">\(\sqrt{1-\gamma}\)</span></li>
+</ul>
+<p>When <span class="math inline">\(\gamma = 1\)</span> (complete damping), the state becomes <span class="math display">\[
+\rho' = \begin{bmatrix} 1 &amp; 0 \\ 0 &amp; 0 \end{bmatrix} = \ket{0}\bra{0},
+\]</span> representing complete relaxation to the ground state.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="physical-qubit-implementations" class="level3" data-number="2.4.3">
+<h3 data-number="2.4.3" class="anchored" data-anchor-id="physical-qubit-implementations"><span class="header-section-number">2.4.3</span> Physical Qubit Implementations</h3>
+<p>The quest for building practical quantum computers has led to several different approaches for implementing qubits. Each implementation aims to create a physical system that can reliably represent quantum states and allow for precise control and manipulation. We will explore in detail later what is needed for a good quantum device, but give a brief overview here of <em>what</em> the devices are.</p>
+<section id="superconducting-qubits" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="superconducting-qubits">Superconducting Qubits</h4>
+<ul>
+<li>Qubit are energy levels of <em>charge</em> or <em>flux</em> within a superconducting circuit.</li>
+<li>Based on superconducting circuits using Josephson junctions.</li>
+<li>Operate at extremely low temperatures (~20 mK).</li>
+<li>Used by: IBM, Google, Rigetti.</li>
+</ul>
+</section>
+<section id="trapped-ion-qubits" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="trapped-ion-qubits">Trapped Ion Qubits</h4>
+<ul>
+<li>Qubits are electronic or nuclear states of individual ions</li>
+<li>Ions held in electromagnetic traps, manipulated by lasers</li>
+<li>Used by: IonQ, Honeywell-Quantinuum</li>
+</ul>
+</section>
+<section id="photonic-qubits" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="photonic-qubits">Photonic Qubits</h4>
+<ul>
+<li>Qubits are properites of light (e.g., polarization)</li>
+<li>Can operate at room temperature</li>
+<li>Used by: PsiQuantum, Xanadu</li>
+</ul>
+</section>
+<section id="semiconductor-quantum-dots" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="semiconductor-quantum-dots">Semiconductor Quantum Dots</h4>
+<ul>
+<li>Qubits can be encoded using either:
+<ul>
+<li><em>charge</em> states (electron occupying different quantum dots)</li>
+<li><em>spin</em> states (up/down spin states of an electron)</li>
+</ul></li>
+<li>Created by confining electrons in semiconductor nanostructures</li>
+<li>Often called “artificial atoms” due to their discrete energy levels</li>
+<li>Active research at: Intel, TU Delft, Princeton, UNSW, CEA-Leti</li>
+</ul>
+</section>
+<section id="nv-centers-in-diamond" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="nv-centers-in-diamond">NV Centers in Diamond</h4>
+<ul>
+<li>The nitrogen vacancy defects in diamond provide energy levels accessible with light.</li>
+<li>Can operate at room temperature</li>
+<li>Applications in quantum sensing and networking</li>
+</ul>
+</section>
+<section id="topological-qubits" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="topological-qubits">Topological Qubits</h4>
+<ul>
+<li>Qubits are non-local and topologically protected states within an exotic (topological) state of matter.</li>
+<li>Most promising candidate: Majorana zero modes</li>
+<li><strong>Current Status</strong>:
+<ul>
+<li>Active research at Microsoft and Delft</li>
+<li>Recent progress in identifying Majorana signatures in nanowires</li>
+<li>Debate continues over experimental evidence</li>
+</ul></li>
+</ul>
+<p>As we’ll discuss, the “perfect” qubit would combine long coherence times, fast gates, high fidelity, easy coupling to other qubits, and straightforward scalability. While each implementation has made significant progress, achieving all these properties simultaneously remains a major challenge in the field.</p>
 
 
 <div id="refs" class="references csl-bib-body" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-WoottersZurek1982" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">W. K. Wootters and W. H. Zurek, <a href="https://doi.org/10.1038/299802a0">A single quantum cannot be cloned</a>, Nature <strong>299</strong>, 802 (1982).</div>
+</div>
 <div id="ref-BravyiKitaev2005" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[1] </div><div class="csl-right-inline">S. Bravyi and A. Kitaev, <a href="https://doi.org/10.1103/PhysRevA.71.022316">Universal quantum computation with ideal <span>Clifford</span> gates and noisy ancillas</a>, Physical Review A <strong>71</strong>, 022316 (2005).</div>
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">S. Bravyi and A. Kitaev, <a href="https://doi.org/10.1103/PhysRevA.71.022316">Universal quantum computation with ideal <span>Clifford</span> gates and noisy ancillas</a>, Physical Review A <strong>71</strong>, 022316 (2005).</div>
+</div>
+<div id="ref-Wilde2017" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">M. M. Wilde, <em>Quantum Information Theory</em>, 2nd ed (Cambridge university press, Cambridge, 2017).</div>
 </div>
 </div>
+</section>
+</section>
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1"><p>Magic is a technical term in quantum computing, though we’re using it in a colloquial sense here, see <span class="citation" data-cites="BravyiKitaev2005">&nbsp;[<a href="references.html#ref-BravyiKitaev2005" role="doc-biblioref">1</a>]</span>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>Magic is a technical term in quantum computing, though we’re using it in a colloquial sense here, see <span class="citation" data-cites="BravyiKitaev2005">&nbsp;[<a href="references.html#ref-BravyiKitaev2005" role="doc-biblioref">2</a>]</span>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>In some literature, these are matrices are denoted by <span class="math inline">\(\sigma_{x}\)</span>, <span class="math inline">\(\sigma_y\)</span>, and <span class="math inline">\(\sigma_z\)</span> and related to spin operators via <span class="math inline">\(S_i =\frac12 \sigma_i\)</span>. This insight can help bridge the idea of these operators and the Bloch sphere.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>The divide-by-two for the angles will become clear as we go through this section.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
