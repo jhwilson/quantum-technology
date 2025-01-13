@@ -1,0 +1,14 @@
+\documentclass[tikz]{standalone}
+% \usepackage{tikz} % already loaded by the documentclass
+\usepackage{braket}
+\usetikzlibrary{quantikz2}
+\begin{document}
+%%| filename: qubit-identity-1
+%%| caption: Identity on $\ket{1}$
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}
+\lstick{$\ket{1}$} &&&&& \rstick{$\ket{1}$}
+\end{quantikz}
+\end{document}
+      

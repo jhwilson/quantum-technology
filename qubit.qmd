@@ -3,7 +3,7 @@
 The fundamental building block of the classical computer was the bit: A 0 or 1 that could be manipulated by a classical computer (via transistors, see @sec-transistors).
 In a similar manner, quantum computation has the "quantum bit" or just _qubit_, for short.  This leads us to the linear algebra of $2\times 2$ matrices, as we will see. Despite the apparent simplicity, we can already see many of the key features of quantum mechanics in this simple system.
 
-## The qubit Hilbert space
+## The Qubit Hilbert space
 
 A qubit will be in two-dimensional complex vector space equipped with an inner product.
 
@@ -237,7 +237,323 @@ H\ket{0} &= \frac{1}{\sqrt{2}}\begin{bmatrix} 1 & 1 \\ 1 & -1 \end{bmatrix}\begi
 $$
 :::
 
+## The Bloch sphere
 
+The qubit itself is more than just a probability of being a 1 or a 0. A crucial bit of _quantum_ information is the relative phase between the two states for instance
+$$
+\ket{\psi} = \tfrac1{\sqrt2}( \ket 0 + e^{i\phi} \ket 1),
+$$
+and since all states are equivalent up to a _total_ phase, we can write the amplitude of each state with a real number. 
+In this case, if we set $\ket{\psi} = x \ket{0} + y e^{i\phi} \ket 1$, then we have $\braket{\psi|\psi} = x^2 + y^2 = 1$ for normalization. This is the equation for a circle, and writing out $x = \cos(\theta/2)$ and $y = \sin(\theta/2)$[^3], we are lead to an angular representation of our state.
+$$
+\ket{\psi} = \cos(\theta/2) \ket{0} + \sin(\theta/2)e^{i\phi} \ket{1}.
+$$ {#eq-bloch-sphere}
+Let's see how this state relates to our Pauli operators. If we calculate the expectation values of each operator:
+
+$$
+\begin{aligned}
+\langle X \rangle &= \bra{\psi}X\ket{\psi} \\
+&= (\cos(\theta/2) \bra{0} + \sin(\theta/2)e^{-i\phi} \bra{1}) 
+   X
+   (\cos(\theta/2) \ket{0} + \sin(\theta/2)e^{i\phi} \ket{1}) \\
+&= (\cos(\theta/2) \bra{0} + \sin(\theta/2)e^{-i\phi} \bra{1}) 
+   (\cos(\theta/2) \ket{1} + \sin(\theta/2)e^{i\phi} \ket{0}) \\
+&= \sin(\theta/2)\cos(\theta/2) e^{i\phi} + \cos(\theta/2)\sin(\theta/2)e^{-i\phi} \\
+&= \sin(\theta/2)\cos(\theta/2) (e^{i\phi} + e^{-i\phi}) \\
+&= 2\sin(\theta/2)\cos(\theta/2) \cos\phi \\
+&= \sin \theta \cos\phi.
+\end{aligned}
+$$
+We can carry out a similar calculation for $Y$ and $Z$ to obtain
+$$
+\begin{aligned}
+\langle X \rangle &= \bra{\psi}X\ket{\psi} = \sin\theta\cos\phi \\
+\langle Y \rangle &= \bra{\psi}Y\ket{\psi} = \sin\theta\sin\phi \\
+\langle Z \rangle &= \bra{\psi}Z\ket{\psi} = \cos\theta
+\end{aligned}
+$$
+
+These expectation values give us coordinates , which are precisely the coordinates of a point on a unit sphere! This is why we call it the Bloch sphere. The angles $\theta$ and $\phi$ are the usual spherical coordinates.
+
+::: {.callout-note}
+## The Bloch Sphere Geometry
+- The north pole ($\theta=0$) corresponds to $\ket{0}$
+- The south pole ($\theta=\pi$) corresponds to $\ket{1}$
+- The equator ($\theta=\pi/2$) contains equal superposition of computational basis states:
+  - $\phi=0$ gives $\ket{+}$ (positive x-axis)
+  - $\phi=\pi$ gives $\ket{-}$ (negative x-axis)
+  - $\phi=\pi/2$ gives $\ket{+i}$ (positive y-axis)
+  - $\phi=3\pi/2$ gives $\ket{-i}$ (negative y-axis)
+:::
+
+::: {#fig-bloch-sphere}
+```{.tikz}
+%%| filename: bloch-sphere
+%%| header-includes: \usetikzlibrary{arrows.meta}
+%%| additionalPackages: \usepackage{braket}
+\begin{tikzpicture}[scale=2]
+    % Draw main circle
+    \draw (0,0) circle (1);
+    
+    % Draw ellipse for perspective
+    \draw[dashed] (0,0) ellipse (1 and 0.4);
+    
+    % Draw axes
+    \draw[-{Latex[length=3mm]}] (-1.0,0) -- (1.0,0) node[below=2.5mm,left=1mm] {$y$};
+    \draw[-{Latex[length=3mm]}] (0,-1.0) -- (0,1.0) node[right=2.5mm,below=1mm] {$z$};
+    \draw[-{Latex[length=3mm]}] (0.7,0.3) -- (-0.7,-0.3) node[right=4mm] {$x$};
+    
+    % Label states
+    % Z basis
+    \node[above] at (0,1) {$\ket{0}$};
+    \node[below] at (0,-1) {$\ket{1}$};
+    
+    % Y basis
+    \node[right] at (1,0) {$\ket{+i}$};
+    \node[left] at (-1,0) {$\ket{-i}$};
+    
+    % X basis
+    \node[right=2mm, above=0.5mm] at (0.6,0.25) {$\ket{-}$};
+    \node[below=2mm] at (-0.6,-0.25) {$\ket{+}$};
+\end{tikzpicture}
+```
+
+The Bloch sphere showing eigenstates of X, Y, and Z Pauli operators
+:::
+
+::: {.callout-note icon="false"}
+## Example: Hadamard Gate on $\ket{0}$
+The Hadamard gate $H$ takes the state $\ket{0}$ (north pole) to $\ket{+}$ (on the equator at $\phi=0$). In terms of the Bloch sphere coordinates, this means:
+
+- Starting point: $\theta=0$ (north pole)
+- Ending point: $\theta=\pi/2$, $\phi=0$ (positive x-axis)
+
+The gate effectively rotates the state by 90° around the y-axis. Similarly, $H\ket{1}$ takes the south pole to $\ket{-}$ on the negative x-axis.
+:::
+
+### General Unitary Rotations
+
+The Hadamard example shows how unitary gates can rotate states on the Bloch sphere. More generally, any single-qubit unitary operation can be thought of as a rotation of the Bloch sphere. Let's see how this works.
+
+A general rotation around a unit vector $\vec{n} = (n_x, n_y, n_z)$ by angle $\theta$ is given by
+$$
+R_{\vec{n}}(\theta) = \cos(\theta/2)I - i\sin(\theta/2)(n_xX + n_yY + n_zZ).
+$$
+
+For example:
+
+- Rotation around z-axis: 
+  $$ R_z(\theta) = e^{-i\theta Z/2} = \begin{bmatrix} e^{-i\theta/2} & 0 \\ 0 & e^{i\theta/2} \end{bmatrix} $$
+- Rotation around x-axis: 
+  $$ R_x(\theta) = e^{-i\theta X/2} = \begin{bmatrix} \cos(\theta/2) & -i\sin(\theta/2) \\ -i\sin(\theta/2) & \cos(\theta/2) \end{bmatrix} $$
+- Rotation around y-axis: 
+  $$R_y(\theta) = e^{-i\theta Y/2} = \begin{bmatrix} \cos(\theta/2) & -\sin(\theta/2) \\ \sin(\theta/2) & \cos(\theta/2) \end{bmatrix}$$
+
+A remarkable fact is that any single-qubit unitary operation can be decomposed into three rotations around two different axes. This is known as the Euler angle decomposition:
+$$
+U = e^{i\alpha}R_z(\phi)R_y(\theta)R_z(\psi)
+$$
+where $\alpha$, $\phi$, $\theta$, and $\psi$ are real numbers. The global phase $e^{i\alpha}$ is often unimportant for quantum computing purposes.
+
+::: {.callout-tip}
+## Visualizing Rotations
+The Euler angle decomposition has a nice geometric interpretation:
+
+1. First rotation ($R_z(\psi)$): Rotate around z-axis
+2. Second rotation ($R_y(\theta)$): Tilt to new latitude
+3. Third rotation ($R_z(\phi)$): Rotate to final longitude
+4. Global phase ($e^{i\alpha}$): Invisible in measurements
+
+This is similar to how we specify points on Earth using latitude and longitude!
+:::
+
+### The Phase Gate
+
+The phase gate (often denoted as $S$) is another important single-qubit gate that adds a phase of $i$ to the $\ket{1}$ state while leaving $\ket{0}$ unchanged:
+
+$$
+S = \begin{bmatrix} 1 & 0 \\ 0 & i \end{bmatrix}
+$$
+
+When acting on basis states:
+$$
+S\ket{0} = \ket{0}, \quad S\ket{1} = i\ket{1}
+$$
+
+The phase gate is equivalent to a $\pi/2$ rotation around the z-axis: $S = R_z(\pi/2)$. On the Bloch sphere, this corresponds to rotating a state by 90° around the z-axis.
+
+::: {.callout-note icon=false}
+## **Example**: Phase Gate on Superposition
+Let's see what happens when we apply $S$ to an equal superposition state:
+
+$$
+\begin{aligned}
+S\ket{+} &= S\left(\frac{1}{\sqrt{2}}(\ket{0} + \ket{1})\right) \\
+&= \frac{1}{\sqrt{2}}(S\ket{0} + S\ket{1}) \\
+&= \frac{1}{\sqrt{2}}(\ket{0} + i\ket{1})
+\end{aligned}
+$$
+
+This transforms $\ket{+}$ into $\ket{+i}$, rotating it from the positive x-axis to the positive y-axis on the Bloch sphere.
+:::
+
+The phase gate is particularly important in quantum error correction and quantum algorithms where controlled phase operations are needed. 
+
+More generically, we can create any $R_z(\phi)$ gate to perform rotations about the $z$-axis (this is very useful for Shor's algorithm). However, a common variant is the $T$ gate, which is simply $R_z(\pi/4)$ and is one of the minimal components needed to achieve universal quantum computation.
+
+::: {.callout-important}
+## Phase gate leaves computational basis states alone
+Note that these gates only change superposition of computational basis states, so $S \ket{0} = \ket{0}$ and $S\ket{1} = i \ket{1}$. (Similarly for any gate made from rotations about the z-axis.)
+:::
+
+## Quantum Circuits
+
+Now that we've covered the key single-qubit operations, we can start to think about how to represent sequences of these operations graphically using quantum circuits. In quantum circuits:
+
+- Qubits are represented as horizontal lines (called "wires", see @fig-single-qubit).
+- Gates are boxes or symbols placed on these wires (see @fig-qubit-XZ-gates and @fig-qubit-HS-gates).
+- Time flows from left to right.
+- Measurements are represented by meters (see @fig-qubit-measure).
+
+Often, unless we are preparing a specific state for an algorithm, we may leave off the states from the ends of the "wire." This wire, @fig-single-qubit, you can think of as the identity.
+
+::: {#fig-single-qubit layout-ncol=3}
+
+```{.tikz}
+%%| filename: qubit-identity-0
+%%| caption: Identity on $\ket{0}$
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}
+\lstick{$\ket{0}$} &&&&& \rstick{$\ket{0}$}
+\end{quantikz}
+```
+
+```{.tikz}
+%%| filename: qubit-identity-1
+%%| caption: Identity on $\ket{1}$
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}
+\lstick{$\ket{1}$} &&&&& \rstick{$\ket{1}$}
+\end{quantikz}
+```
+
+```{.tikz}
+%%| filename: qubit-identity
+%%| caption: Identity on $\ket{\psi}$
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}
+\lstick{$\ket{\psi}$} &&&&& \rstick{$\ket{\psi}$}
+\end{quantikz}
+```
+
+Lines representing the evolution of a qubit (no gates applied)
+::: 
+
+While in quantum state evolution we apply operators right-to-left, the two operations $X \ket{0} = \ket{1}$ and $Z \ket{+} = \ket{-}$ are represented in @fig-qubit-XZ-gates.
+
+::: {.callout-important}
+The Pauli operators are both unitary and Hermitian, so they operator both as good quantum gates (which require unitary as @sec-postulate-unitary stipulates) and as good observables (as @sec-postulate-observable stipulates).
+:::
+
+::: {#fig-qubit-XZ-gates layout-ncol=2}
+
+```{.tikz}
+%%| filename: qubit-X-gate
+%%| caption: Application of the $X$ gate.
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}
+\lstick{$\ket{0}$} && \gate{X} && \rstick{$\ket{1}$}
+\end{quantikz}
+```
+
+```{.tikz}
+%%| filename: qubit-Z-gate
+%%| caption: Application of the $Z$ gate.
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}
+\lstick{$\ket{+}$} && \gate{Z} && \rstick{$\ket{-}$}
+\end{quantikz}
+```
+
+Examples of the Pauli operators as gates.
+::: 
+
+The Hadamard and phase gates can also be mixed in, @fig-qubit-HS-gates, and we can even introduce the meter symbol for measurements, @fig-qubit-measure.
+
+::: {#fig-qubit-HS-gates layout-ncol=2}
+
+```{.tikz}
+%%| filename: qubit-H-gate
+%%| caption: Application of the Hadamard gate 
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}
+\lstick{$\ket{0}$} && \gate{H} && \rstick{$\ket{+}$}
+\end{quantikz}
+```
+
+```{.tikz}
+%%| filename: qubit-S-gate
+%%| caption: Application of the phase gate
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}
+\lstick{$\ket{+}$} && \gate{S} && \rstick{$\ket{+i}$}
+\end{quantikz}
+```
+
+Examples of the Hadamard and phase gates.
+::: 
+
+::: {#fig-qubit-measure layout-ncol=2}
+
+```{.tikz}
+%%| filename: qubit-X-gate-measure
+%%| caption: Will measure 1 with 100% probability
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}
+\lstick{$\ket{0}$} && \gate{X} && \meter{}
+\end{quantikz}
+```
+
+```{.tikz}
+%%| filename: qubit-H-gate-measure
+%%| caption: Will measure 1 with 50% probability
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}
+\lstick{$\ket{0}$} && \gate{H} && \meter{}
+\end{quantikz}
+```
+
+Examples of measurements. The meter is assumed to be measuring in the computational basis unless otherwise noted (i.e., measuring the $Z$ operator).
+::: 
+
+Whenever measurements are performed, we will often transform to the computational basis $\ket{0}$ and $\ket{1}$ to perform a measurement.
+By playing tricks with unitary transformations, we can measure other observables by mixing unitaries and measurements of the computational basis; dependent on the platform, this may or may not be necessary. 
+In terms of diagrams, you should assume meters are measurements in the computational basis unless it is noted otherwise.
+
+
+::: {.callout-note}
+## Reading Quantum Circuits
+Quantum circuits are read from left to right, just like reading text. Each horizontal line represents a qubit's journey through time, and the boxes show what operations happen and when.
+
+The measurement symbol at the end indicates when we extract classical information from our quantum system.
+:::
+
+These diagrams give us a powerful visual language for describing quantum computations. Even complex algorithms can be broken down into sequences of these basic operations.
+
+## Qubits in quantum technology
+
+A large part of the course will consist of finding physical systems where we can identify certain states as $\ket{0}$ and $\ket{1}$, and then proceed to figure out how to perform the gates we need for quantum algorithms. In this way, this course could be called "two-level systems and where to find them."
+
+However, algorithms need these qubits to talk to each other, so we will now proceed to two qubits, and beyond!
 
 <!-- 
 ```{.tikz #fig-single-qubit}
@@ -252,6 +568,7 @@ $$
 
 [^1]: Magic is a technical term in quantum computing, though we're using it in a colloquial sense here, see @BravyiKitaev2005.
 [^2]: In some literature, these are matrices are denoted by $\sigma_{x}$, $\sigma_y$, and $\sigma_z$ and related to spin operators via $S_i =\frac12 \sigma_i$. This insight can help bridge the idea of these operators and the Bloch sphere.
+[^3]: The divide-by-two for the angles will become clear as we go through this section.
 
 <!-- $$
 \ket{1}

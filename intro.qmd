@@ -41,7 +41,7 @@ The recent announcement of Google's Willow chip @GoogleQuantumAIandCollaborators
 In Ref. @NielsenChuang2011 there are a few quotes about early computing
 
 > _"Computers in the future may weigh no more than 1.5 tons."_
-> –Popular Mechanics, forecasting the relentless marcho f science, 1949
+> –Popular Mechanics, forecasting the relentless march of science, 1949
 
 > _"I think there is a world market for maybe five computers."_
 > –Thomas Watson, chairman of IBM, 1943
