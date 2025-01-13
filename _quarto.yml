@@ -28,6 +28,17 @@ format:
     theme: 
       light: flatly
       dark: darkly
+    include-in-header:
+      text: |
+        <script>
+        window.MathJax = {
+          tex: {
+            macros: {
+              tr: "\\operatorname{tr}"
+            }
+          }
+        };
+        </script>
   pdf:
     documentclass: scrreprt
     pdf-engine: lualatex
@@ -36,6 +47,7 @@ format:
     include-in-header: 
       text: |
         \usepackage{braket}
+        \DeclareMathOperator{\tr}{tr}
 
 
 tikz:

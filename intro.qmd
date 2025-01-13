@@ -6,6 +6,11 @@ This breakthrough marked a turning point in quantum computing, igniting increase
 Building on this success, in December 2024, Google announced their new Willow chip @GoogleQuantumAIandCollaboratorsZobrist2024, representing their latest advancement in quantum hardware.
 Today, numerous companies and research institutions worldwide are racing to develop quantum hardware, each pursuing different technological approaches to challenge the computational limits of classical computers.
 
+::: {.callout-note}
+## What is Quantum Advantage?
+Quantum advantage (or quantum supremacy) refers to the demonstration that a quantum computer can solve a specific problem significantly faster than the best known classical algorithm. However, the problem doesn't necessarily need to be useful--it just needs to be well-defined and verifiable.
+:::
+
 This text aims to give undergraduate students a comprehensive introduction to quantum technology and computation. 
 We will begin by exploring the fundamental mathematical framework that underlies quantum computing, building from basic principles to more advanced concepts.
 Crucially, we will see what specific things a quantum computer can achieve that a classical computer would struggle with.
@@ -62,7 +67,10 @@ It requires something more nonlinear: A switch that only allows current flow whe
 
 With these building blocks, logical gates can be created, but *how* to build these? Which device can be made small and in abundance? And what challenges were encountered on the way. 
 
-Keep in mind that the iPhone has within it 19 _billion_ transistors (with the A17 pro).
+::: {.callout-tip}
+## Scale of Modern Computing in your pocket
+The iPhone A17 Pro chip's 19 billion transistors would cover an area of about 1 square centimeter. If each transistor were the size of a grain of rice, they would cover an area larger than 75 football fields! This incredible miniaturization is what enables modern computing.
+::: 
 
 It was recognized early on that semiconductors provided an ideal platform for these kinds of circuits, and much work was done to try and create the above "field effect transistors." Schematically, these take the form:
 
@@ -120,9 +128,26 @@ For quantum computing, we are in a similar situation:
 
 However, as we will see in what follows, we have significant engineering challenges to achieve these in practice. While we will be largely concerned with the physics that make #2 possible in this course (and we'll touch on #1 for the first part of the course), we will pay attention to the strengths and weaknesses in the physics that lead to more pressing engineering challenges.
 
+::: {.callout-note}
+## Historical Parallel
+Just as the theory of classical computation @Turing1937 preceded practical computers by decades, we now have the theory of quantum computation @NielsenChuang2011 but face significant engineering challenges. The key difference is that we're trying to control individual quantum systems rather than classical electrical currents.
+:::
+
 ## Review of the Postulates of Quantum Mechanics
 
 Quantum mechanics is built out of some basic postulates which are crucial to understand for quantum computation. When we talk about a "system" in these postulates, we will be thinking of two-level systems which we can label 0 or 1 (for our qubit). However, we will state them generally since many applications require some basic work to reduce the complicated system down to just the qubits we are interested in.
+
+::: {.callout-important}
+## Mathematical Notation Guide
+Throughout this text, we'll use:
+
+- $\ket{\psi}$ ("ket psi"): Represents a quantum state
+- $\bra{\phi}$ ("bra phi"): The dual vector to $\ket{\phi}$
+- $\braket{\phi|\psi}$: The inner product between states
+- $\otimes$: The tensor product operation
+
+These notations provide a compact way to describe quantum systems.
+:::
 
 ### Postulate I: The Hilbert space
 
@@ -170,6 +195,60 @@ $$1 = \braket{\psi_0|\psi_0} = \braket{\psi_0|U^\dagger U| \psi_0} = \braket{\ps
 
 In the case of time-independent _Hamiltonian dynamics,_ the operator takes the form $U = e^{-i H t/\hbar}$ for a hermitian energy operator $H$ called the _Hamiltonian_.
 
+## A Brief History of Computing: From Classical to Quantum
+
+The concept that information is physical underlies both classical and quantum computation. Even in the earliest systems of record-keeping, we see physical objects encoding information:
+
+-	Kish Tablet (3500 BCE): A limestone tablet from Kish showing a record of pictographic writing.
+-	Quipu (2600–1900 BCE): A system of knotted ropes used by the Inca civilization for keeping records. The color, order, and number of knots all represented quantifiable or categorical data.
+
+These examples highlight that from the very beginning, the act of storing and manipulating information has always had a physical basis—though the underlying physics often remained implicit for centuries.
+
+### Classical Computing Foundations
+
+The paradigm of classical computing rests on a few fundamental ideas:
+
+-	**Boolean Logic & Universal Gates**: All classical computers can be built from a finite set of universal logical gates (e.g., \{NAND\}, \{NOR\}, or \{AND, NOT\}). 
+
+Most Boolean operations (AND, OR, NAND, etc.) are inherently irreversible: once a bit is erased or overwritten, the original state cannot be recovered from the output alone.
+
+-	**Extended (Physical) Church–Turing Thesis**: A probabilistic Turing machine can efficiently simulate any realistic physical model of computation with at most polynomial overhead. 
+
+This thesis, while unproven, underpins the expectation that classical computers (or at least classical models) are sufficient for simulating any physical system in principle.
+Quantum computation potentially challenges this with a polynomial in time algorithm (Shor's algorithm) that is exponential in time classically.
+
+### The Emergence of Quantum Information
+
+While classical computing relies on bits that are strictly 0 or 1, quantum computing introduces powerful new concepts:
+
+- **Superposition**: A quantum bit (qubit) can be in a linear combination of basis states (e.g., simultaneously “0” and “1” with certain complex amplitudes).
+- **Entanglement**: Two or more qubits can become correlated in such a way that measuring one affects the outcomes for the others, even across vast distances.
+
+The key question that launched the field of quantum information was whether these uniquely quantum properties—superposition and entanglement—could be exploited to perform computations more efficiently than any classical device.
+
+In his seminal work, Simulating Physics with Computers @Feynman1982, Richard Feynman observed that simulating quantum many-body systems on classical computers seems to require exponential resources. He posed the idea of harnessing genuine quantum systems themselves for simulation, planting the seeds for quantum computation as a research field.
+
+Then, in a series of groundbreaking results between the 1980s and 1990s, researchers demonstrated that quantum computers could, in principle, outperform classical computers for certain tasks:
+
+1.	Deutsch (1985) @Deutsch1985: Showed that it is possible to carry out a simple computational task on a quantum computer faster than any classical algorithm.
+2.	Deutsch–Jozsa (1992) @DeutschJozsa1992: Introduced a deterministic quantum algorithm that is exponentially faster (in the worst case) than any deterministic classical algorithm.
+3.	Bernstein–Vazirani (1992) @BernsteinVazirani1997: Demonstrated a probabilistic quantum algorithm faster than any probabilistic classical algorithm.
+4.	Simon (1994) @Simon1997: Provided a probabilistic quantum algorithm that is exponentially faster than any probabilistic classical algorithm for a specific promise problem.
+5.	Shor (1994) @Shor1994: Showed how to factor integers efficiently, providing an exponential speedup over the best known classical methods. This result was particularly striking for cryptography, as factoring large numbers underpins many encryption schemes.
+
+Alongside these algorithmic milestones, researchers began to delineate the limitations: not every problem can be exponentially sped up by quantum methods. For instance, Grover’s algorithm (1996) @Grover1996 for unstructured search yields a quadratic speedup (from $N$ to $\sqrt{N}$)—still better than classical, but not the exponential leap that Shor’s algorithm provides for factoring.
+
+### Analog vs. Digital Quantum Simulation
+
+As the field grew, quantum simulation branched into two approaches:
+
+- Analog Quantum Simulation: Uses a controllable quantum system to mimic a target quantum system. The interactions in the simulator closely resemble the interactions in the system of interest.
+- Digital Quantum Simulation: Decomposes a quantum evolution into a sequence of discrete gates (a “universal” set of quantum gates), akin to how classical digital computers function using logical gate operations.
+
+Both approaches aim to exploit quantum mechanics to tackle problems in mathematics, physics, chemistry, and materials science that remain intractable for classical supercomputers.
+
+Amid ongoing research, the interplay between classical and quantum paradigms remains a vibrant area of exploration. While classical computing infrastructure continues to be indispensable, quantum computing offers the promise of qualitatively new capabilities—provided we can tame the noise, errors, and fragilities inherent to quantum states.
+
 ## Quantum Technologies
 
 One major difference between the hindsight-history we have for classical computation and the current state of quantum computers is that are many platforms vying to enable quantum computation. There are arguments for and against each platform, and even arguments for using a combination of platforms. Here we give a list of some of the technologies and highlight the ones we will be surveying in this course.
@@ -193,6 +272,11 @@ One major difference between the hindsight-history we have for classical computa
 **A platform we will cover if time permits**
 
 - **Topological qubits**: A theoretical approach that would use special quantum states of matter to create error-protected qubits. Still in early research stages but could offer significant advantages if realized.
+
+::: {.callout-warning}
+## Current State of Quantum Computing
+As of 2024, the largest quantum computers have around 50-100 physical qubits optimistically, but these are noisy and require error correction. For comparison, your smartphone has billions of classical bits. This highlights the early stage of quantum computing development and the engineering challenges ahead.
+:::
 
 Each platform has its own advantages and challenges in terms of scalability, error rates, coherence times, and manufacturing complexity. The field is still evolving, and it's possible that different platforms may be optimal for different applications.
 

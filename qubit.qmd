@@ -33,6 +33,14 @@ $$
 $$
 In matrix notation, this is just the dot product of a vector with its complex conjugate.
 
+::: {.callout-note}
+## Why Normalization Matters
+The normalization condition $|\alpha|^2 + |\beta|^2 = 1$ isn't just mathematical convenience - it ensures probabilities add up to 100%! For example:
+
+- $\ket{\psi} = \frac{1}{\sqrt{2}}(\ket{0} + \ket{1})$ gives 50-50 chance of measuring 0 or 1
+- $\ket{\psi} = \frac{\sqrt{3}}{2}\ket{0} + \frac{1}{2}\ket{1}$ gives 75% chance of 0 and 25% chance of 1
+:::
+
 We can also write operators that act on these states. The simplest operator is the Pauli $Z$ operator, which in matrix form is
 $$
 Z = \begin{bmatrix} 1 & 0 \\ 0 & -1 \end{bmatrix}.
@@ -43,6 +51,29 @@ Z\ket{0} = \ket{0}, \quad Z\ket{1} = -\ket{1}.
 $$
 This means that $\ket{0}$ and $\ket{1}$ are _eigenstates_ of $Z$ with eigenvalues $+1$ and $-1$ respectively. For a general state $\ket{\psi}$, measuring $Z$ will yield either $+1$ or $-1$, with probabilities determined by $|\alpha|^2$ and $|\beta|^2$ respectively.
 
+::: {.callout-note icon=false}
+## **Example**: Measuring a superposition state
+
+Consider the state $\ket{\psi} = \frac35\ket{0} + \frac45\ket{1}$. When we measure this state in the $Z$ basis:
+
+Notice that this state is normalized since $(\frac{3}{5})^2 + (\frac{4}{5})^2 = 1$. If we measure this state in the computational basis:
+
+- We'll get outcome $\ket{0}$ with probability $|\frac{3}{5}|^2 = 0.36$ (36%)
+- We'll get outcome $\ket{1}$ with probability $|\frac{4}{5}|^2 = 0.64$ (64%)
+
+After measurement, the state will collapse to either $\ket{0}$ or $\ket{1}$ with the above probabilities
+:::
+
+::: {.callout-warning}
+## Measurement Collapse in Practice
+When we say a quantum state "collapses" upon measurement, what actually happens in the lab?
+
+- For a superconducting qubit: We measure a voltage or current
+- For an ion trap: We detect scattered photons
+- For a photonic qubit: We count photons with a detector
+
+Each technology has its own way of converting quantum information into classical signals!
+:::
 ### Qubit operators
 
 Since this is linear algebra, we can write a general operator $\mathcal O$ as a matrix
@@ -102,14 +133,26 @@ This gives us several conditions:
 
 This immediately gives us some insight into these operators. If we define,
 $$
-\ket{\psi_1} = \begin{bmatrix} a \\ b \end{bmatrix}, \quad \ket{\psi_2} = \begin{bmatrix} c \\ d \end{bmatrix},
+\ket{\psi_1} = \begin{bmatrix} a \\ c \end{bmatrix}, \quad \ket{\psi_2} = \begin{bmatrix} b \\ d \end{bmatrix},
 $$
 then we have $\braket{\psi_1|\psi_1} = 1 = \braket{\psi_2|\psi_2}$ and $\braket{\psi_1|\psi_2} = 0$.
 
-An important property of unitary operators is that their eigenvalues always have magnitude 1, meaning they can be written as $e^{i\theta}$ for some real $\theta$. This makes them natural operators for describing quantum evolution, as we will see later.
+An important property of unitary operators is that their eigenvalues always have magnitude 1, meaning they can be written as $e^{i\theta}$ for some real $\theta$. This makes them natural operators for describing quantum evolution.
 
+::: {.callout-note}
+## Why Unitary?
+Unitary operators are special because they:
 
-A particularly important set of operators are the Pauli operators. We've already seen the Pauli $Z$ operator. The other two are
+1. Preserve the normalization of quantum states
+2. Are reversible (have an inverse)
+3. Represent physical operations that conserve probability
+
+This is why quantum gates must be unitary - they represent real physical processes that can be undone!
+:::
+
+### The Pauli operators
+
+A particularly important set of operators are the Pauli operators. We've already seen the Pauli $Z$ operator. The other two are[^2]
 $$
 X = \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}, \quad Y = \begin{bmatrix} 0 & -i \\ i & 0 \end{bmatrix}.
 $$
@@ -117,12 +160,83 @@ These operators satisfy some important algebraic relations:
 $$
 X^2 = Y^2 = Z^2 = I, \quad XY = iZ, \quad YZ = iX, \quad ZX = iY.
 $$
+We can additionally start to see some logical operations begin to appear; $X$ operates on the computational basis as a **NOT** gate
+$$
+X \ket{0} = \ket{1}, \quad X \ket{1} = \ket{0}.
+$$
 
-These operators form a complete basis for $2\times 2$ matrices, meaning we can write any operator as
+::: {.callout-tip}
+## Pauli Operators in Action
+The Pauli operators represent quantum operations:
+
+- $X$ is like the classical NOT gate: flips between $\ket{0}$ and $\ket{1}$
+- $Z$ adds a phase: leaves $\ket{0}$ alone but negates $\ket{1}$
+- $Y = iXZ$ combines both operations.
+   
+These simple operations are building blocks for more complex quantum algorithms!
+:::
+
+::: {.callout-note icon="false"}
+## **Example**: Applying operators
+Let's apply the X (NOT) gate to our state $\ket{\psi} = (\tfrac{3}{5}\ket{0} + \tfrac{4}{5}\ket{1})$:
+$$
+\begin{aligned}
+X\ket{\psi} &= X(\tfrac{3}{5}\ket{0} + \tfrac{4}{5}\ket{1}) \\
+&= \tfrac{3}{5}X\ket{0} + \tfrac{4}{5}X\ket{1} \\
+&= \tfrac{3}{5}\ket{1} + \tfrac{4}{5}\ket{0} \\
+&= \tfrac{4}{5}\ket{0} + \tfrac{3}{5}\ket{1}
+\end{aligned}
+$$
+:::
+
+The full set of Pauli operators, along with the identity, form a complete basis for $2\times 2$ matrices, meaning we can write any operator as
 $$
 \mathcal O = aI + bX + cY + dZ,
 $$
-where $a$, $b$, $c$, and $d$ are complex numbers (though they must satisfy certain conditions if we want $\mathcal O$ to be Hermitian).
+where $a$, $b$, $c$, and $d$ are complex numbers. We can extract each of these numbers, mathematically, with a trace operation
+$$
+\tr \mathcal O = 2a, \quad \tr \mathcal O X = 2b, \quad \tr \mathcal O Y = 2c, \quad \tr \mathcal O Z = 2d.
+$$
+Note that separately, $X$, $Y$, and $Z$ are Hermitian (and thus, observables). If $\mathcal O$ is an observable, then $\mathcal O = \mathcal O^\dagger$ immediately leads us to $a$, $b$, $c$, and $d$ being all real.
+
+We can put constraints on these coefficients for unitary operators as well, and we leave this as an exercise for the reader.
+
+Finally, these operators have eigenstates as well, and we can define them as $X\ket{\pm} = \pm \ket{\pm}$ and $Y\ket{\pm i} = \pm \ket{\pm i}$, and they have the forms
+$$
+\begin{aligned}
+    \ket{\pm} & = \tfrac1{\sqrt2}(\ket 0 \pm \ket 1), \\
+    \ket{\pm i} & = \tfrac1{\sqrt2}(\ket 0 \pm i \ket 1).
+\end{aligned}
+$$
+
+We will often want to change our basis from $\ket{0}$ and $\ket{1}$ to $\ket{+}$ and $\ket{-}$. This is accomplished with something called the _Hadamard gate_ (we'll call it $H$, not to be confused with a Hamiltonian) and it is created specifically to change from computational basis to the $X$ basis: $H \ket{0} = \ket{+}$ and $H \ket{1} = \ket{-}$. As a matrix it takes the form
+$$
+H = \frac1{\sqrt{2}}\begin{bmatrix} 1 & 1 \\ 1 & -1 \end{bmatrix}.
+$$
+
+::: {.callout-important}
+## The Power of Hadamard
+The Hadamard gate is one of the most important gates in quantum computing with useful properties:
+
+1. It creates equal superpositions from computational basis states.
+2. It's its own inverse ($H^2 = I$)
+3. It's used in nearly every quantum algorithm
+4. When applied to $n$ qubits, it creates a superposition of all $2^n$ possible bit strings!
+:::
+
+::: {.callout-note icon="false"}
+## **Example 3**: The Hadamard Transform
+The Hadamard gate is particularly important because it creates superposition states. Let's see what happens when we apply it to $\ket{0}$:
+$$
+\begin{aligned}
+H\ket{0} &= \frac{1}{\sqrt{2}}\begin{bmatrix} 1 & 1 \\ 1 & -1 \end{bmatrix}\begin{bmatrix} 1 \\ 0 \end{bmatrix} \\
+&= \frac{1}{\sqrt{2}}\begin{bmatrix} 1 \\ 1 \end{bmatrix} \\
+&= \frac{1}{\sqrt{2}}(\ket{0} + \ket{1}) \\
+&= \ket{+}
+\end{aligned}
+$$
+:::
+
 
 
 <!-- 
@@ -137,6 +251,7 @@ where $a$, $b$, $c$, and $d$ are complex numbers (though they must satisfy certa
 ``` -->
 
 [^1]: Magic is a technical term in quantum computing, though we're using it in a colloquial sense here, see @BravyiKitaev2005.
+[^2]: In some literature, these are matrices are denoted by $\sigma_{x}$, $\sigma_y$, and $\sigma_z$ and related to spin operators via $S_i =\frac12 \sigma_i$. This insight can help bridge the idea of these operators and the Bloch sphere.
 
 <!-- $$
 \ket{1}
