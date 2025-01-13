@@ -51,6 +51,7 @@ format:
   #       \usepackage{braket}
   #       \DeclareMathOperator{\tr}{tr}
   #       \usetikzlibrary{quantikz2}
+  #       \usetikzlibrary{arrows.meta}
 
 
 tikz:

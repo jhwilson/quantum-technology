@@ -3,6 +3,15 @@
 The fundamental building block of the classical computer was the bit: A 0 or 1 that could be manipulated by a classical computer (via transistors, see @sec-transistors).
 In a similar manner, quantum computation has the "quantum bit" or just _qubit_, for short.  This leads us to the linear algebra of $2\times 2$ matrices, as we will see. Despite the apparent simplicity, we can already see many of the key features of quantum mechanics in this simple system.
 
+::: {.callout-warning}
+## Common Qubit Misconceptions
+- A qubit is not just a probabilistic classical bit.
+- You cannot directly access of the amplitudes of $\ket{0}$ and $\ket{1}$ through a single measurement.
+- Superposition states collapse upon measurement.
+- No-cloning theorem @WoottersZurek1982 means you cannot perfectly copy an unknown quantum state.
+- Entanglement is not the same as classical correlation (see next chapter).
+:::
+
 ## The Qubit Hilbert space
 
 A qubit will be in two-dimensional complex vector space equipped with an inner product.
@@ -237,7 +246,7 @@ H\ket{0} &= \frac{1}{\sqrt{2}}\begin{bmatrix} 1 & 1 \\ 1 & -1 \end{bmatrix}\begi
 $$
 :::
 
-## The Bloch sphere
+## The Bloch sphere {#sec-bloch-sphere}
 
 The qubit itself is more than just a probability of being a 1 or a 0. A crucial bit of _quantum_ information is the relative phase between the two states for instance
 $$
@@ -455,7 +464,7 @@ Lines representing the evolution of a qubit (no gates applied)
 While in quantum state evolution we apply operators right-to-left, the two operations $X \ket{0} = \ket{1}$ and $Z \ket{+} = \ket{-}$ are represented in @fig-qubit-XZ-gates.
 
 ::: {.callout-important}
-The Pauli operators are both unitary and Hermitian, so they operator both as good quantum gates (which require unitary as @sec-postulate-unitary stipulates) and as good observables (as @sec-postulate-observable stipulates).
+The Pauli operators are both unitary and Hermitian, so they perform as quantum gates (which require unitary as @sec-postulate-unitary stipulates) and as observables (as @sec-postulate-observable stipulates).
 :::
 
 ::: {#fig-qubit-XZ-gates layout-ncol=2}
@@ -549,12 +558,386 @@ The measurement symbol at the end indicates when we extract classical informatio
 
 These diagrams give us a powerful visual language for describing quantum computations. Even complex algorithms can be broken down into sequences of these basic operations.
 
-## Qubits in quantum technology
+::: {.callout-note icon=false}
+## **Example**: Gate Sequences
+Consider applying $H$ then $Z$ then $H$ to $\ket{0}$:
 
-A large part of the course will consist of finding physical systems where we can identify certain states as $\ket{0}$ and $\ket{1}$, and then proceed to figure out how to perform the gates we need for quantum algorithms. In this way, this course could be called "two-level systems and where to find them."
+```{.tikz}
+%%| filename: qubit-HZH-gate-measure
+%%| caption: Implementing an $X$ gate with $Z$ and $H$.
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}
+\lstick{$\ket{0}$} & \gate{H} & \gate{Z} & \gate{H} & 
+\end{quantikz}
+```
 
-However, algorithms need these qubits to talk to each other, so we will now proceed to two qubits, and beyond!
 
+1. $H\ket{0} = \ket{+}$ (move to +x axis)
+2. $Z\ket{+} = \frac{1}{\sqrt{2}}(\ket{0} - \ket{1})$ (rotate around z by 90°)
+3. $H(\frac{1}{\sqrt{2}}(\ket{0} - \ket{1})) = \ket{1}$ (move to -z axis)
+
+This sequence effectively implements the $X$ gate!
+:::
+
+## Noise and decoherence
+
+A large part of the course will consist of finding physical systems where we can identify certain states as $\ket{0}$ and $\ket{1}$, and then proceed to figure out how to perform the gates we need for quantum algorithms. In this way, this course could be called "two-level systems and where to find them." However, these states are not pristine and so we need a way to talk about states that subject to noisy environments and loss of information.
+
+In fact, environmental interactions can cause, amongst other issues:
+
+- Loss of phase information (dephasing)
+- Loss of energy (amplitude damping)
+- Random bit flips
+
+To properly describe these noise processes, we need to move beyond pure state descriptions and introduce the density matrix formalism.
+
+### The Density Matrix
+
+For a pure quantum state $\ket{\psi}$, the density matrix is defined as
+$$
+\rho = \ket{\psi}\bra{\psi}
+$$
+For example, the computational basis states have density matrices:
+$$
+\ket{0}\bra{0} = \begin{bmatrix} 1 & 0 \\ 0 & 0 \end{bmatrix}, \quad
+\ket{1}\bra{1} = \begin{bmatrix} 0 & 0 \\ 0 & 1 \end{bmatrix}
+$$
+
+The density matrix also provides a convenient way to calculate expectation values of observables. For any observable $A$, the expectation value is given by:
+$$
+\langle A \rangle = \tr(A\rho)
+$$
+For a pure state $\ket{\psi}$, this reduces to our familiar expression:
+$$
+\tr(A\ket{\psi}\bra{\psi}) = \bra{\psi}A\ket{\psi}
+$$
+
+::: {.callout-note icon=false}
+## **Example**: Measuring $Z$ with the Density Matrix
+Consider measuring $Z$ for the state $\ket{+} = \frac{1}{\sqrt{2}}(\ket{0} + \ket{1})$:
+
+The density matrix is:
+$$
+\rho_+ = \frac{1}{2}\begin{bmatrix} 1 & 1 \\ 1 & 1 \end{bmatrix}
+$$
+
+Using the formula for expecation values with $Z = \begin{bmatrix} 1 & 0 \\ 0 & -1 \end{bmatrix}$:
+$$
+\langle Z \rangle = \tr(Z\rho_+) = \tr\left(\frac{1}{2}\begin{bmatrix} 1 & 0 \\ 0 & -1 \end{bmatrix}\begin{bmatrix} 1 & 1 \\ 1 & 1 \end{bmatrix}\right) = 0
+$$
+
+This matches what we expect: $\ket{+}$ has equal probability of measuring $\pm 1$ for $Z$.
+:::
+
+
+The real power of density matrices comes from describing _mixed states_, which are statistical mixtures of pure states:
+$$
+\rho = \sum_i p_i \ket{\psi_i}\bra{\psi_i}
+$$
+where $p_i$ are classical probabilities ($p_i \geq 0$, $\sum_i p_i = 1$).
+
+::: {.callout-note}
+## Properties of Density Matrices
+
+Any valid density matrix must satisfy:
+
+1. Hermiticity: $\rho = \rho^\dagger$
+2. Positive semidefinite: $\bra{\phi}\rho\ket{\phi} \geq 0$ for all $\ket{\phi}$
+3. Unit trace: $\tr(\rho) = 1$
+4. For pure states: $\tr(\rho^2) = 1$
+5. For mixed states: $\tr(\rho^2) < 1$
+:::
+
+#### Quantum Operations with Density Matrices {.unnumbered}
+
+Just as we can evolve pure states with unitary operators, we can evolve density matrices. For a unitary operation $U$, the density matrix transforms as:
+$$
+\rho \rightarrow U\rho U^\dagger
+$$
+This preserves all the properties of the density matrix we discussed above.
+
+When we make a measurement, we use projection operators $\{P_m\}$ (like $\ket{0}\bra{0}$ and $\ket{1}\bra{1}$ for measuring in the computational basis). The probability of getting outcome $m$ is:
+$$
+p(m) = \tr(P_m \rho)
+$$
+After measuring and getting outcome $m$, the state "collapses" to:
+$$
+\rho_m = \frac{P_m \rho P_m}{\tr(P_m \rho)}
+$$
+where the denominator ensures the trace remains 1.
+
+::: {.callout-note}
+## Quantum Channels
+
+The density matrix formalism really shines when describing general quantum evolution, including noise. Any physical process (unitary or not) can be described by a quantum channel $\mathcal{E}$:
+$$
+\rho \rightarrow \mathcal{E}(\rho) = \sum_k E_k \rho E_k^\dagger
+$$
+The operators $E_k$ (called Kraus operators) satisfy $\sum_k E_k^\dagger E_k = I$ to preserve probability. This includes both ideal unitary evolution (one $E_k = U$) and noise processes (multiple $E_k$), as we'll see in the next section.
+:::
+
+#### Density Matrices and the Bloch Sphere {.unnumbered}
+
+The density matrix formalism provides a beautiful geometric picture when combined with the Bloch sphere representation in @sec-bloch-sphere. While pure states live on the surface of the Bloch sphere, mixed states live _inside_ it. Any density matrix for a single qubit can be written as:
+$$
+\rho = \frac{1}{2}(I + \vec{r}\cdot\vec{\sigma})
+$$
+where $\vec{r} = (r_x, r_y, r_z)$ is called the Bloch vector and $\vec{\sigma} = (X,Y,Z)$ are the Pauli matrices.
+
+The length of $\vec{r}$ determines how mixed the state is:
+
+- For pure states, $|\vec{r}| = 1$ (surface of sphere)
+- For mixed states, $|\vec{r}| < 1$ (inside sphere)
+- For the maximally mixed state, $\vec{r} = 0$ (center of sphere)
+
+This gives us an intuitive picture of decoherence: noise processes like dephasing and bit flips move the Bloch vector inward from the surface, representing the loss of quantum information. The maximally mixed state at the center represents complete loss of information--equal probabilities for all measurement outcomes.
+
+::: {.callout-note}
+## Connection to Purity
+The length of the Bloch vector is directly related to the purity $\tr(\rho^2)$ we discussed earlier:
+$$
+\tr(\rho^2) = \frac{1 + |\vec{r}|^2}{2}
+$$
+This confirms that pure states ($|\vec{r}| = 1$) have purity 1, while mixed states have purity less than 1.
+:::
+
+
+
+### Modeling Noise
+
+A full discussion of different quantum channels can be found in @Wilde2017. Here, we discuss some of the ones relevant for loss of quantum information.
+
+The language of density matrices allows us to describe some of the errors that can occur in a precise manner
+
+#### Random bit-flips {.unnumbered}
+
+If there is probability $p$ that a bit is flipped, we can encode this within a change of the density matrix:
+$$
+\rho \rightarrow (1-p)\rho + p X\rho X,
+$$
+where the first term describes the probability that the density matrix remains unchanged and the second describe the process of randomly flipping a bit.
+
+#### Dephasing {.unnumbered}
+
+As we've already mentioned the phase between $\ket{0}$ and $\ket{1}$ is useful information that we will take advantage of.
+However, some physical processes can scramble this phase in a way that could be inherently difficult to parse, in that case we can describe these processes with "dephasing"
+$$
+\rho \rightarrow (1-p)\rho + p Z \rho Z.
+$$
+This process has a clear action on $\rho$ when $p=1/2$. To illustrate this, consider $\ket{\psi} = \alpha \ket{0} + \beta \ket{1}$, this has a probability of measuring $0$ of $|\alpha|^2$ and a probabilty of measuring $1$ of $|\beta|^2$, but there is also phase information between $\alpha$ and $\beta$ that tells us where on the Bloch sphere the state is located. Dephasing will eliminate this phase information.
+
+To see this, the full density matrix before we apply dephasing is
+$$
+\rho = \begin{bmatrix} |\alpha|^2 & \alpha\beta^* \\ \alpha^*\beta & |\beta|^2 \end{bmatrix},
+$$
+and after dephasing we will have the density matrix
+$$
+\frac12 \rho + \frac12 Z \rho Z = \begin{bmatrix} |\alpha|^2 & 0 \\ 0 & |\beta|^2 \end{bmatrix}.
+$$
+The off-diagonal components carried the relative phase information and it is now entirely lost, leaving us with a classical mixture of $\ket{0}$ and $\ket{1}$
+
+
+::: {.callout-important}
+## Measurement as Dephasing
+
+This process of losing phase information is exactly what happens when we measure a quantum state in a particular basis! When we measure in the computational basis ($\{\ket{0}, \ket{1}\}$), we are effectively performing complete dephasing - we destroy all phase information between the basis states and are left with only the classical probabilities. This is why measurement is often described as "collapsing" the quantum state into classical information.
+
+This connection between measurement and dephasing illustrates a fundamental aspect of quantum mechanics: the act of gaining classical information about a quantum system necessarily destroys some of its quantum properties, as formalized in the measurement postulates we discussed earlier.
+:::
+
+::: {.callout-note icon=false}
+## **Example**: Dephasing of a Superposition State
+Consider the state $\ket{+} = \frac{1}{\sqrt{2}}(\ket{0} + \ket{1})$ under dephasing:
+
+Initial density matrix:
+$$
+\rho_0 = \frac{1}{2}\begin{bmatrix} 1 & 1 \\ 1 & 1 \end{bmatrix}
+$$
+
+After dephasing with probability $p$:
+$$
+\rho(p) = \frac{1}{2}\begin{bmatrix} 1 & (1-2p) \\ (1-2p) & 1 \end{bmatrix}
+$$
+
+Complete dephasing ($p=\frac{1}{2}$) yields the maximally mixed state:
+$$
+\rho(\tfrac{1}{2}) = \frac{1}{2}\begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}
+$$
+:::
+
+#### Depolarizing {.unnumbered}
+
+The depolarizing channel represents one of the most severe forms of noise in quantum systems, often considered the "worst-case scenario" for quantum information. This channel transforms any input state into a mixture of itself and the maximally mixed state:
+$$
+\rho \rightarrow (1-p)\rho + p \frac{I}{2},
+$$
+where $p$ represents the probability of depolarization. When $p=1$, the state becomes completely mixed regardless of the input:
+$$
+\rho \rightarrow \frac{1}{2}I.
+$$
+
+Note that this has eliminated any information about $\ket{\psi}$!
+
+
+::: {.callout-note icon=false}
+## **Example**: The Pauli Twirl
+An interesting way to understand the depolarizing channel is through what's called the "Pauli twirl". The depolarizing channel can be written as a random application of Pauli operators:
+$$
+\rho \rightarrow (1-p)\rho + \frac{p}{3}(X\rho X + Y\rho Y + Z\rho Z).
+$$
+
+This means we can implement depolarizing noise by randomly applying X, Y, or Z gates with probability $p/3$ each. This is particularly useful in quantum error correction, where we often want to simulate noise in a way that's easy to analyze.
+:::
+
+#### Amplitude Damping {.unnumbered}
+
+In many physical systems, one can lose information by having emission of energy. Physically, this could be an atom in some energy level and it emits a photon, falling to a lower energy level. One can imagine a process like this occuring with an operator 
+$$
+E_0 = \sqrt{\gamma} \ket{0} \bra{1},
+$$
+which describes the process of taking an occupied state $\ket{1}$ and transforming it to $\ket{0}$ with probability $\gamma$. To fully encode this into a change in the density matrix, we need one other operator: the chance that nothing happens. A natural guess would be
+$$
+E_1 = \ket{0}\bra{0} + \sqrt{1-\gamma} \ket{1}\bra{1},
+$$
+which describes that there is unit probability of remaining $\ket{0}$ and probaiblity $1-\gamma$ of remaining in $\ket{1}$ if you start there.
+
+The full operation on the density matrix is then
+$$
+\rho \rightarrow E_1 \rho E_1^\dagger + E_0 \rho E_0^\dagger
+$$
+
+
+::: {.callout-note icon=false}
+## **Example**: Amplitude Damping in Action
+Let's see how amplitude damping affects a simple superposition state. Consider the initial state
+$$
+\ket{\psi} = \frac{1}{\sqrt{2}}(\ket{0} + \ket{1}),
+$$
+which has density matrix
+$$
+\rho = \frac{1}{2}\begin{bmatrix} 1 & 1 \\ 1 & 1 \end{bmatrix}.
+$$
+
+After applying amplitude damping with probability $\gamma$, the state becomes
+$$
+\begin{aligned}
+\rho' &= E_1 \rho E_1^\dagger + E_0 \rho E_0^\dagger \\
+&= \frac{1}{2}\begin{bmatrix} 1+\gamma & \sqrt{1-\gamma} \\ \sqrt{1-\gamma} & 1-\gamma \end{bmatrix}.
+\end{aligned}
+$$
+
+We can see that:
+
+- The probability of being in $\ket{1}$ decreases by $\gamma$
+- The probability of being in $\ket{0}$ increases by $\gamma$
+- The off-diagonal coherence terms decay by $\sqrt{1-\gamma}$
+
+When $\gamma = 1$ (complete damping), the state becomes
+$$
+\rho' = \begin{bmatrix} 1 & 0 \\ 0 & 0 \end{bmatrix} = \ket{0}\bra{0},
+$$
+representing complete relaxation to the ground state.
+:::
+
+#### Erasure Channel {.unnumbered}
+
+Another important quantum channel is the erasure channel, which models the loss of a qubit to other accessible states. Unlike amplitude damping, where information leaks gradually, the erasure channel represents a complete loss of the qubit with probability $\epsilon$. When this happens, the qubit is replaced by an "error state" that we denote as $\ket{e}$. Importantly, $\ket{e}$ exists in a different part of the Hilbert space than our qubit states - it's an additional state that flags that erasure has occurred.
+
+::: {.callout-important}
+## Orthogonality of Error State
+The error state $\ket{e}$ is orthogonal to both $\ket{0}$ and $\ket{1}$, meaning $\braket{e|0} = \braket{e|1} = 0$. This is crucial as it represents a state completely outside our original qubit space but still within the system itself.
+:::
+
+The erasure can then be represented by
+$$
+\rho \mapsto (1 - \epsilon)\rho + \epsilon \ket{e}\bra{e}.
+$$
+
+In particular, this process 
+
+- Preserves the state with probability $1-\epsilon$ 
+- Erases it completely with probability $\epsilon$, replacing it with the error state $\ket{e}$
+
+::: {.callout-note icon=false}
+## **Example**: Erasure Channel in Action
+Since the erasure channel operates in an enlarged Hilbert space that includes the error state (in this case, making it 3-dimensional), let's consider our superposition state embedded in this expanded space:
+$$
+\ket{\psi} = \frac{1}{\sqrt{2}}(\ket{0} + \ket{1}) = \frac{1}{\sqrt{2}}(\ket{0} + \ket{1}) = \frac{1}{\sqrt{2}}\begin{bmatrix} 1 \\ 1 \\ 0 \end{bmatrix}.
+$$
+After the erasure channel acts, the state becomes a mixed state:
+$$
+\rho' = (1-\epsilon)\begin{bmatrix} 
+1/2 & 1/2 & 0 \\
+1/2 & 1/2 & 0 \\
+0 & 0 & 0
+\end{bmatrix} + \epsilon\begin{bmatrix}
+0 & 0 & 0 \\
+0 & 0 & 0 \\
+0 & 0 & 1
+\end{bmatrix}
+= \begin{bmatrix}
+\frac{1-\epsilon}{2} & \frac{1-\epsilon}{2} & 0 \\
+\frac{1-\epsilon}{2} & \frac{1-\epsilon}{2} & 0 \\
+0 & 0 & \epsilon
+\end{bmatrix}
+$$
+This represents that with probability $1-\epsilon$ we still have our original state in the upper-left $2\times2$ block, but with probability $\epsilon$ we have completely lost it to the error state, represented by the 1 in the bottom-right corner.
+:::
+
+The erasure channel is particularly important in quantum communication and error correction because the error state exists within the system Hilbert space itself (not the environment). This additional state in the system allows us to track and flag when errors occur--making it especially useful for quantum error correction protocols, unlike other noise channels where the errors are unknown and harder to detect.
+
+
+
+
+### Physical Qubit Implementations
+
+The quest for building practical quantum computers has led to several different approaches for implementing qubits. Each implementation aims to create a physical system that can reliably represent quantum states and allow for precise control and manipulation. We will explore in detail later what is needed for a good quantum device, but give a brief overview here of _what_ the devices are.
+
+#### Superconducting Qubits {.unnumbered}
+
+- Qubit are energy levels of _charge_ or _flux_ within a superconducting circuit. 
+- Based on superconducting circuits using Josephson junctions.
+- Operate at extremely low temperatures (~20 mK).
+- Used by: IBM, Google, Rigetti.
+
+#### Trapped Ion Qubits {.unnumbered}
+
+- Qubits are electronic or nuclear states of individual ions
+- Ions held in electromagnetic traps, manipulated by lasers
+- Used by: IonQ, Honeywell-Quantinuum
+
+#### Photonic Qubits {.unnumbered}
+
+- Qubits are properites of light (e.g., polarization)
+- Can operate at room temperature
+- Used by: PsiQuantum, Xanadu
+
+#### Semiconductor Quantum Dots {.unnumbered}
+
+- Qubits can be encoded using either:
+  * _charge_ states (electron occupying different quantum dots)
+  * _spin_ states (up/down spin states of an electron)
+- Created by confining electrons in semiconductor nanostructures
+- Often called "artificial atoms" due to their discrete energy levels
+- Active research at: Intel, TU Delft, Princeton, UNSW, CEA-Leti
+
+#### NV Centers in Diamond {.unnumbered}
+
+- The nitrogen vacancy defects in diamond provide energy levels accessible with light.
+- Can operate at room temperature
+- Applications in quantum sensing and networking
+
+#### Topological Qubits {.unnumbered}
+
+- Qubits are non-local and topologically protected states within an exotic (topological) state of matter.
+- Most promising candidate: Majorana zero modes
+- **Current Status**:
+  * Active research at Microsoft and Delft
+  * Recent progress in identifying Majorana signatures in nanowires
+  * Debate continues over experimental evidence
+
+As we'll discuss, the "perfect" qubit would combine long coherence times, fast gates, high fidelity, easy coupling to other qubits, and straightforward scalability. While each implementation has made significant progress, achieving all these properties simultaneously remains a major challenge in the field.
 
 [^5]: Magic is a technical term in quantum computing, though we're using it in a colloquial sense here, see @BravyiKitaev2005.
 [^6]: In some literature, these are matrices are denoted by $\sigma_{x}$, $\sigma_y$, and $\sigma_z$ and related to spin operators via $S_i =\frac12 \sigma_i$. This insight can help bridge the idea of these operators and the Bloch sphere.
