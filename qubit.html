@@ -851,8 +851,8 @@ Reading Quantum Circuits
 </div>
 <ol type="1">
 <li><span class="math inline">\(H\ket{0} = \ket{+}\)</span> (move to +x axis)</li>
-<li><span class="math inline">\(Z\ket{+} = \frac{1}{\sqrt{2}}(\ket{0} + i\ket{1})\)</span> (rotate around z by 90°)</li>
-<li><span class="math inline">\(H(\frac{1}{\sqrt{2}}(\ket{0} + i\ket{1})) = \ket{1}\)</span> (move to -z axis)</li>
+<li><span class="math inline">\(Z\ket{+} = \frac{1}{\sqrt{2}}(\ket{0} - \ket{1})\)</span> (rotate around z by 90°)</li>
+<li><span class="math inline">\(H(\frac{1}{\sqrt{2}}(\ket{0} - \ket{1})) = \ket{1}\)</span> (move to -z axis)</li>
 </ol>
 <p>This sequence effectively implements the <span class="math inline">\(X\)</span> gate!</p>
 </div>
@@ -895,7 +895,7 @@ Reading Quantum Circuits
 <p>The density matrix is: <span class="math display">\[
 \rho_+ = \frac{1}{2}\begin{bmatrix} 1 &amp; 1 \\ 1 &amp; 1 \end{bmatrix}
 \]</span></p>
-<p>Using the trace formula with <span class="math inline">\(Z = \begin{bmatrix} 1 &amp; 0 \\ 0 &amp; -1 \end{bmatrix}\)</span>: <span class="math display">\[
+<p>Using the formula for expecation values with <span class="math inline">\(Z = \begin{bmatrix} 1 &amp; 0 \\ 0 &amp; -1 \end{bmatrix}\)</span>: <span class="math display">\[
 \langle Z \rangle = \tr(Z\rho_+) = \tr\left(\frac{1}{2}\begin{bmatrix} 1 &amp; 0 \\ 0 &amp; -1 \end{bmatrix}\begin{bmatrix} 1 &amp; 1 \\ 1 &amp; 1 \end{bmatrix}\right) = 0
 \]</span></p>
 <p>This matches what we expect: <span class="math inline">\(\ket{+}\)</span> has equal probability of measuring <span class="math inline">\(\pm 1\)</span> for <span class="math inline">\(Z\)</span>.</p>
@@ -1103,6 +1103,62 @@ E_1 = \ket{0}\bra{0} + \sqrt{1-\gamma} \ket{1}\bra{1},
 \]</span> representing complete relaxation to the ground state.</p>
 </div>
 </div>
+</section>
+<section id="erasure-channel" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="erasure-channel">Erasure Channel</h4>
+<p>Another important quantum channel is the erasure channel, which models the loss of a qubit to other accessible states. Unlike amplitude damping, where information leaks gradually, the erasure channel represents a complete loss of the qubit with probability <span class="math inline">\(\epsilon\)</span>. When this happens, the qubit is replaced by an “error state” that we denote as <span class="math inline">\(\ket{e}\)</span>. Importantly, <span class="math inline">\(\ket{e}\)</span> exists in a different part of the Hilbert space than our qubit states - it’s an additional state that flags that erasure has occurred.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Orthogonality of Error State
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The error state <span class="math inline">\(\ket{e}\)</span> is orthogonal to both <span class="math inline">\(\ket{0}\)</span> and <span class="math inline">\(\ket{1}\)</span>, meaning <span class="math inline">\(\braket{e|0} = \braket{e|1} = 0\)</span>. This is crucial as it represents a state completely outside our original qubit space but still within the system itself.</p>
+</div>
+</div>
+<p>The erasure can then be represented by <span class="math display">\[
+\rho \mapsto (1 - \epsilon)\rho + \epsilon \ket{e}\bra{e}.
+\]</span></p>
+<p>In particular, this process</p>
+<ul>
+<li>Preserves the state with probability <span class="math inline">\(1-\epsilon\)</span></li>
+<li>Erases it completely with probability <span class="math inline">\(\epsilon\)</span>, replacing it with the error state <span class="math inline">\(\ket{e}\)</span></li>
+</ul>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<strong>Example</strong>: Erasure Channel in Action
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Since the erasure channel operates in an enlarged Hilbert space that includes the error state (in this case, making it 3-dimensional), let’s consider our superposition state embedded in this expanded space: <span class="math display">\[
+\ket{\psi} = \frac{1}{\sqrt{2}}(\ket{0} + \ket{1}) = \frac{1}{\sqrt{2}}(\ket{0} + \ket{1}) = \frac{1}{\sqrt{2}}\begin{bmatrix} 1 \\ 1 \\ 0 \end{bmatrix}.
+\]</span> After the erasure channel acts, the state becomes a mixed state: <span class="math display">\[
+\rho' = (1-\epsilon)\begin{bmatrix}
+1/2 &amp; 1/2 &amp; 0 \\
+1/2 &amp; 1/2 &amp; 0 \\
+0 &amp; 0 &amp; 0
+\end{bmatrix} + \epsilon\begin{bmatrix}
+0 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 1
+\end{bmatrix}
+= \begin{bmatrix}
+\frac{1-\epsilon}{2} &amp; \frac{1-\epsilon}{2} &amp; 0 \\
+\frac{1-\epsilon}{2} &amp; \frac{1-\epsilon}{2} &amp; 0 \\
+0 &amp; 0 &amp; \epsilon
+\end{bmatrix}
+\]</span> This represents that with probability <span class="math inline">\(1-\epsilon\)</span> we still have our original state in the upper-left <span class="math inline">\(2\times2\)</span> block, but with probability <span class="math inline">\(\epsilon\)</span> we have completely lost it to the error state, represented by the 1 in the bottom-right corner.</p>
+</div>
+</div>
+<p>The erasure channel is particularly important in quantum communication and error correction because the error state exists within the system Hilbert space itself (not the environment). This additional state in the system allows us to track and flag when errors occur–making it especially useful for quantum error correction protocols, unlike other noise channels where the errors are unknown and harder to detect.</p>
 </section>
 </section>
 <section id="physical-qubit-implementations" class="level3" data-number="2.4.3">
