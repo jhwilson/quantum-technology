@@ -9,7 +9,7 @@ A qubit will be in two-dimensional complex vector space equipped with an inner p
 
 ### Qubit states
 
-For the qubit, we associate two states with two different basis vectors: $\ket{0}$ and $\ket{1}$. This will be called the _computational basis_. The magic[^1] of quantum mechanics is that a state need not be just one or the other, but could be _any_ linear superposition of these
+For the qubit, we associate two states with two different basis vectors: $\ket{0}$ and $\ket{1}$. This will be called the _computational basis_. The magic[^5] of quantum mechanics is that a state need not be just one or the other, but could be _any_ linear superposition of these
 $$
 \ket{\psi} = \alpha \ket{0} + \beta \ket{1}.
 $$ {#eq-qubit}
@@ -152,7 +152,7 @@ This is why quantum gates must be unitary - they represent real physical process
 
 ### The Pauli operators
 
-A particularly important set of operators are the Pauli operators. We've already seen the Pauli $Z$ operator. The other two are[^2]
+A particularly important set of operators are the Pauli operators. We've already seen the Pauli $Z$ operator. The other two are[^6]
 $$
 X = \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}, \quad Y = \begin{bmatrix} 0 & -i \\ i & 0 \end{bmatrix}.
 $$
@@ -244,7 +244,7 @@ $$
 \ket{\psi} = \tfrac1{\sqrt2}( \ket 0 + e^{i\phi} \ket 1),
 $$
 and since all states are equivalent up to a _total_ phase, we can write the amplitude of each state with a real number. 
-In this case, if we set $\ket{\psi} = x \ket{0} + y e^{i\phi} \ket 1$, then we have $\braket{\psi|\psi} = x^2 + y^2 = 1$ for normalization. This is the equation for a circle, and writing out $x = \cos(\theta/2)$ and $y = \sin(\theta/2)$[^3], we are lead to an angular representation of our state.
+In this case, if we set $\ket{\psi} = x \ket{0} + y e^{i\phi} \ket 1$, then we have $\braket{\psi|\psi} = x^2 + y^2 = 1$ for normalization. This is the equation for a circle, and writing out $x = \cos(\theta/2)$ and $y = \sin(\theta/2)$[^7], we are lead to an angular representation of our state.
 $$
 \ket{\psi} = \cos(\theta/2) \ket{0} + \sin(\theta/2)e^{i\phi} \ket{1}.
 $$ {#eq-bloch-sphere}
@@ -556,6 +556,6 @@ A large part of the course will consist of finding physical systems where we can
 However, algorithms need these qubits to talk to each other, so we will now proceed to two qubits, and beyond!
 
 
-[^1]: Magic is a technical term in quantum computing, though we're using it in a colloquial sense here, see @BravyiKitaev2005.
-[^2]: In some literature, these are matrices are denoted by $\sigma_{x}$, $\sigma_y$, and $\sigma_z$ and related to spin operators via $S_i =\frac12 \sigma_i$. This insight can help bridge the idea of these operators and the Bloch sphere.
-[^3]: The divide-by-two for the angles will become clear as we go through this section.
+[^5]: Magic is a technical term in quantum computing, though we're using it in a colloquial sense here, see @BravyiKitaev2005.
+[^6]: In some literature, these are matrices are denoted by $\sigma_{x}$, $\sigma_y$, and $\sigma_z$ and related to spin operators via $S_i =\frac12 \sigma_i$. This insight can help bridge the idea of these operators and the Bloch sphere.
+[^7]: The divide-by-two for the angles will become clear as we go through this section.

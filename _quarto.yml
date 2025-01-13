@@ -39,20 +39,22 @@ format:
           }
         };
         </script>
-  pdf:
-    documentclass: scrreprt
-    pdf-engine: lualatex
-    pdf-engine-opts: 
-      - --shell-escape
-    include-in-header: 
-      text: |
-        \usepackage{braket}
-        \DeclareMathOperator{\tr}{tr}
+  # pdf:
+  #   documentclass: scrreprt
+  #   pdf-engine: lualatex
+  #   keep-tex: true
+  #   pdf-engine-opts: 
+  #     - --shell-escape
+  #   include-in-header: 
+  #     text: |
+  #       \usepackage{tikz}
+  #       \usepackage{braket}
+  #       \DeclareMathOperator{\tr}{tr}
+  #       \usetikzlibrary{quantikz2}
 
 
 tikz:
-  cache: false
-  save-tex: true  # Enable saving intermediate .tex files
+  cache: true
   tex-dir: tikz-tex  # Optional: Specify directory to save .tex files
   format: svg
 
