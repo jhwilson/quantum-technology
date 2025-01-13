@@ -90,6 +90,15 @@ div.csl-indent {
     "search-label": "Search"
   }
 }</script>
+<script>
+window.MathJax = {
+  tex: {
+    macros: {
+      tr: "\\operatorname{tr}"
+    }
+  }
+};
+</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -214,7 +223,13 @@ window.Quarto = {
   <li><a href="#sec-postulate-observable" id="toc-sec-postulate-observable" class="nav-link" data-scroll-target="#sec-postulate-observable"><span class="header-section-number">1.3.2</span> Postulate II: Physical Observables and Measurements</a></li>
   <li><a href="#sec-postulate-unitary" id="toc-sec-postulate-unitary" class="nav-link" data-scroll-target="#sec-postulate-unitary"><span class="header-section-number">1.3.3</span> Postulate III: Time-evolution of a system</a></li>
   </ul></li>
-  <li><a href="#quantum-technologies" id="toc-quantum-technologies" class="nav-link" data-scroll-target="#quantum-technologies"><span class="header-section-number">1.4</span> Quantum Technologies</a></li>
+  <li><a href="#a-brief-history-of-computing-from-classical-to-quantum" id="toc-a-brief-history-of-computing-from-classical-to-quantum" class="nav-link" data-scroll-target="#a-brief-history-of-computing-from-classical-to-quantum"><span class="header-section-number">1.4</span> A Brief History of Computing: From Classical to Quantum</a>
+  <ul class="collapse">
+  <li><a href="#classical-computing-foundations" id="toc-classical-computing-foundations" class="nav-link" data-scroll-target="#classical-computing-foundations"><span class="header-section-number">1.4.1</span> Classical Computing Foundations</a></li>
+  <li><a href="#the-emergence-of-quantum-information" id="toc-the-emergence-of-quantum-information" class="nav-link" data-scroll-target="#the-emergence-of-quantum-information"><span class="header-section-number">1.4.2</span> The Emergence of Quantum Information</a></li>
+  <li><a href="#analog-vs.-digital-quantum-simulation" id="toc-analog-vs.-digital-quantum-simulation" class="nav-link" data-scroll-target="#analog-vs.-digital-quantum-simulation"><span class="header-section-number">1.4.3</span> Analog vs.&nbsp;Digital Quantum Simulation</a></li>
+  </ul></li>
+  <li><a href="#quantum-technologies" id="toc-quantum-technologies" class="nav-link" data-scroll-target="#quantum-technologies"><span class="header-section-number">1.5</span> Quantum Technologies</a></li>
   </ul>
 </nav>
     </div>
@@ -241,6 +256,19 @@ window.Quarto = {
 
 
 <p>In 2019 <span class="citation" data-cites="AruteMartinis2019">&nbsp;[<a href="references.html#ref-AruteMartinis2019" role="doc-biblioref">1</a>]</span>, Google reached a significant milestone in quantum computing when they achieved “Quantum Advantage”–demonstrating for the first time that a quantum computer could surpass the capabilities of classical computers, albeit for a specific, specialized task. Using their Sycamore processor with 53 qubits, they showed that sampling from a quantum circuit a million times took only 200 seconds, while the equivalent task would take approximately 10,000 years on a classical supercomputer. This breakthrough marked a turning point in quantum computing, igniting increased interest and investment in quantum technologies. Building on this success, in December 2024, Google announced their new Willow chip <span class="citation" data-cites="GoogleQuantumAIandCollaboratorsZobrist2024">&nbsp;[<a href="references.html#ref-GoogleQuantumAIandCollaboratorsZobrist2024" role="doc-biblioref">2</a>]</span>, representing their latest advancement in quantum hardware. Today, numerous companies and research institutions worldwide are racing to develop quantum hardware, each pursuing different technological approaches to challenge the computational limits of classical computers.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+What is Quantum Advantage?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Quantum advantage (or quantum supremacy) refers to the demonstration that a quantum computer can solve a specific problem significantly faster than the best known classical algorithm. However, the problem doesn’t necessarily need to be useful–it just needs to be well-defined and verifiable.</p>
+</div>
+</div>
 <p>This text aims to give undergraduate students a comprehensive introduction to quantum technology and computation. We will begin by exploring the fundamental mathematical framework that underlies quantum computing, building from basic principles to more advanced concepts. Crucially, we will see what specific things a quantum computer can achieve that a classical computer would struggle with. With this foundation, we will examine three of the most promising current quantum computing technologies: superconducting qubits, photonic quantum computing, and ion traps. Each of these approaches offers unique advantages and faces distinct challenges, which we will analyze in detail.</p>
 <p>To bridge theory with practice, we will utilize IBM’s Qiskit software platform to implement basic quantum computations, providing hands-on experience with quantum programming. As we progress, we will explore critical practical considerations in quantum computing, including error mitigation and correction strategies. Time permitting, we will venture into the cutting-edge field of topological quantum computing, which offers a potentially more robust approach to quantum computation.</p>
 <p>Throughout this text, we will maintain a balanced perspective, examining both the tremendous potential and significant challenges facing quantum computing technology. Our goal is to equip students with both theoretical understanding and practical insights into this rapidly evolving field.</p>
@@ -301,7 +329,19 @@ Fig.&nbsp;1.1: Example Circuit diagrams for MOSFETs (<em>enh</em>)
 <p>To enable classical computing, we need something like a “switch” that can be on and off, keeping track of whether or not something like, current is flowing. This is hard to do with traditional circuit elements like resistors, capacitors, and inductors. It requires something more nonlinear: A switch that only allows current flow when a voltage is applied, a <strong>transistor</strong>.</p>
 <p><a href="#fig-MOSFETs" class="quarto-xref">Fig.&nbsp;<span>1.1</span></a> shows two of the types of circuit diagrams for a bipolar junction transistor (G = gate, S = source, and D = drain)<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. A voltage applied at the gate enables a larger current to flow between collector and emitter. There are also <em>bipolar junction transistors</em> that use a smaller current to enable a larger current, in this case there is “base”, “collector”, and “emitter”.</p>
 <p>With these building blocks, logical gates can be created, but <em>how</em> to build these? Which device can be made small and in abundance? And what challenges were encountered on the way.</p>
-<p>Keep in mind that the iPhone has within it 19 <em>billion</em> transistors (with the A17 pro).</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Scale of Modern Computing in your pocket
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The iPhone A17 Pro chip’s 19 billion transistors would cover an area of about 1 square centimeter. If each transistor were the size of a grain of rice, they would cover an area larger than 75 football fields! This incredible miniaturization is what enables modern computing.</p>
+</div>
+</div>
 <p>It was recognized early on that semiconductors provided an ideal platform for these kinds of circuits, and much work was done to try and create the above “field effect transistors.” Schematically, these take the form:</p>
 <div id="fig-FET-schematic" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -380,11 +420,44 @@ Fig.&nbsp;1.3: The point contact transistor.
 <li>We have the quantum theory of photons, atoms, and superconductivity to achieve quantum computation.</li>
 </ol>
 <p>However, as we will see in what follows, we have significant engineering challenges to achieve these in practice. While we will be largely concerned with the physics that make #2 possible in this course (and we’ll touch on #1 for the first part of the course), we will pay attention to the strengths and weaknesses in the physics that lead to more pressing engineering challenges.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Historical Parallel
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Just as the theory of classical computation <span class="citation" data-cites="Turing1937">&nbsp;[<a href="references.html#ref-Turing1937" role="doc-biblioref">6</a>]</span> preceded practical computers by decades, we now have the theory of quantum computation <span class="citation" data-cites="NielsenChuang2011">&nbsp;[<a href="references.html#ref-NielsenChuang2011" role="doc-biblioref">5</a>]</span> but face significant engineering challenges. The key difference is that we’re trying to control individual quantum systems rather than classical electrical currents.</p>
+</div>
+</div>
 </section>
 </section>
 <section id="review-of-the-postulates-of-quantum-mechanics" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="review-of-the-postulates-of-quantum-mechanics"><span class="header-section-number">1.3</span> Review of the Postulates of Quantum Mechanics</h2>
 <p>Quantum mechanics is built out of some basic postulates which are crucial to understand for quantum computation. When we talk about a “system” in these postulates, we will be thinking of two-level systems which we can label 0 or 1 (for our qubit). However, we will state them generally since many applications require some basic work to reduce the complicated system down to just the qubits we are interested in.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Mathematical Notation Guide
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Throughout this text, we’ll use:</p>
+<ul>
+<li><span class="math inline">\(\ket{\psi}\)</span> (“ket psi”): Represents a quantum state</li>
+<li><span class="math inline">\(\bra{\phi}\)</span> (“bra phi”): The dual vector to <span class="math inline">\(\ket{\phi}\)</span></li>
+<li><span class="math inline">\(\braket{\phi|\psi}\)</span>: The inner product between states</li>
+<li><span class="math inline">\(\otimes\)</span>: The tensor product operation</li>
+</ul>
+<p>These notations provide a compact way to describe quantum systems.</p>
+</div>
+</div>
 <section id="postulate-i-the-hilbert-space" class="level3" data-number="1.3.1">
 <h3 data-number="1.3.1" class="anchored" data-anchor-id="postulate-i-the-hilbert-space"><span class="header-section-number">1.3.1</span> Postulate I: The Hilbert space</h3>
 <blockquote class="blockquote">
@@ -431,8 +504,58 @@ Fig.&nbsp;1.3: The point contact transistor.
 <p>In the case of time-independent <em>Hamiltonian dynamics,</em> the operator takes the form <span class="math inline">\(U = e^{-i H t/\hbar}\)</span> for a hermitian energy operator <span class="math inline">\(H\)</span> called the <em>Hamiltonian</em>.</p>
 </section>
 </section>
-<section id="quantum-technologies" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="quantum-technologies"><span class="header-section-number">1.4</span> Quantum Technologies</h2>
+<section id="a-brief-history-of-computing-from-classical-to-quantum" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="a-brief-history-of-computing-from-classical-to-quantum"><span class="header-section-number">1.4</span> A Brief History of Computing: From Classical to Quantum</h2>
+<p>The concept that information is physical underlies both classical and quantum computation. Even in the earliest systems of record-keeping, we see physical objects encoding information:</p>
+<ul>
+<li>Kish Tablet (3500 BCE): A limestone tablet from Kish showing a record of pictographic writing.</li>
+<li>Quipu (2600–1900 BCE): A system of knotted ropes used by the Inca civilization for keeping records. The color, order, and number of knots all represented quantifiable or categorical data.</li>
+</ul>
+<p>These examples highlight that from the very beginning, the act of storing and manipulating information has always had a physical basis—though the underlying physics often remained implicit for centuries.</p>
+<section id="classical-computing-foundations" class="level3" data-number="1.4.1">
+<h3 data-number="1.4.1" class="anchored" data-anchor-id="classical-computing-foundations"><span class="header-section-number">1.4.1</span> Classical Computing Foundations</h3>
+<p>The paradigm of classical computing rests on a few fundamental ideas:</p>
+<ul>
+<li><strong>Boolean Logic &amp; Universal Gates</strong>: All classical computers can be built from a finite set of universal logical gates (e.g., {NAND}, {NOR}, or {AND, NOT}).</li>
+</ul>
+<p>Most Boolean operations (AND, OR, NAND, etc.) are inherently irreversible: once a bit is erased or overwritten, the original state cannot be recovered from the output alone.</p>
+<ul>
+<li><strong>Extended (Physical) Church–Turing Thesis</strong>: A probabilistic Turing machine can efficiently simulate any realistic physical model of computation with at most polynomial overhead.</li>
+</ul>
+<p>This thesis, while unproven, underpins the expectation that classical computers (or at least classical models) are sufficient for simulating any physical system in principle. Quantum computation potentially challenges this with a polynomial in time algorithm (Shor’s algorithm) that is exponential in time classically.</p>
+</section>
+<section id="the-emergence-of-quantum-information" class="level3" data-number="1.4.2">
+<h3 data-number="1.4.2" class="anchored" data-anchor-id="the-emergence-of-quantum-information"><span class="header-section-number">1.4.2</span> The Emergence of Quantum Information</h3>
+<p>While classical computing relies on bits that are strictly 0 or 1, quantum computing introduces powerful new concepts:</p>
+<ul>
+<li><strong>Superposition</strong>: A quantum bit (qubit) can be in a linear combination of basis states (e.g., simultaneously “0” and “1” with certain complex amplitudes).</li>
+<li><strong>Entanglement</strong>: Two or more qubits can become correlated in such a way that measuring one affects the outcomes for the others, even across vast distances.</li>
+</ul>
+<p>The key question that launched the field of quantum information was whether these uniquely quantum properties—superposition and entanglement—could be exploited to perform computations more efficiently than any classical device.</p>
+<p>In his seminal work, Simulating Physics with Computers <span class="citation" data-cites="Feynman1982">&nbsp;[<a href="references.html#ref-Feynman1982" role="doc-biblioref">8</a>]</span>, Richard Feynman observed that simulating quantum many-body systems on classical computers seems to require exponential resources. He posed the idea of harnessing genuine quantum systems themselves for simulation, planting the seeds for quantum computation as a research field.</p>
+<p>Then, in a series of groundbreaking results between the 1980s and 1990s, researchers demonstrated that quantum computers could, in principle, outperform classical computers for certain tasks:</p>
+<ol type="1">
+<li>Deutsch (1985) <span class="citation" data-cites="Deutsch1985">&nbsp;[<a href="references.html#ref-Deutsch1985" role="doc-biblioref">9</a>]</span>: Showed that it is possible to carry out a simple computational task on a quantum computer faster than any classical algorithm.</li>
+<li>Deutsch–Jozsa (1992) <span class="citation" data-cites="DeutschJozsa1992">&nbsp;[<a href="references.html#ref-DeutschJozsa1992" role="doc-biblioref">10</a>]</span>: Introduced a deterministic quantum algorithm that is exponentially faster (in the worst case) than any deterministic classical algorithm.</li>
+<li>Bernstein–Vazirani (1992) <span class="citation" data-cites="BernsteinVazirani1997">&nbsp;[<a href="references.html#ref-BernsteinVazirani1997" role="doc-biblioref">11</a>]</span>: Demonstrated a probabilistic quantum algorithm faster than any probabilistic classical algorithm.</li>
+<li>Simon (1994) <span class="citation" data-cites="Simon1997">&nbsp;[<a href="references.html#ref-Simon1997" role="doc-biblioref">12</a>]</span>: Provided a probabilistic quantum algorithm that is exponentially faster than any probabilistic classical algorithm for a specific promise problem.</li>
+<li>Shor (1994) <span class="citation" data-cites="Shor1994">&nbsp;[<a href="references.html#ref-Shor1994" role="doc-biblioref">13</a>]</span>: Showed how to factor integers efficiently, providing an exponential speedup over the best known classical methods. This result was particularly striking for cryptography, as factoring large numbers underpins many encryption schemes.</li>
+</ol>
+<p>Alongside these algorithmic milestones, researchers began to delineate the limitations: not every problem can be exponentially sped up by quantum methods. For instance, Grover’s algorithm (1996) <span class="citation" data-cites="Grover1996">&nbsp;[<a href="references.html#ref-Grover1996" role="doc-biblioref">14</a>]</span> for unstructured search yields a quadratic speedup (from <span class="math inline">\(N\)</span> to <span class="math inline">\(\sqrt{N}\)</span>)—still better than classical, but not the exponential leap that Shor’s algorithm provides for factoring.</p>
+</section>
+<section id="analog-vs.-digital-quantum-simulation" class="level3" data-number="1.4.3">
+<h3 data-number="1.4.3" class="anchored" data-anchor-id="analog-vs.-digital-quantum-simulation"><span class="header-section-number">1.4.3</span> Analog vs.&nbsp;Digital Quantum Simulation</h3>
+<p>As the field grew, quantum simulation branched into two approaches:</p>
+<ul>
+<li>Analog Quantum Simulation: Uses a controllable quantum system to mimic a target quantum system. The interactions in the simulator closely resemble the interactions in the system of interest.</li>
+<li>Digital Quantum Simulation: Decomposes a quantum evolution into a sequence of discrete gates (a “universal” set of quantum gates), akin to how classical digital computers function using logical gate operations.</li>
+</ul>
+<p>Both approaches aim to exploit quantum mechanics to tackle problems in mathematics, physics, chemistry, and materials science that remain intractable for classical supercomputers.</p>
+<p>Amid ongoing research, the interplay between classical and quantum paradigms remains a vibrant area of exploration. While classical computing infrastructure continues to be indispensable, quantum computing offers the promise of qualitatively new capabilities—provided we can tame the noise, errors, and fragilities inherent to quantum states.</p>
+</section>
+</section>
+<section id="quantum-technologies" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="quantum-technologies"><span class="header-section-number">1.5</span> Quantum Technologies</h2>
 <p>One major difference between the hindsight-history we have for classical computation and the current state of quantum computers is that are many platforms vying to enable quantum computation. There are arguments for and against each platform, and even arguments for using a combination of platforms. Here we give a list of some of the technologies and highlight the ones we will be surveying in this course.</p>
 <p><strong>Platforms covered in this course</strong></p>
 <ul>
@@ -450,6 +573,19 @@ Fig.&nbsp;1.3: The point contact transistor.
 <ul>
 <li><strong>Topological qubits</strong>: A theoretical approach that would use special quantum states of matter to create error-protected qubits. Still in early research stages but could offer significant advantages if realized.</li>
 </ul>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Current State of Quantum Computing
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>As of 2024, the largest quantum computers have around 50-100 physical qubits optimistically, but these are noisy and require error correction. For comparison, your smartphone has billions of classical bits. This highlights the early stage of quantum computing development and the engineering challenges ahead.</p>
+</div>
+</div>
 <p>Each platform has its own advantages and challenges in terms of scalability, error rates, coherence times, and manufacturing complexity. The field is still evolving, and it’s possible that different platforms may be optimal for different applications.</p>
 
 
@@ -474,6 +610,27 @@ Fig.&nbsp;1.3: The point contact transistor.
 </div>
 <div id="ref-Hoddeson1981" class="csl-entry" role="listitem">
 <div class="csl-left-margin">[7] </div><div class="csl-right-inline">L. Hoddeson, <a href="https://doi.org/10.2307/27757489">The <span>Discovery</span> of the <span>Point-Contact Transistor</span></a>, Historical Studies in the Physical Sciences <strong>12</strong>, 41 (1981).</div>
+</div>
+<div id="ref-Feynman1982" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[8] </div><div class="csl-right-inline">R. P. Feynman, <a href="https://doi.org/10.1007/BF02650179">Simulating physics with computers</a>, International Journal of Theoretical Physics <strong>21</strong>, 467 (1982).</div>
+</div>
+<div id="ref-Deutsch1985" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[9] </div><div class="csl-right-inline">D. Deutsch, <a href="https://doi.org/10.1098/rspa.1985.0070">Quantum theory, the <span>Church</span>–<span>Turing</span> principle and the universal quantum computer</a>, Proceedings of the Royal Society of London. A. Mathematical and Physical Sciences <strong>400</strong>, 97 (1985).</div>
+</div>
+<div id="ref-DeutschJozsa1992" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[10] </div><div class="csl-right-inline">D. Deutsch and R. Jozsa, <a href="https://doi.org/10.1098/rspa.1992.0167">Rapid solution of problems by quantum computation</a>, Proceedings of the Royal Society of London. Series A: Mathematical and Physical Sciences <strong>439</strong>, 553 (1992).</div>
+</div>
+<div id="ref-BernsteinVazirani1997" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[11] </div><div class="csl-right-inline">E. Bernstein and U. Vazirani, <a href="https://doi.org/10.1137/S0097539796300921">Quantum <span>Complexity Theory</span></a>, SIAM Journal on Computing <strong>26</strong>, 1411 (1997).</div>
+</div>
+<div id="ref-Simon1997" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[12] </div><div class="csl-right-inline">D. R. Simon, <a href="https://doi.org/10.1137/S0097539796298637">On the <span>Power</span> of <span>Quantum Computation</span></a>, SIAM Journal on Computing <strong>26</strong>, 1474 (1997).</div>
+</div>
+<div id="ref-Shor1994" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[13] </div><div class="csl-right-inline">P. W. Shor, <em><a href="https://doi.org/10.1109/SFCS.1994.365700">Algorithms for Quantum Computation: Discrete Logarithms and Factoring</a></em>, in <em>Proceedings 35th <span>Annual Symposium</span> on <span>Foundations</span> of <span>Computer Science</span></em> (IEEE Comput. Soc. Press, Santa Fe, NM, USA, 1994), pp. 124–134.</div>
+</div>
+<div id="ref-Grover1996" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[14] </div><div class="csl-right-inline">L. K. Grover, <em><a href="https://doi.org/10.1145/237814.237866">A Fast Quantum Mechanical Algorithm for Database Search</a></em>, in <em>Proceedings of the Twenty-Eighth Annual <span>ACM</span> Symposium on <span>Theory</span> of Computing - <span>STOC</span> ’96</em> (ACM Press, Philadelphia, Pennsylvania, United States, 1996), pp. 212–219.</div>
 </div>
 </div>
 </section>
