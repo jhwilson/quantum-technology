@@ -9,6 +9,7 @@ book:
     - index.qmd
     - intro.qmd
     - qubit.qmd
+    - multiple_qubits.qmd
     - summary.qmd
     - references.qmd
 

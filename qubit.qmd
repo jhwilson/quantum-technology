@@ -1,4 +1,4 @@
-# The Qubit 
+# The Qubit {#sec-qubit}
 
 The fundamental building block of the classical computer was the bit: A 0 or 1 that could be manipulated by a classical computer (via transistors, see @sec-transistors).
 In a similar manner, quantum computation has the "quantum bit" or just _qubit_, for short.  This leads us to the linear algebra of $2\times 2$ matrices, as we will see. Despite the apparent simplicity, we can already see many of the key features of quantum mechanics in this simple system.

@@ -1,0 +1,252 @@
+# Multiple Qubits {#sec-multiple-qubit}
+
+Previously in @sec-qubit we discussed in detail how to understand a single qubit. While we saw some basic features, such as superposition and relative phase, it has not been apparent yet what we can do with these features. The power of these will really be unlocked by putting multiple qubits together. We will also begin to see hints of _quantum entanglement_.
+
+However, there is just a practical concern: How much information can we store in a single qubit? With precise control, we have our answer in @sec-bloch-sphere: the angles $\theta$ and $\phi$ on the Bloch sphere. Since algorithms are bit more greedy than that, we need to extend our space and the natural way to do that is to add more qubits. Of course, classically, we operate with many bits: Floats (real numbers) on most computers use 64 bits, and we often add, substract, multiply a lot of these numbers. But classically, when we have, for instance, two bits, there are four discrete states 00, 01, 10, and 11. As we will analyze in detail, quantum mechanically these will be four basis states that can make up a general quantum wave function
+$$
+\ket{\psi} = \alpha \ket{00} + \beta \ket{01} + \gamma \ket{10} + \delta \ket{11}.
+$$
+
+## Tensor Products and the multi-qubit Hilbert space
+
+The equation above gives us an idea for how we ought to combine qubits. The tensor product will formalize this, but we will build it up "intuitively."
+
+Imagine we have one big operator called "read-out" or $\mathcal R$; this operator will measure all of the qubits in the system, and its value will tell us _exactly_ what the state of the system is in terms of the computational basis.
+
+::: {.callout-note}
+## Two-Qubit Readout
+
+The readout operator $\mathcal{R}$ maps the two-qubit basis states to unique numbers:
+
+- $\mathcal{R}\ket{00} = 0 \ket{00}$
+- $\mathcal{R}\ket{01} = 1 \ket{01}$
+- $\mathcal{R}\ket{10} = 2 \ket{10}$
+- $\mathcal{R}\ket{11} = 3 \ket{11}$
+
+This binary-to-decimal conversion helps us uniquely identify each computational basis state.
+:::
+
+However, this operator $\mathcal R$ _must_ be Hermitian to be a physical observable, and as a result its eigenstates span our Hilbert space. Well, upon readout, we know that each qubit can be in one of two states $b_i = 0$ or $1$, and if we have $i = 1, \ldots, N$ qubits, there are $2^N$ possibilities. 
+
+We will return to this, but let us linger on two qubits. Notice that we can obtain the above states with an operation called the _tensor product_.
+
+| $\otimes$ | $\ket{0}$ | $\ket{1}$ |
+|:--|:--:|:--:|
+|$\ket{0}$ | $\ket{0} \otimes \ket{0}$ | $\ket{0} \otimes \ket{1}$ |
+|$\ket{1}$ | $\ket{1}\otimes \ket{0}$ | $\ket{1}\otimes \ket{0}$ |
+
+This multiplication table is how we go from basis sets of single qubits to the basis set of two qubits. Very often, we will drop the $\otimes$ and simply write
+$$
+\ket{b_1 b_2} \equiv \ket{b_1} \otimes \ket{b_2}.
+$$
+
+
+Similarly, we can build up three qubit states by taking the tensor product of two-qubit states with a single qubit:
+
+| $\otimes$ | $\ket{0}$ | $\ket{1}$ |
+|:--|:--:|:--:|
+|$\ket{00}$ | $\ket{00} \otimes \ket{0}$ | $\ket{00} \otimes \ket{1}$ |
+|$\ket{01}$ | $\ket{01} \otimes \ket{0}$ | $\ket{01} \otimes \ket{1}$ |
+|$\ket{10}$ | $\ket{10} \otimes \ket{0}$ | $\ket{10} \otimes \ket{1}$ |
+|$\ket{11}$ | $\ket{11} \otimes \ket{0}$ | $\ket{11} \otimes \ket{1}$ |
+
+again we can define
+$$
+\ket{b_1 b_2 b_3} = \ket{b_1 b_2} \otimes \ket{b_3},
+$$
+and we proceed once more
+
+| $\otimes$ | $\ket{0}$ | $\ket{1}$ |
+|:--|:--:|:--:|
+|$\ket{000}$ | $\ket{000} \otimes \ket{0}$ | $\ket{000} \otimes \ket{1}$ |
+|$\ket{001}$ | $\ket{001} \otimes \ket{0}$ | $\ket{001} \otimes \ket{1}$ |
+|$\ket{010}$ | $\ket{010} \otimes \ket{0}$ | $\ket{010} \otimes \ket{1}$ |
+|$\ket{011}$ | $\ket{011} \otimes \ket{0}$ | $\ket{011} \otimes \ket{1}$ |
+|$\ket{100}$ | $\ket{100} \otimes \ket{0}$ | $\ket{100} \otimes \ket{1}$ |
+|$\ket{101}$ | $\ket{101} \otimes \ket{0}$ | $\ket{101} \otimes \ket{1}$ |
+|$\ket{110}$ | $\ket{110} \otimes \ket{0}$ | $\ket{110} \otimes \ket{1}$ |
+|$\ket{111}$ | $\ket{111} \otimes \ket{0}$ | $\ket{111} \otimes \ket{1}$ |
+
+As we can see, every time we add a new qubit, the dimension of the space is multiplied by two.
+In general, we can can break $N$-qubits in the computational basis as
+$$
+\ket{b_1 b_2 \cdots b_N} = \ket{b_1} \otimes \ket{b_2} \otimes \cdots \otimes \ket{b_N}
+$$
+where $b_j = 0$ or $1$. Since this is a basis, we can "count" the number of basis states to determine the dimension of the space to obtain for the Hilbert space of $N$-qubits $\mathcal H_N$,
+$$
+\dim \mathcal H_N = 2^N.
+$$
+Therefore, a general quantum state of $N$ qubits can be written as a superposition of all possible computational basis states:
+$$
+\ket{\psi} = \sum_{b_1,\ldots,b_N = 0,1} \psi_{b_1\cdots b_N} \ket{b_1\cdots b_N}
+$$
+where $\psi_{b_1\cdots b_N}$ are complex coefficients satisfying the normalization condition
+$$
+\sum_{b_1,\ldots,b_N = 0,1} |\psi_{b_1\cdots b_N}|^2 = 1.
+$$
+This means that to fully specify a quantum state of $N$ qubits, we need $2^N$ complex numbers (subject to normalization), which illustrates both the power and challenge of quantum computing - the exponential growth in the state space allows for massive parallel processing but also makes classical simulation difficult.
+
+::: {.callout-note}
+## Two-qubit wave functions and entanglement
+
+A general two-qubit wave function can be written as
+$$
+\ket{\psi} = \psi_{00}\ket{00} + \psi_{01}\ket{01} + \psi_{10}\ket{10} + \psi_{11}\ket{11}
+$$
+where $|\psi_{00}|^2 + |\psi_{01}|^2 + |\psi_{10}|^2 + |\psi_{11}|^2 = 1$. When the two qubits are independent (a product state), we can write this as a tensor product of individual qubit states:
+$$
+\begin{aligned}
+\ket{\psi} & = (\alpha_1\ket{0} + \beta_1\ket{1}) \otimes (\alpha_2\ket{0} + \beta_2\ket{1}) \\ & = \alpha_1\alpha_2\ket{00} + \alpha_1\beta_2\ket{01} + \beta_1\alpha_2\ket{10} + \beta_1\beta_2\ket{11}
+\end{aligned}
+$$
+
+However, not all two-qubit states can be written as such a product! States that cannot be factored into a tensor product of individual qubit states are called *entangled states* - a crucial quantum resource we'll explore later.
+:::
+
+The exponential growth in the state space has important implications for simulating quantum systems on classical computers. While we need $2^N$ complex numbers to specify an arbitrary quantum state, the situation becomes even more demanding when we consider operations on these states:
+
+1. To represent an arbitrary quantum operation (unitary evolution) on $N$ qubits, we need a $2^N \times 2^N$ unitary matrix. This requires storing and manipulating $2^{2N}$ complex numbers.
+
+2. Even to compute the probability of a measurement outcome, we need to perform operations involving all $2^N$ amplitudes.
+
+This exponential scaling is why classical computers struggle to simulate large quantum systems - the memory and computational requirements become overwhelming. For example:
+
+- 10 qubits: $2^{10} = 1,024$ amplitudes, $2^{20} \approx 1$ million matrix elements
+- 30 qubits: $2^{30} \approx 1$ billion amplitudes, $2^{60} \approx 10^{18}$ matrix elements
+- 50 qubits: $2^{50} \approx 10^{15}$ amplitudes, $2^{100} \approx 10^{30}$ matrix elements
+
+However, it's important to note that not all quantum computations require storing and manipulating the full state space. Many practical quantum algorithms and simulations exploit special properties:
+
+- Some quantum states have special structure (like product states) that allow more efficient representations
+- Many quantum operations act locally or have special symmetries that reduce the computational complexity
+- Some quantum algorithms can be simulated using specialized techniques that avoid storing the full state vector
+
+Nevertheless, the ability to access and manipulate this exponentially large state space can help us perform computations that classical computers would struggle with.
+
+::: {.callout-important}
+## Classical simulation vs. quantum measurement
+
+When simulating quantum systems on classical computers, we have direct access to the full state vector - all the complex amplitudes $\psi_{b_1\cdots b_N}$. This gives us complete information about the quantum state, allowing us to calculate any property without performing repeated measurements.
+
+In contrast, real quantum computers are bound by the measurement postulates of quantum mechanics (Postulate II, @sec-postulate-observable). Each measurement:
+
+1. Collapses the quantum state
+2. Only returns eigenvalues of the measured observable
+3. Must be repeated many times to estimate expectation values and state properties
+
+This limitation of quantum hardware is why techniques like quantum state tomography are necessary - reconstructing the full quantum state requires performing many different measurements on multiple copies of the same state. Classical simulation sidesteps this fundamental quantum constraint, though at the cost of exponential classical resources.
+:::
+
+## Multi-qubit operations
+
+With our exponentially big state space created, we can begin to think about how to translate our single qubit operations to multiple qubits and then how to build up operations that _use_ multiple qubits. We will focus on two qubit gates since these will help us build up a set of universal gates for quantum computation.
+
+### Single-qubit gates
+
+When we want to apply a single-qubit gate to one qubit in a multi-qubit system, we need to use tensor products to construct the appropriate operator. For a two-qubit system, if we want to apply a gate $U$ to the first qubit, the full operator is:
+
+$$
+U \otimes I
+$$
+
+where $I$ is the $2\times 2$ identity matrix. Similarly, to apply $U$ to the second qubit, we use:
+
+$$
+I \otimes U
+$$
+
+For example, applying the Pauli-X gate to the first qubit of a two-qubit system gives:
+
+$$
+X \otimes I = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix} \otimes \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} = \begin{pmatrix} 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \\ 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \end{pmatrix}
+$$
+
+where the rows and columns correspond to the basis states in order $|00\rangle$, $|01\rangle$, $|10\rangle$, $|11\rangle$. For example, the 1 in the third row, first column means $X \otimes I$ transforms $|00\rangle$ to $|10\rangle$, which flips the first qubit as expected.
+
+Similarly, applying it to the second qubit gives:
+
+$$
+I \otimes X = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} \otimes \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix} = \begin{pmatrix} 0 & 1 & 0 & 0 \\ 1 & 0 & 0 & 0 \\ 0 & 0 & 0 & 1 \\ 0 & 0 & 1 & 0 \end{pmatrix}
+$$
+
+Here, the 1 in the second row, first column shows $I \otimes X$ transforms $|00\rangle$ to $|01\rangle$, flipping only the second qubit as expected.
+
+This pattern extends to more qubits. For an $N$-qubit system, to apply $U$ to the $k$th qubit, we use:
+
+$$
+\underbrace{I \otimes \cdots \otimes I}_{k-1} \otimes U \otimes \underbrace{I \otimes \cdots \otimes I}_{N-k}
+$$
+
+where $U$ appears in the $k$th position and $I$ appears in all other positions. This construction ensures we affect only the target qubit while leaving all other qubits unchanged.
+
+
+::: {.callout-note}
+## Example: H gate on second qubit of three-qubit system
+
+Let's see how applying $H$ to the second qubit of a three-qubit system works. The operator is:
+
+$$
+I \otimes H \otimes I
+$$
+
+Acting on the state $|000\rangle$:
+
+$$
+\begin{aligned}
+(I \otimes H \otimes I)|000\rangle &= (I \otimes H \otimes I)(|0\rangle \otimes |0\rangle \otimes |0\rangle) \\
+&= (I|0\rangle) \otimes (H|0\rangle) \otimes (I|0\rangle) \\
+&= |0\rangle \otimes \frac{|0\rangle + |1\rangle}{\sqrt{2}} \otimes |0\rangle \\
+&= \frac{|000\rangle + |010\rangle}{\sqrt{2}}
+\end{aligned}
+$$
+
+As expected, only the middle qubit is put into an equal superposition of 0 and 1.
+:::
+
+
+::: {.callout-important}
+## Notational convenience for single-qubit operations
+
+To avoid writing long chains of tensor products, we often use a subscript to indicate which qubit an operator acts on. For example, instead of writing
+
+$$
+I \otimes X \otimes I \otimes I \otimes X
+$$
+
+for a five-qubit system where we apply $X$ to qubits 2 and 5, we can write this more compactly as
+
+$$
+X_2 X_5
+$$
+
+Similarly, applying the Hadamard gate to the third qubit of a four-qubit system would be written as
+
+$$
+H_3
+$$
+
+rather than $I \otimes I \otimes H \otimes I$. This notation is particularly helpful when describing quantum circuits involving many qubits.
+:::
+
+### Two-qubit gates
+
+### Circuit notation for multiple qubits
+
+### Universal gate sets
+
+## Entanglement
+
+### Definition and examples
+
+### Classical correlation and entanglement
+
+### Measurement and entanglement
+
+### No-cloning
+
+## 
+
+
+
+
+

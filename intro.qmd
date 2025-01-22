@@ -76,7 +76,7 @@ It was recognized early on that semiconductors provided an ideal platform for th
 
 ![Schematic of Field Effect Transistor[^2]](images/FET%20Cross%20Section.svg){width=50% #fig-FET-schematic}
 
-In @fig-FET-schematic, electrons flow from source to drain, but only when the "gate" has an applied voltage to it (effectively "lowering the barrier" for electrons to get through). This theory was sound and based on the recently developed quantum electron theory of metals developed by Wolfgang Pauli, Werner Heisenberg, Arnold Sommerfeld, Felix Bloch, and Rudolf Peierls @Hoddeson1981. And indeed, the people at Bell labs worked on this problem theoretically and experimentally for the beginning in the 1930s (for a full history, see @Hoddeson1981). Despite the strong foundations though, creating a field effect transistor turned out to be difficult, and in the process Brattain and Schockley instead created the point-contact transistor.
+In @fig-FET-schematic, electrons flow from source to drain, but only when the "gate" has an applied voltage to it (effectively "lowering the barrier" for electrons to get through). This theory was sound and based on the recently developed quantum electron theory of metals developed by Wolfgang Pauli, Werner Heisenberg, Arnold Sommerfeld, Felix Bloch, and Rudolf Peierls @Hoddeson1981. And indeed, the people at Bell labs worked on this problem theoretically and experimentally for the beginning in the 1930s (for a full history, see @Hoddeson1981). Despite the strong foundations though, creating a field effect transistor turned out to be difficult, and in the process Brattain and Bardeen instead created the point-contact transistor.
 
 ### The Point Contact Transistor
 
