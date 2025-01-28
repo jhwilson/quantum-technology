@@ -296,7 +296,7 @@ These expectation values give us coordinates , which are precisely the coordinat
 :::
 
 ::: {#fig-bloch-sphere}
-```{.tikz}
+<!-- ```{.tikz}
 %%| filename: bloch-sphere
 %%| header-includes: \usetikzlibrary{arrows.meta}
 %%| additionalPackages: \usepackage{braket}
@@ -325,7 +325,9 @@ These expectation values give us coordinates , which are precisely the coordinat
     \node[right=2mm, above=0.5mm] at (0.6,0.25) {$\ket{-}$};
     \node[below=2mm] at (-0.6,-0.25) {$\ket{+}$};
 \end{tikzpicture}
-```
+``` -->
+
+![](images/tikz/bloch-sphere.svg)
 
 The Bloch sphere showing eigenstates of X, Y, and Z Pauli operators
 :::
@@ -426,9 +428,7 @@ Now that we've covered the key single-qubit operations, we can start to think ab
 
 Often, unless we are preparing a specific state for an algorithm, we may leave off the states from the ends of the "wire." This wire, @fig-single-qubit, you can think of as the identity.
 
-::: {#fig-single-qubit layout-ncol=3}
-
-```{.tikz}
+<!-- ```{.tikz}
 %%| filename: qubit-identity-0
 %%| caption: Identity on $\ket{0}$
 %%| header-includes: \usetikzlibrary{quantikz2}
@@ -436,9 +436,8 @@ Often, unless we are preparing a specific state for an algorithm, we may leave o
 \begin{quantikz}
 \lstick{$\ket{0}$} &&&&& \rstick{$\ket{0}$}
 \end{quantikz}
-```
-
-```{.tikz}
+``` -->
+<!-- ```{.tikz}
 %%| filename: qubit-identity-1
 %%| caption: Identity on $\ket{1}$
 %%| header-includes: \usetikzlibrary{quantikz2}
@@ -446,9 +445,8 @@ Often, unless we are preparing a specific state for an algorithm, we may leave o
 \begin{quantikz}
 \lstick{$\ket{1}$} &&&&& \rstick{$\ket{1}$}
 \end{quantikz}
-```
-
-```{.tikz}
+``` -->
+<!-- ```{.tikz}
 %%| filename: qubit-identity
 %%| caption: Identity on $\ket{\psi}$
 %%| header-includes: \usetikzlibrary{quantikz2}
@@ -456,7 +454,14 @@ Often, unless we are preparing a specific state for an algorithm, we may leave o
 \begin{quantikz}
 \lstick{$\ket{\psi}$} &&&&& \rstick{$\ket{\psi}$}
 \end{quantikz}
-```
+``` -->
+::: {#fig-single-qubit .centered layout-ncol=3}
+
+![Identity on $\ket{0}$](images/tikz/qubit-identity-0.svg){#fig-identity-0}
+
+![Identity on $\ket{1}$](images/tikz/qubit-identity-1.svg){#fig-identity-1}
+
+![Identity on $\ket{\psi}$](images/tikz/qubit-identity.svg){#fig-qubit-identity}
 
 Lines representing the evolution of a qubit (no gates applied)
 ::: 
@@ -467,9 +472,7 @@ While in quantum state evolution we apply operators right-to-left, the two opera
 The Pauli operators are both unitary and Hermitian, so they perform as quantum gates (which require unitary as @sec-postulate-unitary stipulates) and as observables (as @sec-postulate-observable stipulates).
 :::
 
-::: {#fig-qubit-XZ-gates layout-ncol=2}
-
-```{.tikz}
+<!-- ```{.tikz}
 %%| filename: qubit-X-gate
 %%| caption: Application of the $X$ gate.
 %%| header-includes: \usetikzlibrary{quantikz2}
@@ -477,9 +480,8 @@ The Pauli operators are both unitary and Hermitian, so they perform as quantum g
 \begin{quantikz}
 \lstick{$\ket{0}$} && \gate{X} && \rstick{$\ket{1}$}
 \end{quantikz}
-```
-
-```{.tikz}
+``` -->
+<!-- ```{.tikz}
 %%| filename: qubit-Z-gate
 %%| caption: Application of the $Z$ gate.
 %%| header-includes: \usetikzlibrary{quantikz2}
@@ -487,16 +489,19 @@ The Pauli operators are both unitary and Hermitian, so they perform as quantum g
 \begin{quantikz}
 \lstick{$\ket{+}$} && \gate{Z} && \rstick{$\ket{-}$}
 \end{quantikz}
-```
+``` -->
+::: {#fig-qubit-XZ-gates .centered layout-ncol=2}
+
+![Application of the $X$ gate.](images/tikz/qubit-X-gate.svg){#fig-qubit-X-gate width="50%"}
+
+![Application of the $Z$ gate.](images/tikz/qubit-Z-gate.svg){#fig-qubit-Z-gate width="50%"}
 
 Examples of the Pauli operators as gates.
 ::: 
 
 The Hadamard and phase gates can also be mixed in, @fig-qubit-HS-gates, and we can even introduce the meter symbol for measurements, @fig-qubit-measure.
 
-::: {#fig-qubit-HS-gates layout-ncol=2}
-
-```{.tikz}
+<!-- ```{.tikz}
 %%| filename: qubit-H-gate
 %%| caption: Application of the Hadamard gate 
 %%| header-includes: \usetikzlibrary{quantikz2}
@@ -504,9 +509,8 @@ The Hadamard and phase gates can also be mixed in, @fig-qubit-HS-gates, and we c
 \begin{quantikz}
 \lstick{$\ket{0}$} && \gate{H} && \rstick{$\ket{+}$}
 \end{quantikz}
-```
-
-```{.tikz}
+``` -->
+<!-- ```{.tikz}
 %%| filename: qubit-S-gate
 %%| caption: Application of the phase gate
 %%| header-includes: \usetikzlibrary{quantikz2}
@@ -514,14 +518,17 @@ The Hadamard and phase gates can also be mixed in, @fig-qubit-HS-gates, and we c
 \begin{quantikz}
 \lstick{$\ket{+}$} && \gate{S} && \rstick{$\ket{+i}$}
 \end{quantikz}
-```
+``` -->
+::: {#fig-qubit-HS-gates .centered layout-ncol=2}
+
+![Application of the Hadamard gate.](images/tikz/qubit-H-gate.svg){#fig-qubit-H-gate}
+
+![Application of the phase gate](images/tikz/qubit-S-gate.svg){#fig-qubit-phase-gate}
 
 Examples of the Hadamard and phase gates.
 ::: 
 
-::: {#fig-qubit-measure layout-ncol=2}
-
-```{.tikz}
+<!-- ```{.tikz}
 %%| filename: qubit-X-gate-measure
 %%| caption: Will measure 1 with 100% probability
 %%| header-includes: \usetikzlibrary{quantikz2}
@@ -529,9 +536,8 @@ Examples of the Hadamard and phase gates.
 \begin{quantikz}
 \lstick{$\ket{0}$} && \gate{X} && \meter{}
 \end{quantikz}
-```
-
-```{.tikz}
+``` -->
+<!-- ```{.tikz}
 %%| filename: qubit-H-gate-measure
 %%| caption: Will measure 1 with 50% probability
 %%| header-includes: \usetikzlibrary{quantikz2}
@@ -539,7 +545,12 @@ Examples of the Hadamard and phase gates.
 \begin{quantikz}
 \lstick{$\ket{0}$} && \gate{H} && \meter{}
 \end{quantikz}
-```
+``` -->
+::: {#fig-qubit-measure .centered layout-ncol=2}
+
+![Will measure 1 with 100% probability](images/tikz/qubit-X-gate-measure.svg){#fig-qubit-X-measure}
+
+![Will measure 1 with 50% probability](images/tikz/qubit-H-gate-measure.svg){#fig-qubit-H-measure}
 
 Examples of measurements. The meter is assumed to be measuring in the computational basis unless otherwise noted (i.e., measuring the $Z$ operator).
 ::: 
@@ -562,7 +573,7 @@ These diagrams give us a powerful visual language for describing quantum computa
 ## **Example**: Gate Sequences
 Consider applying $H$ then $Z$ then $H$ to $\ket{0}$:
 
-```{.tikz}
+<!-- ```{.tikz}
 %%| filename: qubit-HZH-gate-measure
 %%| caption: Implementing an $X$ gate with $Z$ and $H$.
 %%| header-includes: \usetikzlibrary{quantikz2}
@@ -570,7 +581,8 @@ Consider applying $H$ then $Z$ then $H$ to $\ket{0}$:
 \begin{quantikz}
 \lstick{$\ket{0}$} & \gate{H} & \gate{Z} & \gate{H} & 
 \end{quantikz}
-```
+``` -->
+![Implementing an $X$ gate with $Z$ and $H$.](images/tikz/qubit-HZH-gate-measure.svg){#fig-X-is-H-Z}
 
 
 1. $H\ket{0} = \ket{+}$ (move to +x axis)

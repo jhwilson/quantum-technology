@@ -5,7 +5,7 @@ Previously in @sec-qubit we discussed in detail how to understand a single qubit
 However, there is just a practical concern: How much information can we store in a single qubit? With precise control, we have our answer in @sec-bloch-sphere: the angles $\theta$ and $\phi$ on the Bloch sphere. Since algorithms are bit more greedy than that, we need to extend our space and the natural way to do that is to add more qubits. Of course, classically, we operate with many bits: Floats (real numbers) on most computers use 64 bits, and we often add, substract, multiply a lot of these numbers. But classically, when we have, for instance, two bits, there are four discrete states 00, 01, 10, and 11. As we will analyze in detail, quantum mechanically these will be four basis states that can make up a general quantum wave function
 $$
 \ket{\psi} = \alpha \ket{00} + \beta \ket{01} + \gamma \ket{10} + \delta \ket{11}.
-$$
+$$ {#eq-four-qubit-state}
 
 ## Tensor Products and the multi-qubit Hilbert space
 
@@ -137,9 +137,381 @@ In contrast, real quantum computers are bound by the measurement postulates of q
 This limitation of quantum hardware is why techniques like quantum state tomography are necessary - reconstructing the full quantum state requires performing many different measurements on multiple copies of the same state. Classical simulation sidesteps this fundamental quantum constraint, though at the cost of exponential classical resources.
 :::
 
+Before we run head first into entanglement, let's take a minute to just do some counting to see that we are going to run into some trouble. For a single qubit, we have two complex numbers $\ket{\psi} = \alpha\ket0 + \beta \ket1$, but we need to normalize them $|\alpha|^2 + |\beta|^2=1$ and remove a phase. Thus, we have reduced our 2 complex numbers (= 4 real numbers) down to 4-1-1=2 real numbers. This is made explicit with the Bloch sphere where two real numbers $(\theta,\phi)$ completely characterize the state. Therefore, do we only need $2\times 2=4$ real numbers to describe a 4 qubit state? Well, let's count, we can see from @eq-four-qubit-state that we have 4 complex numbers (= 8 real numbers). But we must also impose normalization and remove an overall phase, reducing us down to 8-1-1 = 6 real numbers. But $6>4$; this is our first hint of something happening in our quantum system, we need more numbers to describe all of the states in a two qubit system than simply what we needed for two separate qubits.
+
+::: {.callout-note}
+## Mathematical Note: State Space Geometry
+
+For the mathematically inclined: The physical state space of an N-qubit system is complex projective space $\mathbb{CP}^{2^N-1}$. For two qubits, this means $\mathbb{CP}^3$, which is fundamentally different from $\mathbb{CP}^1 \times \mathbb{CP}^1$ (the space of two separate qubits). This geometric fact underlies why we need more parameters to describe entangled states - the state space has a richer structure than just the product of individual qubit spaces.
+:::
+
+
+## Entanglement
+
+Entanglement is one of the most important phenomena in quantum mechanics without a clear classical antecedent. The term was first coined by Schrödinger in 1935 @Schrodinger1935 in response to a famous paper by Einstein, Podolsky, and Rosen (EPR) @EinsteinRosen1935. It represents quantum correlations between particles that cannot be explained by a simple "lack of knowledge" by the observer. To get around this, it was thought there must be "hidden variables" to make quantum mechanics complete; thus, EPR used these quantum correlations to argue that quantum mechanics must be incomplete. Quantum mechanics appeared to allow "spooky action at a distance" that violated their ideas of locality and reality.
+
+However, in 1964, John Stewart Bell @Bell1964a showed that quantum mechanics predicts correlations between entangled particles that are mathematically impossible to explain with any local hidden variable theory. Subsequent experiments have repeatedly confirmed these "Bell inequality violations," demonstrating that entanglement represents a fundamentally new kind of physical relationship not reducible to classical correlations (early experiments include @FreedmanClauser1972 and @AspectRoger1982).
+
+The existence of entanglement suggests that the quantum wave function represents more than just our knowledge about measurement probabilities - it appears to be a real physical object. More recent work by Matthew Pusey, Jonathan Barrett, and Terry Rudolph @PuseyRudolph2012 has strengthened this view through their "PBR theorem," which shows that if quantum predictions are correct, then quantum states must be physically real rather than merely statistical.
+
+::: {.callout-note}
+## Reality of the Wave Function
+The PBR theorem (2012) @PuseyRudolph2012 tells us something deep about quantum mechanics. To quote the paper,
+
+> In conclusion, we have presented a no-go theorem, which—modulo assumptions—shows that models in which the quantum state is interpreted as mere information about an objective physical state of a system cannot reproduce the predictions of quantum theory. The result is in the same spirit as Bell's theorem, which states that no local theory can reproduce the predictions of quantum theory.
+
+This provides strong support for viewing entanglement as a genuine physical phenomenon rather than just a limitation of our knowledge.
+:::
+
+Let's explore what entanglement means mathematically and physically.
+
+### Bell States and Non-local Correlations
+
+One of the simplest cases of quantum entanglement is the Bell state 
+$$ 
+|\Phi^+\rangle = \frac{|00\rangle + |11\rangle}{\sqrt{2}}
+$$ {#eq-bell-state}
+
+This state exhibits perfect correlations that persist regardless of the physical separation between the qubits. When we measure the first qubit:
+
+- If we get $|0\rangle$, the state collapses to $|00\rangle$
+- If we get $|1\rangle$, the state collapses to $|11\rangle$
+
+The remarkable feature is that measuring either qubit instantly determines the state of the other qubit, even if they are separated by vast distances. For example:
+
+1. Create $|\Phi^+\rangle$ and separate the qubits by sending one to Earth and one to Mars
+2. Measure the Earth qubit → get result 0 or 1 with 50% probability
+3. We know with 100\% certainty that the Mars qubit will be measured to give the same result.
+4. This happens faster than light could travel between the qubits.
+
+::: {.callout-important}
+## No faster-than-light communication
+
+While entanglement appears to create "spooky action at a distance," it cannot be used to transmit information faster than light. This is because:
+
+1. The measurement results are random
+2. The person with the second qubit needs classical information about the first measurement to interpret their results
+3. This classical information is still limited by the speed of light
+:::
+
+::: {.callout-note}
+## Bell state properties are basis independence
+
+A remarkable property of the Bell state $|\Phi^+\rangle$ is that these perfect correlations persist no matter what basis we measure in. If we measure the first qubit in any basis and get some state $|\psi\rangle$, the second qubit will always be found in state $|\psi\rangle$ when measured in the same basis.
+
+For example, if we measure the first qubit in the $X$ basis:
+- If we get $|+\rangle$, the state collapses to $|{+}{+}\rangle$
+- If we get $|-\rangle$, the state collapses to $|{-}{-}\rangle$
+
+This is because we can rewrite $|\Phi^+\rangle$ in any basis and it maintains the same form:
+$$
+|\Phi^+\rangle = \frac{|00\rangle + |11\rangle}{\sqrt{2}} = \frac{|{+}{+}\rangle + |{-}{-}\rangle}{\sqrt{2}}
+$$
+
+This is true for any basis, not just $Z$ and $X$.
+:::
+
+
+These non-local correlations are fundamentally different from classical correlations, but how can we see that? The key ends up being: measurements that show quantum correlations and was Bell's central insight @Bell1964a. Instead of just looking at measurements of $Z$ which are easily explained by a classical hidden variable, also perform measurements at other angles of the Bloch sphere. 
+
+::: {.callout-note}
+## Mermin's Example
+To see a simple example, read @Mermin1981. The essence of the idea presented there is to measure three different observables with the Bell state in @eq-bell-state,
+$$
+Z, \quad -\frac12 Z + \frac{\sqrt3}{2}X, \quad -\frac12 Z - \frac{\sqrt{3}}{2}X,
+$$
+with the results from these three measurements, there is no way to use classical probabilities of measurement outcomes to account for the distribution of results.
+:::
+
+
+<!-- ### A Bell's inequality
+
+::: {.callout-note}
+## Mermin's Example
+This example, using qubits, is adapted from @Mermin1981.
+:::
+
+What is it about quantum entanglement that is different from classical entanglement? So far it looks like the state might just be a probablistic combination of 1s and 0s. And for the Bell state in @eq-bell-state, maybe we can imagine it's just some probablistic classical bit:
+
+| Measurement Outcome | Probability |
+|:-------------------|:------------|
+| Both measure 0     | 50%         |
+| First 0, Second 1  | 0%          |
+| First 1, Second 0  | 0%          | -->
+
+
+### Mathematical definition and separability
+
+A multi-qubit quantum state is entangled _if and only if_ it cannot be written as a tensor product of individual qubit states[^2]. For a two-qubit pure state $|\psi\rangle$, this means there do not exist single-qubit states $|\phi_1\rangle$ and $|\phi_2\rangle$ such that:
+
+$$
+|\psi\rangle = |\phi_1\rangle \otimes |\phi_2\rangle
+$$
+
+For a general two-qubit state $|\psi\rangle = \alpha|00\rangle + \beta|01\rangle + \gamma|10\rangle + \delta|11\rangle$, there is a simple condition for separability: the state is separable if and only if the determinant of its coefficient matrix is zero:
+
+$$
+\begin{vmatrix} 
+\alpha & \beta \\
+\gamma & \delta
+\end{vmatrix} = \alpha\delta - \beta\gamma = 0
+$$
+
+This can be proven by writing out the general form of a tensor product and matching coefficients. The classic examples of maximally entangled states are the Bell states:
+
+$$
+|\Phi^+\rangle = \frac{|00\rangle + |11\rangle}{\sqrt{2}} \qquad |\Phi^-\rangle = \frac{|00\rangle - |11\rangle}{\sqrt{2}}
+$$
+$$
+|\Psi^+\rangle = \frac{|01\rangle + |10\rangle}{\sqrt{2}} \qquad |\Psi^-\rangle = \frac{|01\rangle - |10\rangle}{\sqrt{2}}
+$$
+
+For mixed states, the situation is more complex and requires measures like concurrence to fully characterize entanglement.
+
+::: {.callout-note icon=false}
+## **Example**: Separable state condition
+
+Consider a separable two-qubit state formed by the tensor product of two arbitrary single-qubit states:
+
+$$
+|\phi_1\rangle = a|0\rangle + b|1\rangle \qquad |\phi_2\rangle = c|0\rangle + d|1\rangle
+$$
+
+Their tensor product gives:
+
+$$
+\begin{aligned}
+|\phi_1\rangle \otimes |\phi_2\rangle &= (a|0\rangle + b|1\rangle) \otimes (c|0\rangle + d|1\rangle) \\
+&= ac|00\rangle + ad|01\rangle + bc|10\rangle + bd|11\rangle
+\end{aligned}
+$$
+
+The coefficient matrix determinant is:
+$$
+\begin{vmatrix}
+ac & ad \\
+bc & bd
+\end{vmatrix} = (ac)(bd) - (ad)(bc) = abcd - abcd = 0
+$$
+
+This confirms that any separable state satisfies the zero determinant condition. Conversely, if a state's coefficient matrix has non-zero determinant, it must be entangled.
+:::
+
+::: {.callout-note icon="false"}
+## **Example**: Checking for Entanglement
+
+Let's examine two states to see if they're entangled:
+
+1. Consider the state $|\psi_1\rangle = \frac{1}{\sqrt{2}}(|00\rangle + |11\rangle)$
+   The coefficient matrix is:
+   $$
+   \begin{pmatrix}
+   1/\sqrt{2} & 0 \\
+   0 & 1/\sqrt{2}
+   \end{pmatrix}
+   $$
+   The determinant is $(1/\sqrt{2})(1/\sqrt{2}) - (0)(0) = 1/2 \neq 0$, so this state is entangled.
+
+2. Consider the state $|\psi_2\rangle = \frac{1}{\sqrt{2}}(|00\rangle + |01\rangle)$
+   The coefficient matrix is:
+   $$
+   \begin{pmatrix}
+   1/\sqrt{2} & 1/\sqrt{2} \\
+   0 & 0
+   \end{pmatrix}
+   $$
+   The determinant is $(1/\sqrt{2})(0) - (1/\sqrt{2})(0) = 0$, so this state is separable.
+   Indeed, we can write it as $|\psi_2\rangle = |0\rangle \otimes \frac{1}{\sqrt{2}}(|0\rangle + |1\rangle)$.
+
+3. Consider the state $|\psi_3\rangle = \frac{1}{2}(|00\rangle + |01\rangle + |10\rangle + |11\rangle)$
+   The coefficient matrix is:
+   $$
+   \begin{pmatrix}
+   1/2 & 1/2 \\
+   1/2 & 1/2
+   \end{pmatrix}
+   $$
+   The determinant is $(1/2)(1/2) - (1/2)(1/2) = 0$, so this state is separable.
+   We can verify this by rewriting it as:
+   $|\psi_3\rangle = \frac{1}{\sqrt{2}}(|0\rangle + |1\rangle) \otimes \frac{1}{\sqrt{2}}(|0\rangle + |1\rangle)$
+:::
+
+### Reduced density matrices
+
+For entangled states, we often want to describe the state of a single qubit within the two-qubit system. This is done using the reduced density matrix, obtained by "tracing out" the other qubit. The process, called the partial trace, gives us a density matrix that describes all measurable properties of the subsystem we're interested in.
+
+For a two-qubit system in state $|\psi\rangle$, the density matrix is $\rho = |\psi\rangle\langle\psi|$. To get the reduced density matrix for the first qubit ($\rho_A$), we take the partial trace over the second qubit (B):
+
+$$
+\rho_A = \text{Tr}_B(\rho) = \sum_{b=0}^1 \langle b_B|\rho|b_B\rangle
+$$
+
+For a single term $\langle b_B|\rho|b_B\rangle$, this gives a $2\times2$ matrix acting on the first qubit:
+
+$$
+\begin{aligned}
+\langle b_B|\rho|b_B\rangle & = \begin{pmatrix}
+\langle 0 b|\rho|0 b\rangle & \langle 0 b|\rho|1 b\rangle \\
+\langle 1 b|\rho|0 b\rangle & \langle 1 b|\rho|1 b\rangle
+\end{pmatrix} \\
+& = \begin{pmatrix}
+|\braket{0 b | \psi}|^2 & \braket{0 b |\psi} \braket{1b| \psi}^* \\
+\braket{1b|\psi}\braket{0b|\psi}^* & |\braket{1b|\psi}|^2
+\end{pmatrix}
+\end{aligned}
+$$
+
+where $|b_B\rangle$ are the basis states of qubit B. Each element of $\rho_A$ is a sum of two elements from the original density matrix, corresponding to tracing out qubit B in the computational basis.
+
+::: {.callout-tip}
+## Tensor notation for density matrices
+
+In tensor notation, a two-qubit state $|\psi\rangle$ has components $\psi_{ij}$ where $i,j$ label the basis states of the first and second qubit. The density matrix elements are then $\rho_{ij,kl} = \psi_{ij}\psi_{kl}^*$, where the first pair of indices $(i,j)$ corresponds to the ket and $(k,l)$ to the bra.
+
+The partial trace over qubit B corresponds to summing over matching indices for qubit B:
+
+$$
+(\rho_A)_{ik} = \sum_j \rho_{ij,kj}
+$$
+This tensor notation makes it clear why this operation is called a "trace" - we're summing over diagonal elements where the indices for system B match (j=j), just like in the usual matrix trace, while keeping the indices for system A (i,k) free.
+:::
+
+
+
+::: {.callout-note icon=false}
+## **Example**: Reduced density matrix of a Bell state
+
+Consider the Bell state $|\Phi^+\rangle = \frac{|00\rangle + |11\rangle}{\sqrt{2}}$. Its density matrix is:
+
+$$
+\rho = |\Phi^+\rangle\langle\Phi^+| = \frac{1}{2}(|00\rangle\langle00| + |00\rangle\langle11| + |11\rangle\langle00| + |11\rangle\langle11|)
+$$
+
+Let's find $\rho_A$ step by step:
+
+1. First, we compute the partial trace:
+   $$
+   \begin{aligned}
+   \rho_A &= \langle0_B|\rho|0_B\rangle + \langle1_B|\rho|1_B\rangle \\
+   &= \frac{1}{2}|0\rangle\langle0| + \frac{1}{2}|1\rangle\langle1| \\
+   &= \frac{1}{2}I
+   \end{aligned}
+   $$
+
+2. This shows that when we look at just one qubit of a maximally entangled pair:
+   - It appears to be in a completely mixed state
+   - We have equal probability of measuring 0 or 1
+   - All quantum information is stored in the correlations between qubits
+:::
+
+The reduced density matrix reveals a key feature of entanglement: while the total state is pure ($\rho^2 = \rho$), the subsystem state can be mixed ($\rho_A^2 \neq \rho_A$). This is a signature of entanglement - if we can only access one qubit of an entangled pair, we see a statistical mixture rather than a pure state.
+
+::: {.callout-note}
+## Why Care About Reduced Density Matrices?
+
+Reduced density matrices are crucial because they tell us what we can observe when we only have access to part of an entangled system. They help answer questions like:
+
+1. **Local Measurements**: What results will we get if we only measure one qubit of an entangled pair?
+2. **Quantum Information**: How much information is accessible locally vs. stored in correlations?
+3. **Decoherence**: How does interaction with the environment affect our quantum system?
+
+For example, in quantum teleportation, while the total state remains pure, the reduced density matrix of the transmitted qubit appears completely mixed until the classical information is received. This explains why teleportation cannot transmit information faster than light!
+:::
+
+
+### Quantifying entanglement
+
+Several measures exist to quantify entanglement, each capturing different aspects:
+
+1. **Von Neumann entropy**: For a pure bipartite state $|\psi\rangle$, the entanglement entropy is $S(\rho_A) = -\text{Tr}(\rho_A \log_2 \rho_A)$ where $\rho_A$ is the reduced density matrix of subsystem A. For two qubits, this ranges from 0 for separable states to 1 for maximally entangled states.
+
+2. **Concurrence** @Wootters2001: For a two-qubit state $\rho$, defined as $C(\rho) = \max(0, \lambda_1 - \lambda_2 - \lambda_3 - \lambda_4)$ where $\lambda_i$ are the square roots of eigenvalues of $\rho(Y \otimes Y)\rho^*(Y \otimes Y)$ in decreasing order (this reduces to $2|\alpha\delta - \beta\gamma|$ for a pure state $|\psi\rangle = \alpha|00\rangle + \beta|01\rangle + \gamma|10\rangle + \delta|11\rangle$).
+
+3. **Negativity**: Based on the partial transpose of the density matrix, providing a computable measure that captures the degree of entanglement. However, while negativity is zero for separable states, a zero negativity does not guarantee separability for some higher-dimensional systems - there exist entangled states with zero negativity.
+
+These measures help quantify the "quantum-ness" of correlations and their potential utility in quantum information protocols. All of these are discussed in detail in @Horodecki2009.
+
+We will find that many protocols of usefulness will produce entanglement in the system, though often only when in a particular basis. We will see that in the next section when we introduce operators on this Hilbert space
+
+::: {.callout-important}
+## Entanglement depends on the partition
+
+When we talk about entanglement between subsystems A and B, it's crucial to understand that this depends entirely on how we choose to divide our total system into these subsystems. The same quantum state can appear entangled or unentangled depending on this choice of partition.
+
+For example, consider the state:
+$$
+|\psi\rangle = \frac{1}{\sqrt{2}}(|00\rangle + |11\rangle),
+$$
+
+this is clearly an entangled Bell state, but our Hilbert space exists as (complex) four-dimensional space. I could "relabel" my states into a new basis (which we can define with a tilde), such that
+$$
+\begin{aligned}
+\ket{00} & = \frac1{\sqrt{2}}( \ket{\tilde 0 \tilde 0} + \ket{\tilde 1 \tilde 1}), \\
+\ket{11} & = \frac1{\sqrt{2}}( \ket{\tilde 0 \tilde 0} - \ket{\tilde 1 \tilde 1}), \\
+\ket{01} & = \frac1{\sqrt{2}}( \ket{\tilde 0 \tilde 1} + \ket{\tilde 1 \tilde 0}), \\
+\ket{10} & = \frac1{\sqrt{2}}( \ket{\tilde 0 \tilde 1} - \ket{\tilde 1 \tilde 0}), \\
+\end{aligned}
+$$
+and if we do that, we see that 
+
+$$
+\ket\psi = \ket{\tilde 0 \tilde 0},
+$$
+
+a completely disentangled state! This is not to say that $\ket{\psi}$ is not entangled, it is. It is merely important to remember that entanglement is defined with respect to a certain partitioning of your Hilbert space. The space represented by $\tilde 0$ and $\tilde 1$ is a complex combination of 00, 01, 10, and 11. 
+
+It is usually the physical situation which dictates how we partition our system (systems that are physically isolated from each other or for which we have single degrees of freedom which admit simple tensor products when considered with other systems).
+:::
+
+::: {.callout-note}
+## When to Use Different Entanglement Measures
+
+Each entanglement measure has its strengths:
+
+1. **Von Neumann Entropy**
+   - Best for: Pure bipartite states
+   - Advantages: Clear physical interpretation, easy to calculate
+   - Use when: You want to quantify how much quantum information is shared between subsystems
+
+2. **Concurrence**
+   - Best for: Two-qubit mixed states
+   - Advantages: Can be directly calculated from density matrix
+   - Use when: Working with noisy or mixed two-qubit states
+
+3. **Negativity**
+   - Best for: Higher-dimensional systems
+   - Advantages: Easy to compute, works for mixed states
+   - Use when: Dealing with larger systems or when you need a quick estimate of entanglement
+
+Example: For the Bell state $\ket{\Phi^+} = \frac{1}{\sqrt{2}}(\ket{00} + \ket{11})$:
+
+- Von Neumann Entropy = 1 (maximally entangled)
+- Concurrence = 1 (maximally entangled)
+- Negativity = 0.5 (maximum value for two qubits)
+:::
+
+::: {.callout-tip}
+## Three qubits can be entangled in two inequivalent ways @Dur2000
+
+Three-qubit entanglement introduces fundamentally new features not present in two-qubit systems. The most famous example is the GHZ state (named after Greenberger, Horne, and Zeilinger @GreenbergerZeilinger1990):
+
+$$
+|\text{GHZ}\rangle = \frac{1}{\sqrt{2}}(|000\rangle + |111\rangle)
+$$
+
+Unlike two-qubit entanglement, which has only one type of maximal entanglement (equivalent to Bell states), three-qubit systems can exhibit qualitatively different kinds of entanglement. The GHZ state above has the special property that measuring any one qubit immediately determines the state of the other two, but if you lose (trace out) any one qubit, the remaining two qubits are completely unentangled. This is fundamentally different from another type of three-qubit entanglement called the W state:
+
+$$
+|W\rangle = \frac{1}{\sqrt{3}}(|001\rangle + |010\rangle + |100\rangle)
+$$
+
+which maintains some two-qubit entanglement even after losing one qubit. These distinct classes of entanglement cannot be converted into each other using local operations and classical communication (LOCC).
+:::
+
+
 ## Multi-qubit operations
 
-With our exponentially big state space created, we can begin to think about how to translate our single qubit operations to multiple qubits and then how to build up operations that _use_ multiple qubits. We will focus on two qubit gates since these will help us build up a set of universal gates for quantum computation.
+With our exponentially big state space created and entanglement characterized, we can begin to think about how to translate our single qubit operations to multiple qubits and then how to build up operations that _use_ multiple qubits. We will focus on two qubit gates since these will help us build up a set of universal gates for quantum computation.
 
 ### Single-qubit gates
 
@@ -180,8 +552,8 @@ $$
 where $U$ appears in the $k$th position and $I$ appears in all other positions. This construction ensures we affect only the target qubit while leaving all other qubits unchanged.
 
 
-::: {.callout-note}
-## Example: H gate on second qubit of three-qubit system
+::: {.callout-note icon="false"}
+## **Example**: H gate on second qubit of three-qubit system
 
 Let's see how applying $H$ to the second qubit of a three-qubit system works. The operator is:
 
@@ -230,23 +602,328 @@ rather than $I \otimes I \otimes H \otimes I$. This notation is particularly hel
 
 ### Two-qubit gates
 
-### Circuit notation for multiple qubits
+To begin to build up a full set of logical gates, we start with "controlled" gates. These are gates that will act as single qubit gates on one qubit (the target), but only if another qubit (the control) is in the $\ket{1}$ state. 
 
-### Universal gate sets
+We first introduce the two-qubit gate called the controlled-NOT (CNOT) gate, which flips the second qubit (target) when the first qubit (control) is in state $|1\rangle$[^1].
 
-## Entanglement
+The CNOT gate can be written as a $4 \times 4$ matrix acting on the two-qubit basis states $|00\rangle$, $|01\rangle$, $|10\rangle$, and $|11\rangle$:
 
-### Definition and examples
+$$
+\text{CNOT} = \begin{pmatrix}
+1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 0 & 0 & 1 \\
+0 & 0 & 1 & 0
+\end{pmatrix}
+$$
 
-### Classical correlation and entanglement
+We can understand this matrix by seeing how it acts on each basis state:
 
-### Measurement and entanglement
+$$
+\begin{aligned}
+\text{CNOT}|00\rangle &= |00\rangle \\
+\text{CNOT}|01\rangle &= |01\rangle \\
+\text{CNOT}|10\rangle &= |11\rangle \\
+\text{CNOT}|11\rangle &= |10\rangle
+\end{aligned}
+$$
 
-### No-cloning
-
-## 
+When the first (control) qubit is $|0\rangle$, the target qubit is unchanged. When the control qubit is $|1\rangle$, the target qubit is flipped (X gate applied). This has a circuit representation which we show below in @fig-cnot-examples.
 
 
+<!-- ```{.tikz}
+%%| filename: cnot-0-control
+%%| caption: CNOT gate with control in $\ket{0}$
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}
+\lstick{$\ket{0}$} & \ctrl{1} & \qw & \rstick{$\ket{0}$} \\
+\lstick{$\ket{\psi}$} & \targ{} & \qw & \rstick{$\ket{\psi}$}
+\end{quantikz}
+```
+```{.tikz}
+%%| filename: cnot-1-control
+%%| caption: CNOT gate with control in $\ket{1}$
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}
+\lstick{$\ket{1}$} & \ctrl{1} & \qw & \rstick{$\ket{1}$} \\
+\lstick{$\ket{\psi}$} & \targ{} & \qw & \rstick{$X\ket{\psi}$}
+\end{quantikz}
+``` -->
+::: {#fig-cnot-examples .centered layout-ncol=2}
+
+![CNOT gate with control in $|0\rangle$](images/tikz/cnot-0-control.svg){#fig-cnot-0 width="80%"}
+
+![CNOT gate with control in $|1\rangle$](images/tikz/cnot-1-control.svg){#fig-cnot-1 width="80%"}
+
+The CNOT gate behavior depends on the control qubit state. When the control is $|0\rangle$ (left), the target is unchanged. When the control is $|1\rangle$ (right), the target is flipped.
+:::
+
+The CNOT gate's action on computational basis states appears simple - it either leaves them unchanged (when control is |0⟩) or flips the target (when control is |1⟩). However, when applied to superposition states, the CNOT can create entanglement. 
+
+For example, consider applying CNOT to a superposition state created by applying a Hadamard gate to the first qubit (circuit diagram in @fig-H-CNOT-Bell).
+
+<!-- ```{.tikz}
+%%| filename: cnot-bell
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}
+\lstick{$\ket{0}$} & \gate{H} & \ctrl{1} & \qw & \rstick[2]{$\frac1{\sqrt2}(\ket{00}+\ket{11})$}\\
+\lstick{$\ket{0}$} & \qw & \targ{} & \qw &
+\end{quantikz}
+``` -->
+::: {#fig-H-CNOT-Bell .centered}
+![](images/tikz/cnot-bell.svg){width=60%}
+
+The application of $H$ followed by a CNOT gate can create the Bell state $\frac1{\sqrt2}(\ket{00}+\ket{11})$.
+:::
+
+We can verify this mathematically:
+$$
+\begin{aligned}
+|00\rangle &\xrightarrow{H \otimes I} \frac{|0\rangle + |1\rangle}{\sqrt{2}} \otimes |0\rangle = \frac{|00\rangle + |10\rangle}{\sqrt{2}} \\
+&\xrightarrow{\text{CNOT}} \frac{|00\rangle + |11\rangle}{\sqrt{2}}
+\end{aligned}
+$$
+
+The resulting state is the Bell state $|\Phi^+\rangle$ which we saw earlier - a maximally entangled state that cannot be written as a product of individual qubit states.
+
+The CNOT gate is just one example of a controlled operation. More generally, we can create controlled versions of any single-qubit gate, where the target operation is applied only when the control qubit is $\ket{1}$. The most common controlled gates are:
+
+- Controlled-X (CNOT): Flips the target qubit if control is $\ket{1}$, @fig-CX-gate
+- Controlled-Z (CZ): Adds -1 phase if both qubits are $\ket{1}$, @fig-CZ-gate 
+- Controlled-Y (CY): Applies Y rotation if control is $\ket{1}$, @fig-CY-gate
+
+<!-- 
+```{.tikz}
+%%| filename: cx-gate
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}
+& \ctrl{1} & \\
+& \gate{X} & 
+\end{quantikz}
+```
+
+```{.tikz}
+%%| filename: cz-gate
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}
+& \ctrl{1} & \\
+& \gate{Z} & 
+\end{quantikz}
+```
+
+```{.tikz}
+%%| filename: cy-gate
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}
+& \ctrl{1} & \\
+& \gate{Y} & 
+\end{quantikz}
+``` -->
+
+::: {#fig-CY-CZ-gates layout-ncol=3}
+![CX](images/tikz/cx-gate.svg){#fig-CX-gate width=60%}
+
+![CY](images/tikz/cy-gate.svg){#fig-CY-gate width=60%}
+
+![CZ](images/tikz/cz-gate.svg){#fig-CZ-gate width=60%}
+
+Circuit Notation for controlled-X (CX), controlled-Y (CY), and controlled-Z (CZ) gates. Note that CX=CNOT, so this is just an alternative circuit notation.
+:::
+
+Any controlled gate can be constructed using CNOT gates and single-qubit operations. For example, the CZ gate can be implemented as:
+
+<!-- ```{.tikz}
+%%| filename: cz-decomp
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}
+&& \ctrl{1} &&  \\
+& \gate{H} & \targ{} & \gate{H} & 
+\end{quantikz}
+``` -->
+![The CZ gate can be decomposed into two Hadamards sandwiching a CNOT (CX) gate.](images/tikz/cz-decomp.svg){#fig-CZ-decomp width=40%}
+
+This notation is flexible as well, we can begin to apply any unitary matrix $U$ onto a target qubit and have a control qubit for it. This generically will look like
+
+<!-- ```{.tikz}
+%%| filename: cu-gate
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}
+& \ctrl{1} & \\
+& \gate{U} & 
+\end{quantikz}
+```  -->
+![An arbitrary controlled gate](images/tikz/cu-gate.svg){#fig-CU-gate width=20%}
+
+Mathematically, we can write this out in a four-by-four matrix
+$$
+\text{CU} = \begin{pmatrix}
+1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 0 & U_{11} & U_{12} \\
+0 & 0 & U_{21} & U_{22}
+\end{pmatrix}
+$$
+
+where $U_{ij}$ are the matrix elements of the single-qubit unitary $U = \begin{pmatrix} U_{11} & U_{12} \\ U_{21} & U_{22} \end{pmatrix}$.
+
+Another important two-qubit gate is the SWAP gate, which exchanges the states of two qubits. 
+The SWAP gate can be written as a four-by-four matrix:
+
+$$
+\text{SWAP} = \begin{pmatrix}
+1 & 0 & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 0 & 0 & 1
+\end{pmatrix}
+$$
+
+Unlike controlled gates, the SWAP gate cannot create entanglement - it simply swaps the quantum states between the qubits. The circuit notation for a SWAP gate is:
+
+<!-- ```{.tikz}
+%%| filename: swap-gate
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}
+& \swap{1} & \\
+& \targX{} &
+\end{quantikz}
+``` -->
+
+![SWAP gate circuit notation](images/tikz/swap-gate.svg){#fig-swap-gate width=20%}
+
+We've seen how this can already create entanglement even though one qubit is merely acting as "control," and how we can "SWAP" two qubits. However, we can also write down more general four-by-four matrices on two qubits and if we have a generic four-by-four matrix $U_4$, we will write that circuit element as
+
+<!-- ```{.tikz}
+%%| filename: u4-gate
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}
+& \gate[2]{U_4} & \\
+& \qw & 
+\end{quantikz}
+``` -->
+![A generic unitary on two qubits can be represented by a block spanning the two qubits](images/tikz/u4-gate.svg){#fig-u4-gate width=20%}
+
+These two-qubit gates form the foundation for quantum computation with multiple qubits. The controlled operations, particularly the CNOT gate, are essential building blocks for quantum algorithms, while general two-qubit unitaries give us the full power to manipulate quantum states in ways impossible with just single-qubit operations. Understanding how these gates create and manipulate entanglement is crucial.
+
+#### Universal gate sets
+
+Just as classical computation can be performed using a small set of universal gates (like NAND or NOR), quantum computation can be achieved using a finite set of quantum gates that can approximate any unitary operation to arbitrary precision. This is known as a universal gate set.
+
+A common universal gate set consists of:
+
+1. The CNOT gate
+2. Single-qubit rotations (or equivalently, any set of gates that can approximate any single-qubit rotation)
+
+Remarkably, these are sufficient to construct any unitary operation on any number of qubits, though the construction may require many gates. This is analogous to how NAND gates can be used to build any classical logic circuit.
+
+There are several alternative universal gate sets. Some common ones include:
+
+- CZ (or CY) + single-qubit rotations
+- CNOT + Hadamard + Phase (S) gate + T gate
+- Toffoli + Hadamard
+
+The choice of which universal gate set to use often depends on the physical implementation of the quantum computer. For example, some quantum computing architectures might naturally implement CZ gates rather than CNOT gates, making the CZ-based universal set more practical.
+
+It's worth noting that while we can approximate any unitary to arbitrary precision with these gate sets, the number of gates required might grow exponentially with the desired precision. This is known as the Solovay-Kitaev theorem, which provides an algorithm for finding such approximations.
+
+### Measurement 
+
+
+When measuring multiple qubits, we need to extend our understanding of single-qubit measurements. For a single qubit, measuring in the computational basis was straightforward - we would get either $\ket{0}$ or $\ket{1}$. However, in a multi-qubit system, measuring just one qubit introduces an important concept: partial measurements and degeneracy.
+
+Consider measuring the first qubit of a two-qubit state in the computational basis. The measurement operators are:
+
+$$
+P_0 = |0\rangle\langle 0| \otimes I = \begin{pmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \end{pmatrix}
+$$
+
+$$
+P_1 = |1\rangle\langle 1| \otimes I = \begin{pmatrix} 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{pmatrix}
+$$
+
+These operators are degenerate - for example, $P_0$ projects onto both $|00\rangle$ and $|01\rangle$ states. This means when we measure the first qubit and get 0, the second qubit remains in its quantum state.
+
+::: {.callout-note icon="false"}
+## Example: Partial Measurement
+Consider the state:
+$$
+|\psi\rangle = \frac{1}{2}(|00\rangle + |01\rangle + |10\rangle + |11\rangle)
+$$
+
+If we measure the first qubit and get 0, the state collapses to:
+$$
+|\psi'\rangle = \frac{1}{\sqrt{2}}(|00\rangle + |01\rangle)
+$$
+
+The second qubit remains in a superposition!
+:::
+
+When measuring multiple qubits, we need to be careful about how we calculate probabilities. For a single qubit, the probability of measuring $\ket{0}$ was simply $|\braket{0|\psi}|^2$. However, with multiple qubits, we need to sum over all possible configurations of the unmeasured qubits.
+
+For example, if we have a two-qubit state $|\psi\rangle$ and measure only the first qubit, the probability of getting 0 is:
+
+$$
+p(0) = \sum_i |\langle 0i|\psi\rangle|^2
+$$
+
+where $i$ runs over all possible states of the second qubit (0 and 1). This sum accounts for all ways we could get outcome 0 on the first qubit, regardless of what state the second qubit is in.
+
+::: {.callout-note icon="false"}
+## Example: Calculating Measurement Probabilities
+Consider again the state:
+$$
+|\psi\rangle = \frac{1}{2}(|00\rangle + |01\rangle + |10\rangle + |11\rangle)
+$$
+
+The probability of measuring 0 on the first qubit is:
+$$
+\begin{aligned}
+P(0) &= |\langle 00|\psi\rangle|^2 + |\langle 01|\psi\rangle|^2 \\
+&= \left|\frac{1}{2}\right|^2 + \left|\frac{1}{2}\right|^2 \\
+&= \frac{1}{2}
+\end{aligned}
+$$
+
+This matches our intuition - the first qubit is equally likely to be 0 or 1.
+:::
+
+
+#### Measuring General Observables
+In practice, we may be restricted in what we can measure on a quantum computer, such as only in the computational ($Z$) basis. However, we often need to measure other observables. For example, we might want to measure the parity of two qubits ($Z_1Z_2$) or their correlation ($X_1X_2$).
+
+To measure these observables, we need to transform our state before measurement. This is done by applying appropriate unitary operations that map our desired measurement basis to the computational basis.
+
+For example, to measure in the X basis, we first apply $H$ before measuring in the computational basis.
+
+For two-qubit observables like Z₁Z₂, we can use controlled operations to map the eigenspaces to computational basis states. Here's how we might measure Z₁Z₂:
+
+```{.tikz}
+%%| filename: zz-measure
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}& \ctrl{1} & \meter{} \\& \targ{} & \meter{}\end{quantikz}
+```
+<!-- ![Circuit to measure Z₁Z₂](){#fig-zz-measure width=20%} -->
+
+
+## Decoherence in multi-qubit systems
+
+### 
+
+
+
+[^1]: This is also known as the CX-gate (the controlled-$X$ gate).
+[^2]: This is true for pure states, but can be easily generalized to mixed states, see @Horodecki2009.
 
 
 

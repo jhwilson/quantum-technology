@@ -10,7 +10,12 @@ book:
     - intro.qmd
     - qubit.qmd
     - multiple_qubits.qmd
-    - summary.qmd
+    # - basic_algorithms.qmd
+    # - superconducting_qubits.qmd
+    # - ion_trap_qubits.qmd
+    # - photonic_qubits.qmd
+    # - topological_qubits.qmd
+    # - summary.qmd
     - references.qmd
 
 bibliography: references.bib
@@ -40,20 +45,17 @@ format:
           }
         };
         </script>
-  # pdf:
-  #   documentclass: scrreprt
-  #   pdf-engine: lualatex
-  #   keep-tex: true
-  #   pdf-engine-opts: 
-  #     - --shell-escape
-  #   include-in-header: 
-  #     text: |
-  #       \usepackage{tikz}
-  #       \usepackage{braket}
-  #       \DeclareMathOperator{\tr}{tr}
-  #       \usetikzlibrary{quantikz2}
-  #       \usetikzlibrary{arrows.meta}
-
+  pdf:
+    documentclass: scrreprt
+    fontsize: 10pt
+    pdf-engine: lualatex
+    keep-tex: false
+    pdf-engine-opts: 
+      - --shell-escape
+    include-in-header: 
+      text: |
+        \usepackage{braket}
+        \DeclareMathOperator{\tr}{tr}
 
 tikz:
   cache: true
