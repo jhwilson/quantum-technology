@@ -137,6 +137,23 @@ In contrast, real quantum computers are bound by the measurement postulates of q
 This limitation of quantum hardware is why techniques like quantum state tomography are necessary - reconstructing the full quantum state requires performing many different measurements on multiple copies of the same state. Classical simulation sidesteps this fundamental quantum constraint, though at the cost of exponential classical resources.
 :::
 
+::: {.callout-note icon=false}
+## **Example**: Building up three-qubit states
+Consider how we build up the state $\ket{101}$:
+
+1. Start with first two qubits: $\ket{10}$
+2. Tensor with third qubit: $\ket{10} \otimes \ket{1}$
+3. This gives: $\ket{101}$
+
+We can verify this matches our counting:
+
+- First qubit: $\ket{1}$ (second basis state)
+- Second qubit: $\ket{0}$ (first basis state)
+- Third qubit: $\ket{1}$ (second basis state)
+
+Therefore in binary: 101, which is state number 5 in our computational basis (counting from 0).
+:::
+
 Before we run head first into entanglement, let's take a minute to just do some counting to see that we are going to run into some trouble. For a single qubit, we have two complex numbers $\ket{\psi} = \alpha\ket0 + \beta \ket1$, but we need to normalize them $|\alpha|^2 + |\beta|^2=1$ and remove a phase. Thus, we have reduced our 2 complex numbers (= 4 real numbers) down to 4-1-1=2 real numbers. This is made explicit with the Bloch sphere where two real numbers $(\theta,\phi)$ completely characterize the state. Therefore, do we only need $2\times 2=4$ real numbers to describe a 4 qubit state? Well, let's count, we can see from @eq-four-qubit-state that we have 4 complex numbers (= 8 real numbers). But we must also impose normalization and remove an overall phase, reducing us down to 8-1-1 = 6 real numbers. But $6>4$; this is our first hint of something happening in our quantum system, we need more numbers to describe all of the states in a two qubit system than simply what we needed for two separate qubits.
 
 ::: {.callout-note}
@@ -405,6 +422,37 @@ Let's find $\rho_A$ step by step:
 :::
 
 The reduced density matrix reveals a key feature of entanglement: while the total state is pure ($\rho^2 = \rho$), the subsystem state can be mixed ($\rho_A^2 \neq \rho_A$). This is a signature of entanglement - if we can only access one qubit of an entangled pair, we see a statistical mixture rather than a pure state.
+
+::: {.callout-note icon=false}
+## **Example**: Partial Trace for a General Two-Qubit State
+
+Suppose we have a general two-qubit pure state:
+$$
+|\psi\rangle = \alpha|00\rangle + \beta|01\rangle + \gamma|10\rangle + \delta|11\rangle.
+$$
+The full density matrix is:
+$$
+\rho = |\psi\rangle \langle \psi| 
+= \begin{pmatrix}
+\alpha \\ \beta \\ \gamma \\ \delta
+\end{pmatrix}
+\begin{pmatrix}
+\alpha^* & \beta^* & \gamma^* & \delta^*
+\end{pmatrix}.
+$$
+
+To find the reduced density matrix of the first qubit, $\rho_A = \mathrm{Tr}_B(\rho)$, group the basis states so that qubit B’s index is traced out:
+
+$$
+\rho_A =
+\begin{pmatrix}
+|\alpha|^2 + |\beta|^2 & \alpha\gamma^*+\beta\delta^* \\
+\gamma\alpha^* + \delta\beta^* & |\gamma|^2 + |\delta|^2
+\end{pmatrix}.
+$$
+
+This $2\times2$ matrix captures all local measurements and observables on qubit A, regardless of the state of qubit B.
+:::
 
 ::: {.callout-note}
 ## Why Care About Reduced Density Matrices?
@@ -815,6 +863,29 @@ We've seen how this can already create entanglement even though one qubit is mer
 
 These two-qubit gates form the foundation for quantum computation with multiple qubits. The controlled operations, particularly the CNOT gate, are essential building blocks for quantum algorithms, while general two-qubit unitaries give us the full power to manipulate quantum states in ways impossible with just single-qubit operations. Understanding how these gates create and manipulate entanglement is crucial.
 
+::: {.callout-note icon=false}
+## **Example**: Creating different entangled states
+Let's see how different combinations of gates create distinct entangled states:
+
+1. Bell state $\ket{\Phi^+}$:
+   ```
+   |0⟩ --H--•--|
+            |
+   |0⟩ -----X--|
+   ```
+   $\ket{00} \xrightarrow{H \otimes I} \frac{\ket{00} + \ket{10}}{\sqrt{2}} \xrightarrow{CNOT} \frac{\ket{00} + \ket{11}}{\sqrt{2}}$
+
+2. Bell state $\ket{\Psi^+}$:
+   ```
+   |0⟩ --H--•--|
+            |
+   |0⟩ --X--X--|
+   ```
+   $\ket{00} \xrightarrow{I \otimes X} \ket{01} \xrightarrow{H \otimes I} \frac{\ket{01} + \ket{11}}{\sqrt{2}} \xrightarrow{CNOT} \frac{\ket{01} + \ket{10}}{\sqrt{2}}$
+
+This shows how different gate sequences can create different types of entanglement. _Note: We have used the fixed-width font notation for circuit diagrams here._
+:::
+
 #### Universal gate sets
 
 Just as classical computation can be performed using a small set of universal gates (like NAND or NOR), quantum computation can be achieved using a finite set of quantum gates that can approximate any unitary operation to arbitrary precision. This is known as a universal gate set.
@@ -836,6 +907,34 @@ The choice of which universal gate set to use often depends on the physical impl
 
 It's worth noting that while we can approximate any unitary to arbitrary precision with these gate sets, the number of gates required might grow exponentially with the desired precision. This is known as the Solovay-Kitaev theorem, which provides an algorithm for finding such approximations.
 
+::: {.callout-note icon=false}
+## **Example**: Creating a GHZ State
+A three-qubit GHZ state is
+$$
+| \text{GHZ} \rangle = \frac{|000\rangle + |111\rangle}{\sqrt{2}}.
+$$
+
+We can create this state using the following sequence of gates:
+
+1. Start from $|000\rangle$
+2. Apply a Hadamard gate to the first qubit:
+   $$
+   |000\rangle \xrightarrow{H \otimes I \otimes I} \frac{|000\rangle + |100\rangle}{\sqrt{2}}
+   $$
+3. Apply two consecutive CNOTs, using the first qubit as the control:
+   $$
+   \begin{aligned}
+   &\frac{|000\rangle + |100\rangle}{\sqrt{2}} 
+   \xrightarrow{\text{CNOT on qubits 1→2}} 
+   \frac{|000\rangle + |110\rangle}{\sqrt{2}} \\
+   &\quad \xrightarrow{\text{CNOT on qubits 1→3}}
+   \frac{|000\rangle + |111\rangle}{\sqrt{2}}
+   \end{aligned}
+   $$
+
+Measuring any qubit in the computational basis will instantly project the entire system into either $|000\rangle$ or $|111\rangle$, illustrating the strong correlations present in multipartite entanglement.
+:::
+
 ### Measurement 
 
 
@@ -851,7 +950,7 @@ $$
 P_1 = |1\rangle\langle 1| \otimes I = \begin{pmatrix} 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{pmatrix}
 $$
 
-These operators are degenerate - for example, $P_0$ projects onto both $|00\rangle$ and $|01\rangle$ states. This means when we measure the first qubit and get 0, the second qubit remains in its quantum state.
+These operators are degenerate - for example, $P_0$ projects onto both $|00\rangle$ and $|01\rangle$ states. This means when we measure the first qubit and get 0, the second qubit remains in a quantum state.
 
 ::: {.callout-note icon="false"}
 ## Example: Partial Measurement
@@ -868,7 +967,7 @@ $$
 The second qubit remains in a superposition!
 :::
 
-When measuring multiple qubits, we need to be careful about how we calculate probabilities. For a single qubit, the probability of measuring $\ket{0}$ was simply $|\braket{0|\psi}|^2$. However, with multiple qubits, we need to sum over all possible configurations of the unmeasured qubits.
+When measuring multiple qubits, we need to be careful about how we calculate probabilities. For a single qubit, the probability of measuring $\ket{0}$ was simply $\lvert\braket{0|\psi}\rvert^2$. However, with multiple qubits, we need to sum over all possible configurations of the unmeasured qubits.
 
 For example, if we have a two-qubit state $|\psi\rangle$ and measure only the first qubit, the probability of getting 0 is:
 
@@ -888,7 +987,7 @@ $$
 The probability of measuring 0 on the first qubit is:
 $$
 \begin{aligned}
-P(0) &= |\langle 00|\psi\rangle|^2 + |\langle 01|\psi\rangle|^2 \\
+p(0) &= |\langle 00|\psi\rangle|^2 + |\langle 01|\psi\rangle|^2 \\
 &= \left|\frac{1}{2}\right|^2 + \left|\frac{1}{2}\right|^2 \\
 &= \frac{1}{2}
 \end{aligned}
@@ -903,27 +1002,260 @@ In practice, we may be restricted in what we can measure on a quantum computer, 
 
 To measure these observables, we need to transform our state before measurement. This is done by applying appropriate unitary operations that map our desired measurement basis to the computational basis.
 
-For example, to measure in the X basis, we first apply $H$ before measuring in the computational basis.
+For example, as we saw in the single qubit section, to measure in the X basis, we first apply $H$ before measuring in the computational basis.
 
-For two-qubit observables like Z₁Z₂, we can use controlled operations to map the eigenspaces to computational basis states. Here's how we might measure Z₁Z₂:
+For two-qubit observables like $Z_1 Z_2$, we can use controlled operations to map the eigenspaces to computational basis states. Here's how we might measure $Z_1 Z_2$. 
 
-```{.tikz}
+First, let's write out how $Z_1 Z_2$ acts on the computational basis, separting out the +1 eigenvalues from the -1 eigenvalues
+
+| State | $Z_1Z_2$ | $Z_2$ | 
+|-------|-------|------------|
+| $\ket{00}$ | $+1$ | $+1$ |
+| $\ket{01}$ | $-1$ | $-1$ |
+| $\ket{10}$ | $-1$ | $+1$ |
+| $\ket{11}$ | $+1$ | $-1$ |
+
+Notice that these operators have the same number of +1 and -1 eigenvalues. On top of that, the states $\ket{00}$ and $\ket{01}$ have the same eigenvalue, and $\ket{10}$ and $\ket{11}$ flips. This sounds like a CNOT gate, in fact if we have a unitary that takes $\ket{10} \mapsto \ket{11}$ and $\ket{11} \mapsto \ket{10}$, while leaving $\ket{00}$ and $\ket{01}$ alone, these operators match.
+
+Let's build out a way to relate these operators which we will then use to measure _any_ string Pauli matrices. With the above, we note that
+$$
+\begin{aligned}
+\ket{00} & \mapsto \ket{00},\\
+\ket{01} & \mapsto \ket{01}, \\
+\ket{10} & \mapsto \ket{11}, \\
+\ket{11} & \mapsto \ket{10}
+\end{aligned}
+$$
+will let us map $Z_1 Z_2 \mapsto Z_2$. This has a simple matrix form
+$$
+\begin{pmatrix}
+1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 0 & 0 & 1 \\
+0 & 0 & 1 & 0
+\end{pmatrix}.
+$$
+In other words, the CNOT gate. Formally, this means that
+$$
+\text{CNOT}\, Z_1 Z_2\, \text{CNOT} = Z_2,
+$${#eq-CNOT-Z1Z2-CNOT}
+which can be verified with matrix mulitplation. However, we can also note that if we apply $\ket{b_1 b_2}$ to both sides,
+$$
+Z_1 Z_2 \text{CNOT} \ket{b_1 b_2} = \mathrm{CNOT} (-1)^{b_2} \ket{b_1 b_2} = (-1)^{b_2} \mathrm{CNOT} \ket{b_1 b_2},
+$$
+which verifies that $\mathrm{CNOT}\ket{b_1 b_2}$ is an eigenvector of $Z_1 Z_2$ with eigenvalue $(-1)^{b_2}$ (this assume @eq-CNOT-Z1Z2-CNOT is correct). 
+
+Therefore, to _measure_ $Z_1 Z_2$, we perform CNOT, then measure the target qubit (number two). The circuit diagram looks like this
+
+<!-- ```{.tikz}
 %%| filename: zz-measure
 %%| header-includes: \usetikzlibrary{quantikz2}
 %%| additionalPackages: \usepackage{braket}
-\begin{quantikz}& \ctrl{1} & \meter{} \\& \targ{} & \meter{}\end{quantikz}
+\begin{quantikz}& \ctrl{1} &  \\& \targ{} & \meter{}\end{quantikz}
+``` -->
+![Circuit to measure $Z_1Z_2$](images/tikz/zz-measure.svg){#fig-zz-measure width=20%} 
+
+and if we want to not only measure $Z_1 Z_2$ but ensure the system goes into an eigenstate of $Z_1 Z_2$, we need to perform CNOT again
+
+<!-- ```{.tikz}
+%%| filename: zz-measure-restore
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}& \ctrl{1} & & \ctrl{1} &  \\& \targ{} & \meter{} & \targ{} & \end{quantikz}
 ```
-<!-- ![Circuit to measure Z₁Z₂](){#fig-zz-measure width=20%} -->
+
+```{.tikz}
+%%| filename: big-zz-measure
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz} & \meter[2]{Z_1Z_2} &  \\ &  & \end{quantikz}
+``` -->
+
+::: {#fig-ZZ-meas layout-ncol=2 layout-valign="bottom"}
+![Circuit to measure $Z_1Z_2$ with a single symbol](images/tikz/big-zz-measure.svg){#fig-big-zz-measure width=40%}
+
+![Circuit to measure $Z_1Z_2$ with explicit gates](images/tikz/zz-measure-restore.svg){#fig-zz-measure-restore width=80%}
+
+Circuit diagrams for the $Z_1 Z_2$ measurement. These two circuits are equivalent to each other.
+:::
+
+But what about measuring other Pauli strings? We can use
+the fact that $X = H Z H$ and $Y = S X S^\dagger$ to convert any Pauli string measurement into a $Z$-type measurement. For example, to measure $X_1 X_2$, we can apply Hadamard gates to both qubits, measure $Z_1 Z_2$, and then apply Hadamard gates again:
+
+<!-- ```{.tikz}
+%%| filename: xx-measure
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}& \gate{H} & \ctrl{1} & & \ctrl{1} & \gate{H} &  \\& \gate{H} & \targ{} & \meter{} & \targ{} & \gate{H} & \end{quantikz}
+```
+
+```{.tikz}
+%%| filename: big-xx-measure
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz} & \meter[2]{X_1X_2} &  \\ &  & \end{quantikz}
+```   -->
+
+::: {#fig-XX-meas layout-ncol=2 layout-valign="bottom"}
+![Circuit to measure $X_1X_2$ with a single symbol](images/tikz/big-xx-measure.svg){#fig-big-xx-measure width=40%}
+
+![Circuit to measure $X_1X_2$ with explicit gates](images/tikz/xx-measure.svg){#fig-xx-measure-restore width=95%}
+
+Circuit diagrams for the $X_1 X_2$ measurement. These two circuits are equivalent to each other.
+:::
+
+This gives us a way to measure any Pauli string
+
+1. Perform single-particle unitaries to convert it to only $Z$ and $I$ operators.
+2. Find the permutation matrix that relates +1 and -1 eigenvalues of your $Z$-Pauli string to a single $Z_n$ and apply that unitary matrix (this could be a complicated combination of CNOT gates)
+3. Measure $Z_n$.
+4. If the correct measured state is needed, undo the unitary in #2 followed by the single-particle unitaries in #1. 
+
+Pauli strings are particularly "simple." Measuring more complicated observables requires more thought and sometimes ancillary systems to assist in that measurement.
+
+::: {.callout-note icon=false}
+## **Example**: Measuring X on One Qubit of a Two-Qubit System
+
+Suppose we have a two-qubit state:
+$$
+|\phi\rangle = \alpha|00\rangle + \beta|01\rangle + \gamma|10\rangle + \delta|11\rangle,
+$$
+and we want to measure the first qubit in the $X$ basis while leaving the second qubit unmeasured.
+
+1. Recall $H X H = Z$. So to measure $X$ on the first qubit, apply a Hadamard on that qubit to map the $X$ basis to the $Z$ basis:
+   $$
+   (H \otimes I)|\phi\rangle.
+   $$
+2. Measure the first qubit in the computational basis (effectively measuring $Z$ on the transformed state).
+3. After the measurement, unapply the $H$ if you want to restore the original basis of the first qubit.
+
+This procedure effectively measures $X_1$ while leaving qubit 2 untouched (can it still be entangled?).
+:::
+
+::: {.callout-note icon=false}
+## **Example**: Creating entanglement through measurement
+Let's see how we can create entanglement through measurement. We'll start with the product state $|{+}{+}\rangle$ and use a $Z_1Z_2$ measurement to create a maximally entangled state.
+
+1. Initial state:
+   $$
+   |{+}{+}\rangle = \frac{1}{2}(|00\rangle + |01\rangle + |10\rangle + |11\rangle)
+   $$
+
+2. Measuring $Z_1Z_2$ projects onto the +1 or -1 eigenspaces:
+   - +1 eigenspace: span{$|00\rangle$, $|11\rangle$}
+   - -1 eigenspace: span{$|01\rangle$, $|10\rangle$}
+
+3. After measurement:
+   - If outcome = +1:
+     $$
+     |\Phi^+\rangle = \frac{|00\rangle + |11\rangle}{\sqrt{2}}
+     $$
+   - If outcome = -1:
+     $$
+     |\Psi^+\rangle = \frac{|01\rangle + |10\rangle}{\sqrt{2}}
+     $$
+
+4. If we get -1, we can apply $X$ to the second qubit to transform to $|\Psi^{+}\rangle$:
+   $$
+   (I \otimes X)\frac{|01\rangle + |10\rangle}{\sqrt{2}} = \frac{|00\rangle + |11\rangle}{\sqrt{2}}
+   $$
+
+This procedure creates the Bell state $|\Phi^+\rangle$ regardless of measurement outcome, demonstrating how measurement plus conditional corrections can generate entanglement from separable states.
+:::
 
 
 ## Decoherence in multi-qubit systems
 
-### 
+When dealing with multiple qubits, decoherence becomes even more challenging than in single-qubit systems. Not only can each qubit experience individual decoherence, but the interactions between qubits can create new pathways for errors. The main types of multi-qubit decoherence are:
+
+1. **Independent decoherence**: Each qubit experiences its own local noise
+2. **Correlated decoherence**: Environmental effects that simultaneously affect multiple qubits
+3. **Cross-talk**: Unwanted interactions between qubits that should be isolated
+
+For example, consider a two-qubit state that starts in a Bell state:
+$$
+|\Phi^+\rangle = \frac{1}{\sqrt{2}}(|00\rangle + |11\rangle)
+$$
+The density matrix for this pure state is:
+$$
+|\Phi^+\rangle\langle\Phi^+| = \frac{1}{2}\begin{pmatrix}
+1 & 0 & 0 & 1 \\
+0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 \\
+1 & 0 & 0 & 1
+\end{pmatrix}
+$$
+
+Under independent dephasing, each qubit loses phase coherence separately:
+$$
+\rho(t) = \frac{1}{2}\begin{pmatrix} 
+1 & 0 & 0 & e^{-2\gamma t} \\
+0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 \\
+e^{-2\gamma t} & 0 & 0 & 1
+\end{pmatrix}
+$$
+
+which would represent exponential decay in entanglement over time; this could occur even with pure local noise. This highlights a crucial feature of quantum systems: even when noise acts independently on each qubit (i.e., local noise), it can destroy global quantum properties like entanglement. In other words, we don't need correlated noise to degrade entanglement - local noise channels are sufficient to compromise the quantum advantages that entanglement provides.
+
+::: {.callout-note icon=false}
+## **Example**: Impact of different noise types
+Consider a Bell state under different noise channels:
+
+1. Amplitude damping on first qubit only:
+   $$
+   \rho(t) = \begin{pmatrix} 
+   1-\frac{e^{-\gamma t}}{2} & 0 & 0 & \frac{e^{-\gamma t/2}}{\sqrt{2}} \\
+   0 & 0 & 0 & 0 \\
+   0 & 0 & 0 & 0 \\
+   \frac{e^{-\gamma t/2}}{\sqrt{2}} & 0 & 0 & \frac{e^{-\gamma t}}{2}
+   \end{pmatrix}
+   $$
+
+2. Dephasing on both qubits:
+   $$
+   \rho(t) = \frac{1}{2}\begin{pmatrix} 
+   1 & 0 & 0 & e^{-2\gamma t} \\
+   0 & 0 & 0 & 0 \\
+   0 & 0 & 0 & 0 \\
+   e^{-2\gamma t} & 0 & 0 & 1
+   \end{pmatrix}
+   $$
+
+This shows how different noise channels affect the quantum correlations in distinct ways.
+:::
+
+### Gate Errors
+
+In addition to decoherence during idle times, errors can occur during gate operations. These gate errors come in several forms:
+
+1. **Systematic errors**: Consistent over/under-rotation of gates
+2. **Random errors**: Fluctuations in gate parameters
+3. **Cross-talk errors**: Gates affecting neighboring qubits
+4. **Leakage errors**: System leaving the computational basis
+
+For two-qubit gates like CNOT, errors are typically higher than single-qubit gates because:
+
+- They require stronger interactions between qubits
+- Take longer to implement
+- Are more sensitive to timing and control errors (e.g.,some qubits have to wait while single-qubit operations "catch up").
+
+::: {.callout-note}
+## Current State of Gate Fidelities
+As of 2021, record error rates are:
+
+- Single-qubit gates: 0.03%
+- Two-qubit gates: 0.5%
+- Measurement: 0.2%
+
+These numbers are representative of state-of-the-art superconducting qubit platforms, as reported in @DeLeonSteuerman2021.
+:::
 
 
 
 [^1]: This is also known as the CX-gate (the controlled-$X$ gate).
 [^2]: This is true for pure states, but can be easily generalized to mixed states, see @Horodecki2009.
+
 
 
 
