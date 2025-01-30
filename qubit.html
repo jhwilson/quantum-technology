@@ -50,7 +50,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./summary.html" rel="next">
+<link href="./multiple_qubits.html" rel="next">
 <link href="./intro.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -189,8 +189,8 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./summary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
+  <a href="./multiple_qubits.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Multiple Qubits</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -235,7 +235,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Qubit</span></h1>
+<h1 class="title"><span id="sec-qubit" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Qubit</span></span></h1>
 </div>
 
 
@@ -566,7 +566,37 @@ The Bloch Sphere Geometry
 <div id="fig-bloch-sphere" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-bloch-sphere-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="qubit_files/mediabag/bloch-sphere.svg" class="img-fluid figure-img">
+<!-- ```{.tikz}
+%%| filename: bloch-sphere
+%%| header-includes: \usetikzlibrary{arrows.meta}
+%%| additionalPackages: \usepackage{braket}
+\begin{tikzpicture}[scale=2]
+    % Draw main circle
+    \draw (0,0) circle (1);
+    
+    % Draw ellipse for perspective
+    \draw[dashed] (0,0) ellipse (1 and 0.4);
+    
+    % Draw axes
+    \draw[-{Latex[length=3mm]}] (-1.0,0) -- (1.0,0) node[below=2.5mm,left=1mm] {$y$};
+    \draw[-{Latex[length=3mm]}] (0,-1.0) -- (0,1.0) node[right=2.5mm,below=1mm] {$z$};
+    \draw[-{Latex[length=3mm]}] (0.7,0.3) -- (-0.7,-0.3) node[right=4mm] {$x$};
+    
+    % Label states
+    % Z basis
+    \node[above] at (0,1) {$\ket{0}$};
+    \node[below] at (0,-1) {$\ket{1}$};
+    
+    % Y basis
+    \node[right] at (1,0) {$\ket{+i}$};
+    \node[left] at (-1,0) {$\ket{-i}$};
+    
+    % X basis
+    \node[right=2mm, above=0.5mm] at (0.6,0.25) {$\ket{-}$};
+    \node[below=2mm] at (-0.6,-0.25) {$\ket{+}$};
+\end{tikzpicture}
+``` -->
+<p><img src="images/tikz/bloch-sphere.svg" class="img-fluid figure-img"></p>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bloch-sphere-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Fig.&nbsp;2.1: The Bloch sphere showing eigenstates of X, Y, and Z Pauli operators
@@ -685,31 +715,70 @@ Phase gate leaves computational basis states alone
 <li>Measurements are represented by meters (see <a href="#fig-qubit-measure" class="quarto-xref">Fig.&nbsp;<span>2.5</span></a>).</li>
 </ul>
 <p>Often, unless we are preparing a specific state for an algorithm, we may leave off the states from the ends of the “wire.” This wire, <a href="#fig-single-qubit" class="quarto-xref">Fig.&nbsp;<span>2.2</span></a>, you can think of as the identity.</p>
+<!-- ```{.tikz}
+%%| filename: qubit-identity-0
+%%| caption: Identity on $\ket{0}$
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}
+\lstick{$\ket{0}$} &&&&& \rstick{$\ket{0}$}
+\end{quantikz}
+``` -->
+<!-- ```{.tikz}
+%%| filename: qubit-identity-1
+%%| caption: Identity on $\ket{1}$
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}
+\lstick{$\ket{1}$} &&&&& \rstick{$\ket{1}$}
+\end{quantikz}
+``` -->
+<!-- ```{.tikz}
+%%| filename: qubit-identity
+%%| caption: Identity on $\ket{\psi}$
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}
+\lstick{$\ket{\psi}$} &&&&& \rstick{$\ket{\psi}$}
+\end{quantikz}
+``` -->
 <div id="fig-single-qubit" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-single-qubit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="qubit_files/mediabag/qubit-identity-0.svg" class="img-fluid figure-img"></p>
-<figcaption>Identity on <span class="math inline">\(\ket{0}\)</span></figcaption>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-single-qubit" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div id="fig-identity-0" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-identity-0-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/tikz/qubit-identity-0.svg" class="img-fluid figure-img" data-ref-parent="fig-single-qubit">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-identity-0-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Identity on <span class="math inline">\(\ket{0}\)</span>
+</figcaption>
 </figure>
 </div>
 </div>
-<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="qubit_files/mediabag/qubit-identity-1.svg" class="img-fluid figure-img"></p>
-<figcaption>Identity on <span class="math inline">\(\ket{1}\)</span></figcaption>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-single-qubit" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div id="fig-identity-1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-identity-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/tikz/qubit-identity-1.svg" class="img-fluid figure-img" data-ref-parent="fig-single-qubit">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-identity-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Identity on <span class="math inline">\(\ket{1}\)</span>
+</figcaption>
 </figure>
 </div>
 </div>
-<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="qubit_files/mediabag/qubit-identity.svg" class="img-fluid figure-img"></p>
-<figcaption>Identity on <span class="math inline">\(\ket{\psi}\)</span></figcaption>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-single-qubit" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div id="fig-qubit-identity" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-qubit-identity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/tikz/qubit-identity.svg" class="img-fluid figure-img" data-ref-parent="fig-single-qubit">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-qubit-identity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(c) Identity on <span class="math inline">\(\ket{\psi}\)</span>
+</figcaption>
 </figure>
 </div>
 </div>
@@ -734,23 +803,49 @@ Important
 <p>The Pauli operators are both unitary and Hermitian, so they perform as quantum gates (which require unitary as <a href="intro.html#sec-postulate-unitary" class="quarto-xref"><span>Section 1.3.3</span></a> stipulates) and as observables (as <a href="intro.html#sec-postulate-observable" class="quarto-xref"><span>Section 1.3.2</span></a> stipulates).</p>
 </div>
 </div>
+<!-- ```{.tikz}
+%%| filename: qubit-X-gate
+%%| caption: Application of the $X$ gate.
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}
+\lstick{$\ket{0}$} && \gate{X} && \rstick{$\ket{1}$}
+\end{quantikz}
+``` -->
+<!-- ```{.tikz}
+%%| filename: qubit-Z-gate
+%%| caption: Application of the $Z$ gate.
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}
+\lstick{$\ket{+}$} && \gate{Z} && \rstick{$\ket{-}$}
+\end{quantikz}
+``` -->
 <div id="fig-qubit-XZ-gates" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-qubit-XZ-gates-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="qubit_files/mediabag/qubit-X-gate.svg" class="img-fluid figure-img"></p>
-<figcaption>Application of the <span class="math inline">\(X\)</span> gate.</figcaption>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-qubit-XZ-gates" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-qubit-X-gate" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-qubit-X-gate-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/tikz/qubit-X-gate.svg" class="img-fluid figure-img" style="width:50.0%" data-ref-parent="fig-qubit-XZ-gates">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-qubit-X-gate-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Application of the <span class="math inline">\(X\)</span> gate.
+</figcaption>
 </figure>
 </div>
 </div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="qubit_files/mediabag/qubit-Z-gate.svg" class="img-fluid figure-img"></p>
-<figcaption>Application of the <span class="math inline">\(Z\)</span> gate.</figcaption>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-qubit-XZ-gates" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-qubit-Z-gate" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-qubit-Z-gate-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/tikz/qubit-Z-gate.svg" class="img-fluid figure-img" style="width:50.0%" data-ref-parent="fig-qubit-XZ-gates">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-qubit-Z-gate-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Application of the <span class="math inline">\(Z\)</span> gate.
+</figcaption>
 </figure>
 </div>
 </div>
@@ -762,23 +857,49 @@ Fig.&nbsp;2.3: Examples of the Pauli operators as gates.
 </figure>
 </div>
 <p>The Hadamard and phase gates can also be mixed in, <a href="#fig-qubit-HS-gates" class="quarto-xref">Fig.&nbsp;<span>2.4</span></a>, and we can even introduce the meter symbol for measurements, <a href="#fig-qubit-measure" class="quarto-xref">Fig.&nbsp;<span>2.5</span></a>.</p>
+<!-- ```{.tikz}
+%%| filename: qubit-H-gate
+%%| caption: Application of the Hadamard gate 
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}
+\lstick{$\ket{0}$} && \gate{H} && \rstick{$\ket{+}$}
+\end{quantikz}
+``` -->
+<!-- ```{.tikz}
+%%| filename: qubit-S-gate
+%%| caption: Application of the phase gate
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}
+\lstick{$\ket{+}$} && \gate{S} && \rstick{$\ket{+i}$}
+\end{quantikz}
+``` -->
 <div id="fig-qubit-HS-gates" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-qubit-HS-gates-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="qubit_files/mediabag/qubit-H-gate.svg" class="img-fluid figure-img"></p>
-<figcaption>Application of the Hadamard gate</figcaption>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-qubit-HS-gates" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-qubit-H-gate" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-qubit-H-gate-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/tikz/qubit-H-gate.svg" class="img-fluid figure-img" data-ref-parent="fig-qubit-HS-gates">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-qubit-H-gate-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Application of the Hadamard gate.
+</figcaption>
 </figure>
 </div>
 </div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="qubit_files/mediabag/qubit-S-gate.svg" class="img-fluid figure-img"></p>
-<figcaption>Application of the phase gate</figcaption>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-qubit-HS-gates" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-qubit-phase-gate" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-qubit-phase-gate-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/tikz/qubit-S-gate.svg" class="img-fluid figure-img" data-ref-parent="fig-qubit-HS-gates">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-qubit-phase-gate-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Application of the phase gate
+</figcaption>
 </figure>
 </div>
 </div>
@@ -789,23 +910,49 @@ Fig.&nbsp;2.4: Examples of the Hadamard and phase gates.
 </figcaption>
 </figure>
 </div>
+<!-- ```{.tikz}
+%%| filename: qubit-X-gate-measure
+%%| caption: Will measure 1 with 100% probability
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}
+\lstick{$\ket{0}$} && \gate{X} && \meter{}
+\end{quantikz}
+``` -->
+<!-- ```{.tikz}
+%%| filename: qubit-H-gate-measure
+%%| caption: Will measure 1 with 50% probability
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}
+\lstick{$\ket{0}$} && \gate{H} && \meter{}
+\end{quantikz}
+``` -->
 <div id="fig-qubit-measure" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-qubit-measure-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="qubit_files/mediabag/qubit-X-gate-measure.svg" class="img-fluid figure-img"></p>
-<figcaption>Will measure 1 with 100% probability</figcaption>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-qubit-measure" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-qubit-X-measure" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-qubit-X-measure-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/tikz/qubit-X-gate-measure.svg" class="img-fluid figure-img" data-ref-parent="fig-qubit-measure">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-qubit-X-measure-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Will measure 1 with 100% probability
+</figcaption>
 </figure>
 </div>
 </div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="qubit_files/mediabag/qubit-H-gate-measure.svg" class="img-fluid figure-img"></p>
-<figcaption>Will measure 1 with 50% probability</figcaption>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-qubit-measure" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-qubit-H-measure" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-qubit-H-measure-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/tikz/qubit-H-gate-measure.svg" class="img-fluid figure-img" data-ref-parent="fig-qubit-measure">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-qubit-H-measure-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Will measure 1 with 50% probability
+</figcaption>
 </figure>
 </div>
 </div>
@@ -843,10 +990,23 @@ Reading Quantum Circuits
 </div>
 <div class="callout-body-container callout-body">
 <p>Consider applying <span class="math inline">\(H\)</span> then <span class="math inline">\(Z\)</span> then <span class="math inline">\(H\)</span> to <span class="math inline">\(\ket{0}\)</span>:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="qubit_files/mediabag/qubit-HZH-gate-measure.svg" class="img-fluid figure-img"></p>
-<figcaption>Implementing an <span class="math inline">\(X\)</span> gate with <span class="math inline">\(Z\)</span> and <span class="math inline">\(H\)</span>.</figcaption>
+<!-- ```{.tikz}
+%%| filename: qubit-HZH-gate-measure
+%%| caption: Implementing an $X$ gate with $Z$ and $H$.
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}
+\lstick{$\ket{0}$} & \gate{H} & \gate{Z} & \gate{H} & 
+\end{quantikz}
+``` -->
+<div id="fig-X-is-H-Z" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-X-is-H-Z-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/tikz/qubit-HZH-gate-measure.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-X-is-H-Z-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Fig.&nbsp;2.6: Implementing an <span class="math inline">\(X\)</span> gate with <span class="math inline">\(Z\)</span> and <span class="math inline">\(H\)</span>.
+</figcaption>
 </figure>
 </div>
 <ol type="1">
@@ -1817,8 +1977,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./summary.html" class="pagination-link" aria-label="Summary">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Summary</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./multiple_qubits.html" class="pagination-link" aria-label="Multiple Qubits">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Multiple Qubits</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

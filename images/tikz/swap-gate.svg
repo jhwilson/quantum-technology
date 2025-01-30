@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.1"
+   id="svg1"
+   width="38.858387"
+   height="28.947294"
+   viewBox="0 0 38.858387 28.947294"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <g
+     id="g1"
+     transform="translate(-3.8961401,0.59831396)">
+    <path
+       id="path1"
+       d="M 0,7.0867 V -7.08669"
+       style="fill:none;stroke:#000000;stroke-width:0.79701;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+       transform="matrix(1.3333333,0,0,-1.3333333,23.325333,13.876)" />
+    <path
+       id="path2"
+       d="M 0,7.0867 H -14.17339"
+       style="fill:none;stroke:#000000;stroke-width:0.79701;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+       transform="matrix(1.3333333,0,0,-1.3333333,23.325333,13.876)" />
+    <path
+       id="path3"
+       d="M 14.17339,7.0867 H 0"
+       style="fill:none;stroke:#000000;stroke-width:0.79701;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+       transform="matrix(1.3333333,0,0,-1.3333333,23.325333,13.876)" />
+    <path
+       id="path4"
+       d="M 0,-7.08669 H -14.17339"
+       style="fill:none;stroke:#000000;stroke-width:0.79701;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+       transform="matrix(1.3333333,0,0,-1.3333333,23.325333,13.876)" />
+    <path
+       id="path5"
+       d="M 14.17339,-7.08669 H 0"
+       style="fill:none;stroke:#000000;stroke-width:0.79701;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+       transform="matrix(1.3333333,0,0,-1.3333333,23.325333,13.876)" />
+    <path
+       id="path6"
+       d="m -3.48695,-3.48695 6.9739,6.9739 m -6.9739,0 6.9739,-6.9739"
+       style="fill:none;stroke:#000000;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+       transform="matrix(1.3333333,0,0,-1.3333333,23.325333,4.4266667)" />
+    <path
+       id="path7"
+       d="m -3.48695,-3.48695 6.9739,6.9739 m -6.9739,0 6.9739,-6.9739"
+       style="fill:none;stroke:#000000;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+       transform="matrix(1.3333333,0,0,-1.3333333,23.325333,23.324)" />
+  </g>
+</svg>

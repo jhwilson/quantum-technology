@@ -1,0 +1,2391 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.39">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>3&nbsp; Multiple Qubits – Quantum Technology</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./references.html" rel="next">
+<link href="./qubit.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-d166b450ba5a8e9f7a0ab969bf6592c1.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-b7c2d8834e08b04a63bb76a724ffbcac.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-c1966a8c70583a3816b1e3a216c1caf1.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script>
+window.MathJax = {
+  tex: {
+    macros: {
+      tr: "\\operatorname{tr}"
+    }
+  }
+};
+</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./multiple_qubits.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Multiple Qubits</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Quantum Technology</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./qubit.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Qubit</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./multiple_qubits.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Multiple Qubits</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#tensor-products-and-the-multi-qubit-hilbert-space" id="toc-tensor-products-and-the-multi-qubit-hilbert-space" class="nav-link active" data-scroll-target="#tensor-products-and-the-multi-qubit-hilbert-space"><span class="header-section-number">3.1</span> Tensor Products and the multi-qubit Hilbert space</a></li>
+  <li><a href="#entanglement" id="toc-entanglement" class="nav-link" data-scroll-target="#entanglement"><span class="header-section-number">3.2</span> Entanglement</a>
+  <ul class="collapse">
+  <li><a href="#bell-states-and-non-local-correlations" id="toc-bell-states-and-non-local-correlations" class="nav-link" data-scroll-target="#bell-states-and-non-local-correlations"><span class="header-section-number">3.2.1</span> Bell States and Non-local Correlations</a></li>
+  <li><a href="#mathematical-definition-and-separability" id="toc-mathematical-definition-and-separability" class="nav-link" data-scroll-target="#mathematical-definition-and-separability"><span class="header-section-number">3.2.2</span> Mathematical definition and separability</a></li>
+  <li><a href="#reduced-density-matrices" id="toc-reduced-density-matrices" class="nav-link" data-scroll-target="#reduced-density-matrices"><span class="header-section-number">3.2.3</span> Reduced density matrices</a></li>
+  <li><a href="#quantifying-entanglement" id="toc-quantifying-entanglement" class="nav-link" data-scroll-target="#quantifying-entanglement"><span class="header-section-number">3.2.4</span> Quantifying entanglement</a></li>
+  </ul></li>
+  <li><a href="#multi-qubit-operations" id="toc-multi-qubit-operations" class="nav-link" data-scroll-target="#multi-qubit-operations"><span class="header-section-number">3.3</span> Multi-qubit operations</a>
+  <ul class="collapse">
+  <li><a href="#single-qubit-gates" id="toc-single-qubit-gates" class="nav-link" data-scroll-target="#single-qubit-gates"><span class="header-section-number">3.3.1</span> Single-qubit gates</a></li>
+  <li><a href="#two-qubit-gates" id="toc-two-qubit-gates" class="nav-link" data-scroll-target="#two-qubit-gates"><span class="header-section-number">3.3.2</span> Two-qubit gates</a></li>
+  <li><a href="#measurement" id="toc-measurement" class="nav-link" data-scroll-target="#measurement"><span class="header-section-number">3.3.3</span> Measurement</a></li>
+  </ul></li>
+  <li><a href="#decoherence-in-multi-qubit-systems" id="toc-decoherence-in-multi-qubit-systems" class="nav-link" data-scroll-target="#decoherence-in-multi-qubit-systems"><span class="header-section-number">3.4</span> Decoherence in multi-qubit systems</a>
+  <ul class="collapse">
+  <li><a href="#gate-errors" id="toc-gate-errors" class="nav-link" data-scroll-target="#gate-errors"><span class="header-section-number">3.4.1</span> Gate Errors</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="sec-multiple-qubit" class="quarto-section-identifier"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Multiple Qubits</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Previously in <a href="qubit.html" class="quarto-xref"><span>Chapter 2</span></a> we discussed in detail how to understand a single qubit. While we saw some basic features, such as superposition and relative phase, it has not been apparent yet what we can do with these features. The power of these will really be unlocked by putting multiple qubits together. We will also begin to see hints of <em>quantum entanglement</em>.</p>
+<p>However, there is just a practical concern: How much information can we store in a single qubit? With precise control, we have our answer in <a href="qubit.html#sec-bloch-sphere" class="quarto-xref"><span>Section 2.2</span></a>: the angles <span class="math inline">\(\theta\)</span> and <span class="math inline">\(\phi\)</span> on the Bloch sphere. Since algorithms are bit more greedy than that, we need to extend our space and the natural way to do that is to add more qubits. Of course, classically, we operate with many bits: Floats (real numbers) on most computers use 64 bits, and we often add, substract, multiply a lot of these numbers. But classically, when we have, for instance, two bits, there are four discrete states 00, 01, 10, and 11. As we will analyze in detail, quantum mechanically these will be four basis states that can make up a general quantum wave function <span id="eq-four-qubit-state"><span class="math display">\[
+\ket{\psi} = \alpha \ket{00} + \beta \ket{01} + \gamma \ket{10} + \delta \ket{11}.
+\tag{3.1}\]</span></span></p>
+<section id="tensor-products-and-the-multi-qubit-hilbert-space" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="tensor-products-and-the-multi-qubit-hilbert-space"><span class="header-section-number">3.1</span> Tensor Products and the multi-qubit Hilbert space</h2>
+<p>The equation above gives us an idea for how we ought to combine qubits. The tensor product will formalize this, but we will build it up “intuitively.”</p>
+<p>Imagine we have one big operator called “read-out” or <span class="math inline">\(\mathcal R\)</span>; this operator will measure all of the qubits in the system, and its value will tell us <em>exactly</em> what the state of the system is in terms of the computational basis.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Two-Qubit Readout
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The readout operator <span class="math inline">\(\mathcal{R}\)</span> maps the two-qubit basis states to unique numbers:</p>
+<ul>
+<li><span class="math inline">\(\mathcal{R}\ket{00} = 0 \ket{00}\)</span></li>
+<li><span class="math inline">\(\mathcal{R}\ket{01} = 1 \ket{01}\)</span></li>
+<li><span class="math inline">\(\mathcal{R}\ket{10} = 2 \ket{10}\)</span></li>
+<li><span class="math inline">\(\mathcal{R}\ket{11} = 3 \ket{11}\)</span></li>
+</ul>
+<p>This binary-to-decimal conversion helps us uniquely identify each computational basis state.</p>
+</div>
+</div>
+<p>However, this operator <span class="math inline">\(\mathcal R\)</span> <em>must</em> be Hermitian to be a physical observable, and as a result its eigenstates span our Hilbert space. Well, upon readout, we know that each qubit can be in one of two states <span class="math inline">\(b_i = 0\)</span> or <span class="math inline">\(1\)</span>, and if we have <span class="math inline">\(i = 1, \ldots, N\)</span> qubits, there are <span class="math inline">\(2^N\)</span> possibilities.</p>
+<p>We will return to this, but let us linger on two qubits. Notice that we can obtain the above states with an operation called the <em>tensor product</em>.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;"><span class="math inline">\(\otimes\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\ket{0}\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\ket{1}\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\ket{0}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\ket{0} \otimes \ket{0}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\ket{0} \otimes \ket{1}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\ket{1}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\ket{1}\otimes \ket{0}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\ket{1}\otimes \ket{0}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>This multiplication table is how we go from basis sets of single qubits to the basis set of two qubits. Very often, we will drop the <span class="math inline">\(\otimes\)</span> and simply write <span class="math display">\[
+\ket{b_1 b_2} \equiv \ket{b_1} \otimes \ket{b_2}.
+\]</span></p>
+<p>Similarly, we can build up three qubit states by taking the tensor product of two-qubit states with a single qubit:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;"><span class="math inline">\(\otimes\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\ket{0}\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\ket{1}\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\ket{00}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\ket{00} \otimes \ket{0}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\ket{00} \otimes \ket{1}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\ket{01}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\ket{01} \otimes \ket{0}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\ket{01} \otimes \ket{1}\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\ket{10}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\ket{10} \otimes \ket{0}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\ket{10} \otimes \ket{1}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\ket{11}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\ket{11} \otimes \ket{0}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\ket{11} \otimes \ket{1}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>again we can define <span class="math display">\[
+\ket{b_1 b_2 b_3} = \ket{b_1 b_2} \otimes \ket{b_3},
+\]</span> and we proceed once more</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 36%">
+<col style="width: 36%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><span class="math inline">\(\otimes\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\ket{0}\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\ket{1}\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\ket{000}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\ket{000} \otimes \ket{0}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\ket{000} \otimes \ket{1}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\ket{001}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\ket{001} \otimes \ket{0}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\ket{001} \otimes \ket{1}\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\ket{010}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\ket{010} \otimes \ket{0}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\ket{010} \otimes \ket{1}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\ket{011}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\ket{011} \otimes \ket{0}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\ket{011} \otimes \ket{1}\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\ket{100}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\ket{100} \otimes \ket{0}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\ket{100} \otimes \ket{1}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\ket{101}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\ket{101} \otimes \ket{0}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\ket{101} \otimes \ket{1}\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\ket{110}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\ket{110} \otimes \ket{0}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\ket{110} \otimes \ket{1}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\ket{111}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\ket{111} \otimes \ket{0}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\ket{111} \otimes \ket{1}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>As we can see, every time we add a new qubit, the dimension of the space is multiplied by two. In general, we can can break <span class="math inline">\(N\)</span>-qubits in the computational basis as <span class="math display">\[
+\ket{b_1 b_2 \cdots b_N} = \ket{b_1} \otimes \ket{b_2} \otimes \cdots \otimes \ket{b_N}
+\]</span> where <span class="math inline">\(b_j = 0\)</span> or <span class="math inline">\(1\)</span>. Since this is a basis, we can “count” the number of basis states to determine the dimension of the space to obtain for the Hilbert space of <span class="math inline">\(N\)</span>-qubits <span class="math inline">\(\mathcal H_N\)</span>, <span class="math display">\[
+\dim \mathcal H_N = 2^N.
+\]</span> Therefore, a general quantum state of <span class="math inline">\(N\)</span> qubits can be written as a superposition of all possible computational basis states: <span class="math display">\[
+\ket{\psi} = \sum_{b_1,\ldots,b_N = 0,1} \psi_{b_1\cdots b_N} \ket{b_1\cdots b_N}
+\]</span> where <span class="math inline">\(\psi_{b_1\cdots b_N}\)</span> are complex coefficients satisfying the normalization condition <span class="math display">\[
+\sum_{b_1,\ldots,b_N = 0,1} |\psi_{b_1\cdots b_N}|^2 = 1.
+\]</span> This means that to fully specify a quantum state of <span class="math inline">\(N\)</span> qubits, we need <span class="math inline">\(2^N\)</span> complex numbers (subject to normalization), which illustrates both the power and challenge of quantum computing - the exponential growth in the state space allows for massive parallel processing but also makes classical simulation difficult.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Two-qubit wave functions and entanglement
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A general two-qubit wave function can be written as <span class="math display">\[
+\ket{\psi} = \psi_{00}\ket{00} + \psi_{01}\ket{01} + \psi_{10}\ket{10} + \psi_{11}\ket{11}
+\]</span> where <span class="math inline">\(|\psi_{00}|^2 + |\psi_{01}|^2 + |\psi_{10}|^2 + |\psi_{11}|^2 = 1\)</span>. When the two qubits are independent (a product state), we can write this as a tensor product of individual qubit states: <span class="math display">\[
+\begin{aligned}
+\ket{\psi} &amp; = (\alpha_1\ket{0} + \beta_1\ket{1}) \otimes (\alpha_2\ket{0} + \beta_2\ket{1}) \\ &amp; = \alpha_1\alpha_2\ket{00} + \alpha_1\beta_2\ket{01} + \beta_1\alpha_2\ket{10} + \beta_1\beta_2\ket{11}
+\end{aligned}
+\]</span></p>
+<p>However, not all two-qubit states can be written as such a product! States that cannot be factored into a tensor product of individual qubit states are called <em>entangled states</em> - a crucial quantum resource we’ll explore later.</p>
+</div>
+</div>
+<p>The exponential growth in the state space has important implications for simulating quantum systems on classical computers. While we need <span class="math inline">\(2^N\)</span> complex numbers to specify an arbitrary quantum state, the situation becomes even more demanding when we consider operations on these states:</p>
+<ol type="1">
+<li><p>To represent an arbitrary quantum operation (unitary evolution) on <span class="math inline">\(N\)</span> qubits, we need a <span class="math inline">\(2^N \times 2^N\)</span> unitary matrix. This requires storing and manipulating <span class="math inline">\(2^{2N}\)</span> complex numbers.</p></li>
+<li><p>Even to compute the probability of a measurement outcome, we need to perform operations involving all <span class="math inline">\(2^N\)</span> amplitudes.</p></li>
+</ol>
+<p>This exponential scaling is why classical computers struggle to simulate large quantum systems - the memory and computational requirements become overwhelming. For example:</p>
+<ul>
+<li>10 qubits: <span class="math inline">\(2^{10} = 1,024\)</span> amplitudes, <span class="math inline">\(2^{20} \approx 1\)</span> million matrix elements</li>
+<li>30 qubits: <span class="math inline">\(2^{30} \approx 1\)</span> billion amplitudes, <span class="math inline">\(2^{60} \approx 10^{18}\)</span> matrix elements</li>
+<li>50 qubits: <span class="math inline">\(2^{50} \approx 10^{15}\)</span> amplitudes, <span class="math inline">\(2^{100} \approx 10^{30}\)</span> matrix elements</li>
+</ul>
+<p>However, it’s important to note that not all quantum computations require storing and manipulating the full state space. Many practical quantum algorithms and simulations exploit special properties:</p>
+<ul>
+<li>Some quantum states have special structure (like product states) that allow more efficient representations</li>
+<li>Many quantum operations act locally or have special symmetries that reduce the computational complexity</li>
+<li>Some quantum algorithms can be simulated using specialized techniques that avoid storing the full state vector</li>
+</ul>
+<p>Nevertheless, the ability to access and manipulate this exponentially large state space can help us perform computations that classical computers would struggle with.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Classical simulation vs.&nbsp;quantum measurement
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When simulating quantum systems on classical computers, we have direct access to the full state vector - all the complex amplitudes <span class="math inline">\(\psi_{b_1\cdots b_N}\)</span>. This gives us complete information about the quantum state, allowing us to calculate any property without performing repeated measurements.</p>
+<p>In contrast, real quantum computers are bound by the measurement postulates of quantum mechanics (Postulate II, <a href="intro.html#sec-postulate-observable" class="quarto-xref"><span>Section 1.3.2</span></a>). Each measurement:</p>
+<ol type="1">
+<li>Collapses the quantum state</li>
+<li>Only returns eigenvalues of the measured observable</li>
+<li>Must be repeated many times to estimate expectation values and state properties</li>
+</ol>
+<p>This limitation of quantum hardware is why techniques like quantum state tomography are necessary - reconstructing the full quantum state requires performing many different measurements on multiple copies of the same state. Classical simulation sidesteps this fundamental quantum constraint, though at the cost of exponential classical resources.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<strong>Example</strong>: Building up three-qubit states
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Consider how we build up the state <span class="math inline">\(\ket{101}\)</span>:</p>
+<ol type="1">
+<li>Start with first two qubits: <span class="math inline">\(\ket{10}\)</span></li>
+<li>Tensor with third qubit: <span class="math inline">\(\ket{10} \otimes \ket{1}\)</span></li>
+<li>This gives: <span class="math inline">\(\ket{101}\)</span></li>
+</ol>
+<p>We can verify this matches our counting:</p>
+<ul>
+<li>First qubit: <span class="math inline">\(\ket{1}\)</span> (second basis state)</li>
+<li>Second qubit: <span class="math inline">\(\ket{0}\)</span> (first basis state)</li>
+<li>Third qubit: <span class="math inline">\(\ket{1}\)</span> (second basis state)</li>
+</ul>
+<p>Therefore in binary: 101, which is state number 5 in our computational basis (counting from 0).</p>
+</div>
+</div>
+<p>Before we run head first into entanglement, let’s take a minute to just do some counting to see that we are going to run into some trouble. For a single qubit, we have two complex numbers <span class="math inline">\(\ket{\psi} = \alpha\ket0 + \beta \ket1\)</span>, but we need to normalize them <span class="math inline">\(|\alpha|^2 + |\beta|^2=1\)</span> and remove a phase. Thus, we have reduced our 2 complex numbers (= 4 real numbers) down to 4-1-1=2 real numbers. This is made explicit with the Bloch sphere where two real numbers <span class="math inline">\((\theta,\phi)\)</span> completely characterize the state. Therefore, do we only need <span class="math inline">\(2\times 2=4\)</span> real numbers to describe a 4 qubit state? Well, let’s count, we can see from <a href="#eq-four-qubit-state" class="quarto-xref">Eq.&nbsp;<span>3.1</span></a> that we have 4 complex numbers (= 8 real numbers). But we must also impose normalization and remove an overall phase, reducing us down to 8-1-1 = 6 real numbers. But <span class="math inline">\(6&gt;4\)</span>; this is our first hint of something happening in our quantum system, we need more numbers to describe all of the states in a two qubit system than simply what we needed for two separate qubits.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Mathematical Note: State Space Geometry
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For the mathematically inclined: The physical state space of an N-qubit system is complex projective space <span class="math inline">\(\mathbb{CP}^{2^N-1}\)</span>. For two qubits, this means <span class="math inline">\(\mathbb{CP}^3\)</span>, which is fundamentally different from <span class="math inline">\(\mathbb{CP}^1 \times \mathbb{CP}^1\)</span> (the space of two separate qubits). This geometric fact underlies why we need more parameters to describe entangled states - the state space has a richer structure than just the product of individual qubit spaces.</p>
+</div>
+</div>
+</section>
+<section id="entanglement" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="entanglement"><span class="header-section-number">3.2</span> Entanglement</h2>
+<p>Entanglement is one of the most important phenomena in quantum mechanics without a clear classical antecedent. The term was first coined by Schrödinger in 1935 <span class="citation" data-cites="Schrodinger1935">&nbsp;[<a href="references.html#ref-Schrodinger1935" role="doc-biblioref">1</a>]</span> in response to a famous paper by Einstein, Podolsky, and Rosen (EPR) <span class="citation" data-cites="EinsteinRosen1935">&nbsp;[<a href="references.html#ref-EinsteinRosen1935" role="doc-biblioref">2</a>]</span>. It represents quantum correlations between particles that cannot be explained by a simple “lack of knowledge” by the observer. To get around this, it was thought there must be “hidden variables” to make quantum mechanics complete; thus, EPR used these quantum correlations to argue that quantum mechanics must be incomplete. Quantum mechanics appeared to allow “spooky action at a distance” that violated their ideas of locality and reality.</p>
+<p>However, in 1964, John Stewart Bell <span class="citation" data-cites="Bell1964a">&nbsp;[<a href="references.html#ref-Bell1964a" role="doc-biblioref">3</a>]</span> showed that quantum mechanics predicts correlations between entangled particles that are mathematically impossible to explain with any local hidden variable theory. Subsequent experiments have repeatedly confirmed these “Bell inequality violations,” demonstrating that entanglement represents a fundamentally new kind of physical relationship not reducible to classical correlations (early experiments include <span class="citation" data-cites="FreedmanClauser1972">&nbsp;[<a href="references.html#ref-FreedmanClauser1972" role="doc-biblioref">4</a>]</span> and <span class="citation" data-cites="AspectRoger1982">&nbsp;[<a href="references.html#ref-AspectRoger1982" role="doc-biblioref">5</a>]</span>).</p>
+<p>The existence of entanglement suggests that the quantum wave function represents more than just our knowledge about measurement probabilities - it appears to be a real physical object. More recent work by Matthew Pusey, Jonathan Barrett, and Terry Rudolph <span class="citation" data-cites="PuseyRudolph2012">&nbsp;[<a href="references.html#ref-PuseyRudolph2012" role="doc-biblioref">6</a>]</span> has strengthened this view through their “PBR theorem,” which shows that if quantum predictions are correct, then quantum states must be physically real rather than merely statistical.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Reality of the Wave Function
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The PBR theorem (2012) <span class="citation" data-cites="PuseyRudolph2012">&nbsp;[<a href="references.html#ref-PuseyRudolph2012" role="doc-biblioref">6</a>]</span> tells us something deep about quantum mechanics. To quote the paper,</p>
+<blockquote class="blockquote">
+<p>In conclusion, we have presented a no-go theorem, which—modulo assumptions—shows that models in which the quantum state is interpreted as mere information about an objective physical state of a system cannot reproduce the predictions of quantum theory. The result is in the same spirit as Bell’s theorem, which states that no local theory can reproduce the predictions of quantum theory.</p>
+</blockquote>
+<p>This provides strong support for viewing entanglement as a genuine physical phenomenon rather than just a limitation of our knowledge.</p>
+</div>
+</div>
+<p>Let’s explore what entanglement means mathematically and physically.</p>
+<section id="bell-states-and-non-local-correlations" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="bell-states-and-non-local-correlations"><span class="header-section-number">3.2.1</span> Bell States and Non-local Correlations</h3>
+<p>One of the simplest cases of quantum entanglement is the Bell state <span id="eq-bell-state"><span class="math display">\[
+|\Phi^+\rangle = \frac{|00\rangle + |11\rangle}{\sqrt{2}}
+\tag{3.2}\]</span></span></p>
+<p>This state exhibits perfect correlations that persist regardless of the physical separation between the qubits. When we measure the first qubit:</p>
+<ul>
+<li>If we get <span class="math inline">\(|0\rangle\)</span>, the state collapses to <span class="math inline">\(|00\rangle\)</span></li>
+<li>If we get <span class="math inline">\(|1\rangle\)</span>, the state collapses to <span class="math inline">\(|11\rangle\)</span></li>
+</ul>
+<p>The remarkable feature is that measuring either qubit instantly determines the state of the other qubit, even if they are separated by vast distances. For example:</p>
+<ol type="1">
+<li>Create <span class="math inline">\(|\Phi^+\rangle\)</span> and separate the qubits by sending one to Earth and one to Mars</li>
+<li>Measure the Earth qubit → get result 0 or 1 with 50% probability</li>
+<li>We know with 100% certainty that the Mars qubit will be measured to give the same result.</li>
+<li>This happens faster than light could travel between the qubits.</li>
+</ol>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+No faster-than-light communication
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>While entanglement appears to create “spooky action at a distance,” it cannot be used to transmit information faster than light. This is because:</p>
+<ol type="1">
+<li>The measurement results are random</li>
+<li>The person with the second qubit needs classical information about the first measurement to interpret their results</li>
+<li>This classical information is still limited by the speed of light</li>
+</ol>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Bell state properties are basis independence
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A remarkable property of the Bell state <span class="math inline">\(|\Phi^+\rangle\)</span> is that these perfect correlations persist no matter what basis we measure in. If we measure the first qubit in any basis and get some state <span class="math inline">\(|\psi\rangle\)</span>, the second qubit will always be found in state <span class="math inline">\(|\psi\rangle\)</span> when measured in the same basis.</p>
+<p>For example, if we measure the first qubit in the <span class="math inline">\(X\)</span> basis: - If we get <span class="math inline">\(|+\rangle\)</span>, the state collapses to <span class="math inline">\(|{+}{+}\rangle\)</span> - If we get <span class="math inline">\(|-\rangle\)</span>, the state collapses to <span class="math inline">\(|{-}{-}\rangle\)</span></p>
+<p>This is because we can rewrite <span class="math inline">\(|\Phi^+\rangle\)</span> in any basis and it maintains the same form: <span class="math display">\[
+|\Phi^+\rangle = \frac{|00\rangle + |11\rangle}{\sqrt{2}} = \frac{|{+}{+}\rangle + |{-}{-}\rangle}{\sqrt{2}}
+\]</span></p>
+<p>This is true for any basis, not just <span class="math inline">\(Z\)</span> and <span class="math inline">\(X\)</span>.</p>
+</div>
+</div>
+<p>These non-local correlations are fundamentally different from classical correlations, but how can we see that? The key ends up being: measurements that show quantum correlations and was Bell’s central insight <span class="citation" data-cites="Bell1964a">&nbsp;[<a href="references.html#ref-Bell1964a" role="doc-biblioref">3</a>]</span>. Instead of just looking at measurements of <span class="math inline">\(Z\)</span> which are easily explained by a classical hidden variable, also perform measurements at other angles of the Bloch sphere.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Mermin’s Example
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To see a simple example, read <span class="citation" data-cites="Mermin1981">&nbsp;[<a href="references.html#ref-Mermin1981" role="doc-biblioref">7</a>]</span>. The essence of the idea presented there is to measure three different observables with the Bell state in <a href="#eq-bell-state" class="quarto-xref">Eq.&nbsp;<span>3.2</span></a>, <span class="math display">\[
+Z, \quad -\frac12 Z + \frac{\sqrt3}{2}X, \quad -\frac12 Z - \frac{\sqrt{3}}{2}X,
+\]</span> with the results from these three measurements, there is no way to use classical probabilities of measurement outcomes to account for the distribution of results.</p>
+</div>
+</div>
+<!-- ### A Bell's inequality
+
+::: {.callout-note}
+## Mermin's Example
+This example, using qubits, is adapted from @Mermin1981.
+:::
+
+What is it about quantum entanglement that is different from classical entanglement? So far it looks like the state might just be a probablistic combination of 1s and 0s. And for the Bell state in @eq-bell-state, maybe we can imagine it's just some probablistic classical bit:
+
+| Measurement Outcome | Probability |
+|:-------------------|:------------|
+| Both measure 0     | 50%         |
+| First 0, Second 1  | 0%          |
+| First 1, Second 0  | 0%          | -->
+</section>
+<section id="mathematical-definition-and-separability" class="level3" data-number="3.2.2">
+<h3 data-number="3.2.2" class="anchored" data-anchor-id="mathematical-definition-and-separability"><span class="header-section-number">3.2.2</span> Mathematical definition and separability</h3>
+<p>A multi-qubit quantum state is entangled <em>if and only if</em> it cannot be written as a tensor product of individual qubit states<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. For a two-qubit pure state <span class="math inline">\(|\psi\rangle\)</span>, this means there do not exist single-qubit states <span class="math inline">\(|\phi_1\rangle\)</span> and <span class="math inline">\(|\phi_2\rangle\)</span> such that:</p>
+<p><span class="math display">\[
+|\psi\rangle = |\phi_1\rangle \otimes |\phi_2\rangle
+\]</span></p>
+<p>For a general two-qubit state <span class="math inline">\(|\psi\rangle = \alpha|00\rangle + \beta|01\rangle + \gamma|10\rangle + \delta|11\rangle\)</span>, there is a simple condition for separability: the state is separable if and only if the determinant of its coefficient matrix is zero:</p>
+<p><span class="math display">\[
+\begin{vmatrix}
+\alpha &amp; \beta \\
+\gamma &amp; \delta
+\end{vmatrix} = \alpha\delta - \beta\gamma = 0
+\]</span></p>
+<p>This can be proven by writing out the general form of a tensor product and matching coefficients. The classic examples of maximally entangled states are the Bell states:</p>
+<p><span class="math display">\[
+|\Phi^+\rangle = \frac{|00\rangle + |11\rangle}{\sqrt{2}} \qquad |\Phi^-\rangle = \frac{|00\rangle - |11\rangle}{\sqrt{2}}
+\]</span> <span class="math display">\[
+|\Psi^+\rangle = \frac{|01\rangle + |10\rangle}{\sqrt{2}} \qquad |\Psi^-\rangle = \frac{|01\rangle - |10\rangle}{\sqrt{2}}
+\]</span></p>
+<p>For mixed states, the situation is more complex and requires measures like concurrence to fully characterize entanglement.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<strong>Example</strong>: Separable state condition
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Consider a separable two-qubit state formed by the tensor product of two arbitrary single-qubit states:</p>
+<p><span class="math display">\[
+|\phi_1\rangle = a|0\rangle + b|1\rangle \qquad |\phi_2\rangle = c|0\rangle + d|1\rangle
+\]</span></p>
+<p>Their tensor product gives:</p>
+<p><span class="math display">\[
+\begin{aligned}
+|\phi_1\rangle \otimes |\phi_2\rangle &amp;= (a|0\rangle + b|1\rangle) \otimes (c|0\rangle + d|1\rangle) \\
+&amp;= ac|00\rangle + ad|01\rangle + bc|10\rangle + bd|11\rangle
+\end{aligned}
+\]</span></p>
+<p>The coefficient matrix determinant is: <span class="math display">\[
+\begin{vmatrix}
+ac &amp; ad \\
+bc &amp; bd
+\end{vmatrix} = (ac)(bd) - (ad)(bc) = abcd - abcd = 0
+\]</span></p>
+<p>This confirms that any separable state satisfies the zero determinant condition. Conversely, if a state’s coefficient matrix has non-zero determinant, it must be entangled.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<strong>Example</strong>: Checking for Entanglement
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let’s examine two states to see if they’re entangled:</p>
+<ol type="1">
+<li><p>Consider the state <span class="math inline">\(|\psi_1\rangle = \frac{1}{\sqrt{2}}(|00\rangle + |11\rangle)\)</span> The coefficient matrix is: <span class="math display">\[
+\begin{pmatrix}
+1/\sqrt{2} &amp; 0 \\
+0 &amp; 1/\sqrt{2}
+\end{pmatrix}
+\]</span> The determinant is <span class="math inline">\((1/\sqrt{2})(1/\sqrt{2}) - (0)(0) = 1/2 \neq 0\)</span>, so this state is entangled.</p></li>
+<li><p>Consider the state <span class="math inline">\(|\psi_2\rangle = \frac{1}{\sqrt{2}}(|00\rangle + |01\rangle)\)</span> The coefficient matrix is: <span class="math display">\[
+\begin{pmatrix}
+1/\sqrt{2} &amp; 1/\sqrt{2} \\
+0 &amp; 0
+\end{pmatrix}
+\]</span> The determinant is <span class="math inline">\((1/\sqrt{2})(0) - (1/\sqrt{2})(0) = 0\)</span>, so this state is separable. Indeed, we can write it as <span class="math inline">\(|\psi_2\rangle = |0\rangle \otimes \frac{1}{\sqrt{2}}(|0\rangle + |1\rangle)\)</span>.</p></li>
+<li><p>Consider the state <span class="math inline">\(|\psi_3\rangle = \frac{1}{2}(|00\rangle + |01\rangle + |10\rangle + |11\rangle)\)</span> The coefficient matrix is: <span class="math display">\[
+\begin{pmatrix}
+1/2 &amp; 1/2 \\
+1/2 &amp; 1/2
+\end{pmatrix}
+\]</span> The determinant is <span class="math inline">\((1/2)(1/2) - (1/2)(1/2) = 0\)</span>, so this state is separable. We can verify this by rewriting it as: <span class="math inline">\(|\psi_3\rangle = \frac{1}{\sqrt{2}}(|0\rangle + |1\rangle) \otimes \frac{1}{\sqrt{2}}(|0\rangle + |1\rangle)\)</span></p></li>
+</ol>
+</div>
+</div>
+</section>
+<section id="reduced-density-matrices" class="level3" data-number="3.2.3">
+<h3 data-number="3.2.3" class="anchored" data-anchor-id="reduced-density-matrices"><span class="header-section-number">3.2.3</span> Reduced density matrices</h3>
+<p>For entangled states, we often want to describe the state of a single qubit within the two-qubit system. This is done using the reduced density matrix, obtained by “tracing out” the other qubit. The process, called the partial trace, gives us a density matrix that describes all measurable properties of the subsystem we’re interested in.</p>
+<p>For a two-qubit system in state <span class="math inline">\(|\psi\rangle\)</span>, the density matrix is <span class="math inline">\(\rho = |\psi\rangle\langle\psi|\)</span>. To get the reduced density matrix for the first qubit (<span class="math inline">\(\rho_A\)</span>), we take the partial trace over the second qubit (B):</p>
+<p><span class="math display">\[
+\rho_A = \text{Tr}_B(\rho) = \sum_{b=0}^1 \langle b_B|\rho|b_B\rangle
+\]</span></p>
+<p>For a single term <span class="math inline">\(\langle b_B|\rho|b_B\rangle\)</span>, this gives a <span class="math inline">\(2\times2\)</span> matrix acting on the first qubit:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\langle b_B|\rho|b_B\rangle &amp; = \begin{pmatrix}
+\langle 0 b|\rho|0 b\rangle &amp; \langle 0 b|\rho|1 b\rangle \\
+\langle 1 b|\rho|0 b\rangle &amp; \langle 1 b|\rho|1 b\rangle
+\end{pmatrix} \\
+&amp; = \begin{pmatrix}
+|\braket{0 b | \psi}|^2 &amp; \braket{0 b |\psi} \braket{1b| \psi}^* \\
+\braket{1b|\psi}\braket{0b|\psi}^* &amp; |\braket{1b|\psi}|^2
+\end{pmatrix}
+\end{aligned}
+\]</span></p>
+<p>where <span class="math inline">\(|b_B\rangle\)</span> are the basis states of qubit B. Each element of <span class="math inline">\(\rho_A\)</span> is a sum of two elements from the original density matrix, corresponding to tracing out qubit B in the computational basis.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tensor notation for density matrices
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In tensor notation, a two-qubit state <span class="math inline">\(|\psi\rangle\)</span> has components <span class="math inline">\(\psi_{ij}\)</span> where <span class="math inline">\(i,j\)</span> label the basis states of the first and second qubit. The density matrix elements are then <span class="math inline">\(\rho_{ij,kl} = \psi_{ij}\psi_{kl}^*\)</span>, where the first pair of indices <span class="math inline">\((i,j)\)</span> corresponds to the ket and <span class="math inline">\((k,l)\)</span> to the bra.</p>
+<p>The partial trace over qubit B corresponds to summing over matching indices for qubit B:</p>
+<p><span class="math display">\[
+(\rho_A)_{ik} = \sum_j \rho_{ij,kj}
+\]</span> This tensor notation makes it clear why this operation is called a “trace” - we’re summing over diagonal elements where the indices for system B match (j=j), just like in the usual matrix trace, while keeping the indices for system A (i,k) free.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<strong>Example</strong>: Reduced density matrix of a Bell state
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Consider the Bell state <span class="math inline">\(|\Phi^+\rangle = \frac{|00\rangle + |11\rangle}{\sqrt{2}}\)</span>. Its density matrix is:</p>
+<p><span class="math display">\[
+\rho = |\Phi^+\rangle\langle\Phi^+| = \frac{1}{2}(|00\rangle\langle00| + |00\rangle\langle11| + |11\rangle\langle00| + |11\rangle\langle11|)
+\]</span></p>
+<p>Let’s find <span class="math inline">\(\rho_A\)</span> step by step:</p>
+<ol type="1">
+<li><p>First, we compute the partial trace: <span class="math display">\[
+\begin{aligned}
+\rho_A &amp;= \langle0_B|\rho|0_B\rangle + \langle1_B|\rho|1_B\rangle \\
+&amp;= \frac{1}{2}|0\rangle\langle0| + \frac{1}{2}|1\rangle\langle1| \\
+&amp;= \frac{1}{2}I
+\end{aligned}
+\]</span></p></li>
+<li><p>This shows that when we look at just one qubit of a maximally entangled pair:</p>
+<ul>
+<li>It appears to be in a completely mixed state</li>
+<li>We have equal probability of measuring 0 or 1</li>
+<li>All quantum information is stored in the correlations between qubits</li>
+</ul></li>
+</ol>
+</div>
+</div>
+<p>The reduced density matrix reveals a key feature of entanglement: while the total state is pure (<span class="math inline">\(\rho^2 = \rho\)</span>), the subsystem state can be mixed (<span class="math inline">\(\rho_A^2 \neq \rho_A\)</span>). This is a signature of entanglement - if we can only access one qubit of an entangled pair, we see a statistical mixture rather than a pure state.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<strong>Example</strong>: Partial Trace for a General Two-Qubit State
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Suppose we have a general two-qubit pure state: <span class="math display">\[
+|\psi\rangle = \alpha|00\rangle + \beta|01\rangle + \gamma|10\rangle + \delta|11\rangle.
+\]</span> The full density matrix is: <span class="math display">\[
+\rho = |\psi\rangle \langle \psi|
+= \begin{pmatrix}
+\alpha \\ \beta \\ \gamma \\ \delta
+\end{pmatrix}
+\begin{pmatrix}
+\alpha^* &amp; \beta^* &amp; \gamma^* &amp; \delta^*
+\end{pmatrix}.
+\]</span></p>
+<p>To find the reduced density matrix of the first qubit, <span class="math inline">\(\rho_A = \mathrm{Tr}_B(\rho)\)</span>, group the basis states so that qubit B’s index is traced out:</p>
+<p><span class="math display">\[
+\rho_A =
+\begin{pmatrix}
+|\alpha|^2 + |\beta|^2 &amp; \alpha\gamma^*+\beta\delta^* \\
+\gamma\alpha^* + \delta\beta^* &amp; |\gamma|^2 + |\delta|^2
+\end{pmatrix}.
+\]</span></p>
+<p>This <span class="math inline">\(2\times2\)</span> matrix captures all local measurements and observables on qubit A, regardless of the state of qubit B.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Why Care About Reduced Density Matrices?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Reduced density matrices are crucial because they tell us what we can observe when we only have access to part of an entangled system. They help answer questions like:</p>
+<ol type="1">
+<li><strong>Local Measurements</strong>: What results will we get if we only measure one qubit of an entangled pair?</li>
+<li><strong>Quantum Information</strong>: How much information is accessible locally vs.&nbsp;stored in correlations?</li>
+<li><strong>Decoherence</strong>: How does interaction with the environment affect our quantum system?</li>
+</ol>
+<p>For example, in quantum teleportation, while the total state remains pure, the reduced density matrix of the transmitted qubit appears completely mixed until the classical information is received. This explains why teleportation cannot transmit information faster than light!</p>
+</div>
+</div>
+</section>
+<section id="quantifying-entanglement" class="level3" data-number="3.2.4">
+<h3 data-number="3.2.4" class="anchored" data-anchor-id="quantifying-entanglement"><span class="header-section-number">3.2.4</span> Quantifying entanglement</h3>
+<p>Several measures exist to quantify entanglement, each capturing different aspects:</p>
+<ol type="1">
+<li><p><strong>Von Neumann entropy</strong>: For a pure bipartite state <span class="math inline">\(|\psi\rangle\)</span>, the entanglement entropy is <span class="math inline">\(S(\rho_A) = -\text{Tr}(\rho_A \log_2 \rho_A)\)</span> where <span class="math inline">\(\rho_A\)</span> is the reduced density matrix of subsystem A. For two qubits, this ranges from 0 for separable states to 1 for maximally entangled states.</p></li>
+<li><p><strong>Concurrence</strong> <span class="citation" data-cites="Wootters2001">&nbsp;[<a href="references.html#ref-Wootters2001" role="doc-biblioref">9</a>]</span>: For a two-qubit state <span class="math inline">\(\rho\)</span>, defined as <span class="math inline">\(C(\rho) = \max(0, \lambda_1 - \lambda_2 - \lambda_3 - \lambda_4)\)</span> where <span class="math inline">\(\lambda_i\)</span> are the square roots of eigenvalues of <span class="math inline">\(\rho(Y \otimes Y)\rho^*(Y \otimes Y)\)</span> in decreasing order (this reduces to <span class="math inline">\(2|\alpha\delta - \beta\gamma|\)</span> for a pure state <span class="math inline">\(|\psi\rangle = \alpha|00\rangle + \beta|01\rangle + \gamma|10\rangle + \delta|11\rangle\)</span>).</p></li>
+<li><p><strong>Negativity</strong>: Based on the partial transpose of the density matrix, providing a computable measure that captures the degree of entanglement. However, while negativity is zero for separable states, a zero negativity does not guarantee separability for some higher-dimensional systems - there exist entangled states with zero negativity.</p></li>
+</ol>
+<p>These measures help quantify the “quantum-ness” of correlations and their potential utility in quantum information protocols. All of these are discussed in detail in <span class="citation" data-cites="Horodecki2009">&nbsp;[<a href="references.html#ref-Horodecki2009" role="doc-biblioref">8</a>]</span>.</p>
+<p>We will find that many protocols of usefulness will produce entanglement in the system, though often only when in a particular basis. We will see that in the next section when we introduce operators on this Hilbert space</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Entanglement depends on the partition
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When we talk about entanglement between subsystems A and B, it’s crucial to understand that this depends entirely on how we choose to divide our total system into these subsystems. The same quantum state can appear entangled or unentangled depending on this choice of partition.</p>
+<p>For example, consider the state: <span class="math display">\[
+|\psi\rangle = \frac{1}{\sqrt{2}}(|00\rangle + |11\rangle),
+\]</span></p>
+<p>this is clearly an entangled Bell state, but our Hilbert space exists as (complex) four-dimensional space. I could “relabel” my states into a new basis (which we can define with a tilde), such that <span class="math display">\[
+\begin{aligned}
+\ket{00} &amp; = \frac1{\sqrt{2}}( \ket{\tilde 0 \tilde 0} + \ket{\tilde 1 \tilde 1}), \\
+\ket{11} &amp; = \frac1{\sqrt{2}}( \ket{\tilde 0 \tilde 0} - \ket{\tilde 1 \tilde 1}), \\
+\ket{01} &amp; = \frac1{\sqrt{2}}( \ket{\tilde 0 \tilde 1} + \ket{\tilde 1 \tilde 0}), \\
+\ket{10} &amp; = \frac1{\sqrt{2}}( \ket{\tilde 0 \tilde 1} - \ket{\tilde 1 \tilde 0}), \\
+\end{aligned}
+\]</span> and if we do that, we see that</p>
+<p><span class="math display">\[
+\ket\psi = \ket{\tilde 0 \tilde 0},
+\]</span></p>
+<p>a completely disentangled state! This is not to say that <span class="math inline">\(\ket{\psi}\)</span> is not entangled, it is. It is merely important to remember that entanglement is defined with respect to a certain partitioning of your Hilbert space. The space represented by <span class="math inline">\(\tilde 0\)</span> and <span class="math inline">\(\tilde 1\)</span> is a complex combination of 00, 01, 10, and 11.</p>
+<p>It is usually the physical situation which dictates how we partition our system (systems that are physically isolated from each other or for which we have single degrees of freedom which admit simple tensor products when considered with other systems).</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+When to Use Different Entanglement Measures
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Each entanglement measure has its strengths:</p>
+<ol type="1">
+<li><strong>Von Neumann Entropy</strong>
+<ul>
+<li>Best for: Pure bipartite states</li>
+<li>Advantages: Clear physical interpretation, easy to calculate</li>
+<li>Use when: You want to quantify how much quantum information is shared between subsystems</li>
+</ul></li>
+<li><strong>Concurrence</strong>
+<ul>
+<li>Best for: Two-qubit mixed states</li>
+<li>Advantages: Can be directly calculated from density matrix</li>
+<li>Use when: Working with noisy or mixed two-qubit states</li>
+</ul></li>
+<li><strong>Negativity</strong>
+<ul>
+<li>Best for: Higher-dimensional systems</li>
+<li>Advantages: Easy to compute, works for mixed states</li>
+<li>Use when: Dealing with larger systems or when you need a quick estimate of entanglement</li>
+</ul></li>
+</ol>
+<p>Example: For the Bell state <span class="math inline">\(\ket{\Phi^+} = \frac{1}{\sqrt{2}}(\ket{00} + \ket{11})\)</span>:</p>
+<ul>
+<li>Von Neumann Entropy = 1 (maximally entangled)</li>
+<li>Concurrence = 1 (maximally entangled)</li>
+<li>Negativity = 0.5 (maximum value for two qubits)</li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Three qubits can be entangled in two inequivalent ways <span class="citation" data-cites="Dur2000">&nbsp;[<a href="references.html#ref-Dur2000" role="doc-biblioref">10</a>]</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Three-qubit entanglement introduces fundamentally new features not present in two-qubit systems. The most famous example is the GHZ state (named after Greenberger, Horne, and Zeilinger <span class="citation" data-cites="GreenbergerZeilinger1990">&nbsp;[<a href="references.html#ref-GreenbergerZeilinger1990" role="doc-biblioref">11</a>]</span>):</p>
+<p><span class="math display">\[
+|\text{GHZ}\rangle = \frac{1}{\sqrt{2}}(|000\rangle + |111\rangle)
+\]</span></p>
+<p>Unlike two-qubit entanglement, which has only one type of maximal entanglement (equivalent to Bell states), three-qubit systems can exhibit qualitatively different kinds of entanglement. The GHZ state above has the special property that measuring any one qubit immediately determines the state of the other two, but if you lose (trace out) any one qubit, the remaining two qubits are completely unentangled. This is fundamentally different from another type of three-qubit entanglement called the W state:</p>
+<p><span class="math display">\[
+|W\rangle = \frac{1}{\sqrt{3}}(|001\rangle + |010\rangle + |100\rangle)
+\]</span></p>
+<p>which maintains some two-qubit entanglement even after losing one qubit. These distinct classes of entanglement cannot be converted into each other using local operations and classical communication (LOCC).</p>
+</div>
+</div>
+</section>
+</section>
+<section id="multi-qubit-operations" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="multi-qubit-operations"><span class="header-section-number">3.3</span> Multi-qubit operations</h2>
+<p>With our exponentially big state space created and entanglement characterized, we can begin to think about how to translate our single qubit operations to multiple qubits and then how to build up operations that <em>use</em> multiple qubits. We will focus on two qubit gates since these will help us build up a set of universal gates for quantum computation.</p>
+<section id="single-qubit-gates" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="single-qubit-gates"><span class="header-section-number">3.3.1</span> Single-qubit gates</h3>
+<p>When we want to apply a single-qubit gate to one qubit in a multi-qubit system, we need to use tensor products to construct the appropriate operator. For a two-qubit system, if we want to apply a gate <span class="math inline">\(U\)</span> to the first qubit, the full operator is:</p>
+<p><span class="math display">\[
+U \otimes I
+\]</span></p>
+<p>where <span class="math inline">\(I\)</span> is the <span class="math inline">\(2\times 2\)</span> identity matrix. Similarly, to apply <span class="math inline">\(U\)</span> to the second qubit, we use:</p>
+<p><span class="math display">\[
+I \otimes U
+\]</span></p>
+<p>For example, applying the Pauli-X gate to the first qubit of a two-qubit system gives:</p>
+<p><span class="math display">\[
+X \otimes I = \begin{pmatrix} 0 &amp; 1 \\ 1 &amp; 0 \end{pmatrix} \otimes \begin{pmatrix} 1 &amp; 0 \\ 0 &amp; 1 \end{pmatrix} = \begin{pmatrix} 0 &amp; 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 1 \\ 1 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0 &amp; 0 \end{pmatrix}
+\]</span></p>
+<p>where the rows and columns correspond to the basis states in order <span class="math inline">\(|00\rangle\)</span>, <span class="math inline">\(|01\rangle\)</span>, <span class="math inline">\(|10\rangle\)</span>, <span class="math inline">\(|11\rangle\)</span>. For example, the 1 in the third row, first column means <span class="math inline">\(X \otimes I\)</span> transforms <span class="math inline">\(|00\rangle\)</span> to <span class="math inline">\(|10\rangle\)</span>, which flips the first qubit as expected.</p>
+<p>Similarly, applying it to the second qubit gives:</p>
+<p><span class="math display">\[
+I \otimes X = \begin{pmatrix} 1 &amp; 0 \\ 0 &amp; 1 \end{pmatrix} \otimes \begin{pmatrix} 0 &amp; 1 \\ 1 &amp; 0 \end{pmatrix} = \begin{pmatrix} 0 &amp; 1 &amp; 0 &amp; 0 \\ 1 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 1 \\ 0 &amp; 0 &amp; 1 &amp; 0 \end{pmatrix}
+\]</span></p>
+<p>Here, the 1 in the second row, first column shows <span class="math inline">\(I \otimes X\)</span> transforms <span class="math inline">\(|00\rangle\)</span> to <span class="math inline">\(|01\rangle\)</span>, flipping only the second qubit as expected.</p>
+<p>This pattern extends to more qubits. For an <span class="math inline">\(N\)</span>-qubit system, to apply <span class="math inline">\(U\)</span> to the <span class="math inline">\(k\)</span>th qubit, we use:</p>
+<p><span class="math display">\[
+\underbrace{I \otimes \cdots \otimes I}_{k-1} \otimes U \otimes \underbrace{I \otimes \cdots \otimes I}_{N-k}
+\]</span></p>
+<p>where <span class="math inline">\(U\)</span> appears in the <span class="math inline">\(k\)</span>th position and <span class="math inline">\(I\)</span> appears in all other positions. This construction ensures we affect only the target qubit while leaving all other qubits unchanged.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<strong>Example</strong>: H gate on second qubit of three-qubit system
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let’s see how applying <span class="math inline">\(H\)</span> to the second qubit of a three-qubit system works. The operator is:</p>
+<p><span class="math display">\[
+I \otimes H \otimes I
+\]</span></p>
+<p>Acting on the state <span class="math inline">\(|000\rangle\)</span>:</p>
+<p><span class="math display">\[
+\begin{aligned}
+(I \otimes H \otimes I)|000\rangle &amp;= (I \otimes H \otimes I)(|0\rangle \otimes |0\rangle \otimes |0\rangle) \\
+&amp;= (I|0\rangle) \otimes (H|0\rangle) \otimes (I|0\rangle) \\
+&amp;= |0\rangle \otimes \frac{|0\rangle + |1\rangle}{\sqrt{2}} \otimes |0\rangle \\
+&amp;= \frac{|000\rangle + |010\rangle}{\sqrt{2}}
+\end{aligned}
+\]</span></p>
+<p>As expected, only the middle qubit is put into an equal superposition of 0 and 1.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Notational convenience for single-qubit operations
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To avoid writing long chains of tensor products, we often use a subscript to indicate which qubit an operator acts on. For example, instead of writing</p>
+<p><span class="math display">\[
+I \otimes X \otimes I \otimes I \otimes X
+\]</span></p>
+<p>for a five-qubit system where we apply <span class="math inline">\(X\)</span> to qubits 2 and 5, we can write this more compactly as</p>
+<p><span class="math display">\[
+X_2 X_5
+\]</span></p>
+<p>Similarly, applying the Hadamard gate to the third qubit of a four-qubit system would be written as</p>
+<p><span class="math display">\[
+H_3
+\]</span></p>
+<p>rather than <span class="math inline">\(I \otimes I \otimes H \otimes I\)</span>. This notation is particularly helpful when describing quantum circuits involving many qubits.</p>
+</div>
+</div>
+</section>
+<section id="two-qubit-gates" class="level3" data-number="3.3.2">
+<h3 data-number="3.3.2" class="anchored" data-anchor-id="two-qubit-gates"><span class="header-section-number">3.3.2</span> Two-qubit gates</h3>
+<p>To begin to build up a full set of logical gates, we start with “controlled” gates. These are gates that will act as single qubit gates on one qubit (the target), but only if another qubit (the control) is in the <span class="math inline">\(\ket{1}\)</span> state.</p>
+<p>We first introduce the two-qubit gate called the controlled-NOT (CNOT) gate, which flips the second qubit (target) when the first qubit (control) is in state <span class="math inline">\(|1\rangle\)</span><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
+<p>The CNOT gate can be written as a <span class="math inline">\(4 \times 4\)</span> matrix acting on the two-qubit basis states <span class="math inline">\(|00\rangle\)</span>, <span class="math inline">\(|01\rangle\)</span>, <span class="math inline">\(|10\rangle\)</span>, and <span class="math inline">\(|11\rangle\)</span>:</p>
+<p><span class="math display">\[
+\text{CNOT} = \begin{pmatrix}
+1 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 1 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 1 \\
+0 &amp; 0 &amp; 1 &amp; 0
+\end{pmatrix}
+\]</span></p>
+<p>We can understand this matrix by seeing how it acts on each basis state:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\text{CNOT}|00\rangle &amp;= |00\rangle \\
+\text{CNOT}|01\rangle &amp;= |01\rangle \\
+\text{CNOT}|10\rangle &amp;= |11\rangle \\
+\text{CNOT}|11\rangle &amp;= |10\rangle
+\end{aligned}
+\]</span></p>
+<p>When the first (control) qubit is <span class="math inline">\(|0\rangle\)</span>, the target qubit is unchanged. When the control qubit is <span class="math inline">\(|1\rangle\)</span>, the target qubit is flipped (X gate applied). This has a circuit representation which we show below in <a href="#fig-cnot-examples" class="quarto-xref">Fig.&nbsp;<span>3.1</span></a>.</p>
+<!-- ```{.tikz}
+%%| filename: cnot-0-control
+%%| caption: CNOT gate with control in $\ket{0}$
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}
+\lstick{$\ket{0}$} & \ctrl{1} & \qw & \rstick{$\ket{0}$} \\
+\lstick{$\ket{\psi}$} & \targ{} & \qw & \rstick{$\ket{\psi}$}
+\end{quantikz}
+```
+```{.tikz}
+%%| filename: cnot-1-control
+%%| caption: CNOT gate with control in $\ket{1}$
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}
+\lstick{$\ket{1}$} & \ctrl{1} & \qw & \rstick{$\ket{1}$} \\
+\lstick{$\ket{\psi}$} & \targ{} & \qw & \rstick{$X\ket{\psi}$}
+\end{quantikz}
+``` -->
+<div id="fig-cnot-examples" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cnot-examples-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-cnot-examples" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-cnot-0" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-cnot-0-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/tikz/cnot-0-control.svg" class="img-fluid figure-img" style="width:80.0%" data-ref-parent="fig-cnot-examples">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-cnot-0-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) CNOT gate with control in <span class="math inline">\(|0\rangle\)</span>
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-cnot-examples" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-cnot-1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-cnot-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/tikz/cnot-1-control.svg" class="img-fluid figure-img" style="width:80.0%" data-ref-parent="fig-cnot-examples">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-cnot-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) CNOT gate with control in <span class="math inline">\(|1\rangle\)</span>
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cnot-examples-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Fig.&nbsp;3.1: The CNOT gate behavior depends on the control qubit state. When the control is <span class="math inline">\(|0\rangle\)</span> (left), the target is unchanged. When the control is <span class="math inline">\(|1\rangle\)</span> (right), the target is flipped.
+</figcaption>
+</figure>
+</div>
+<p>The CNOT gate’s action on computational basis states appears simple - it either leaves them unchanged (when control is |0⟩) or flips the target (when control is |1⟩). However, when applied to superposition states, the CNOT can create entanglement.</p>
+<p>For example, consider applying CNOT to a superposition state created by applying a Hadamard gate to the first qubit (circuit diagram in <a href="#fig-H-CNOT-Bell" class="quarto-xref">Fig.&nbsp;<span>3.2</span></a>).</p>
+<!-- ```{.tikz}
+%%| filename: cnot-bell
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}
+\lstick{$\ket{0}$} & \gate{H} & \ctrl{1} & \qw & \rstick[2]{$\frac1{\sqrt2}(\ket{00}+\ket{11})$}\\
+\lstick{$\ket{0}$} & \qw & \targ{} & \qw &
+\end{quantikz}
+``` -->
+<div id="fig-H-CNOT-Bell" class="centered quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-H-CNOT-Bell-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/tikz/cnot-bell.svg" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-H-CNOT-Bell-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Fig.&nbsp;3.2: The application of <span class="math inline">\(H\)</span> followed by a CNOT gate can create the Bell state <span class="math inline">\(\frac1{\sqrt2}(\ket{00}+\ket{11})\)</span>.
+</figcaption>
+</figure>
+</div>
+<p>We can verify this mathematically: <span class="math display">\[
+\begin{aligned}
+|00\rangle &amp;\xrightarrow{H \otimes I} \frac{|0\rangle + |1\rangle}{\sqrt{2}} \otimes |0\rangle = \frac{|00\rangle + |10\rangle}{\sqrt{2}} \\
+&amp;\xrightarrow{\text{CNOT}} \frac{|00\rangle + |11\rangle}{\sqrt{2}}
+\end{aligned}
+\]</span></p>
+<p>The resulting state is the Bell state <span class="math inline">\(|\Phi^+\rangle\)</span> which we saw earlier - a maximally entangled state that cannot be written as a product of individual qubit states.</p>
+<p>The CNOT gate is just one example of a controlled operation. More generally, we can create controlled versions of any single-qubit gate, where the target operation is applied only when the control qubit is <span class="math inline">\(\ket{1}\)</span>. The most common controlled gates are:</p>
+<ul>
+<li>Controlled-X (CNOT): Flips the target qubit if control is <span class="math inline">\(\ket{1}\)</span>, <a href="#fig-CX-gate" class="quarto-xref">Fig.&nbsp;<span>3.3 (a)</span></a></li>
+<li>Controlled-Z (CZ): Adds -1 phase if both qubits are <span class="math inline">\(\ket{1}\)</span>, <a href="#fig-CZ-gate" class="quarto-xref">Fig.&nbsp;<span>3.3 (c)</span></a></li>
+<li>Controlled-Y (CY): Applies Y rotation if control is <span class="math inline">\(\ket{1}\)</span>, <a href="#fig-CY-gate" class="quarto-xref">Fig.&nbsp;<span>3.3 (b)</span></a></li>
+</ul>
+<!-- 
+```{.tikz}
+%%| filename: cx-gate
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}
+& \ctrl{1} & \\
+& \gate{X} & 
+\end{quantikz}
+```
+
+```{.tikz}
+%%| filename: cz-gate
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}
+& \ctrl{1} & \\
+& \gate{Z} & 
+\end{quantikz}
+```
+
+```{.tikz}
+%%| filename: cy-gate
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}
+& \ctrl{1} & \\
+& \gate{Y} & 
+\end{quantikz}
+``` -->
+<div id="fig-CY-CZ-gates" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-CY-CZ-gates-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-CY-CZ-gates" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div id="fig-CX-gate" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-CX-gate-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/tikz/cx-gate.svg" class="img-fluid figure-img" style="width:60.0%" data-ref-parent="fig-CY-CZ-gates">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-CX-gate-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) CX
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-CY-CZ-gates" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div id="fig-CY-gate" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-CY-gate-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/tikz/cy-gate.svg" class="img-fluid figure-img" style="width:60.0%" data-ref-parent="fig-CY-CZ-gates">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-CY-gate-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) CY
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-CY-CZ-gates" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div id="fig-CZ-gate" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-CZ-gate-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/tikz/cz-gate.svg" class="img-fluid figure-img" style="width:60.0%" data-ref-parent="fig-CY-CZ-gates">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-CZ-gate-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(c) CZ
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-CY-CZ-gates-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Fig.&nbsp;3.3: Circuit Notation for controlled-X (CX), controlled-Y (CY), and controlled-Z (CZ) gates. Note that CX=CNOT, so this is just an alternative circuit notation.
+</figcaption>
+</figure>
+</div>
+<p>Any controlled gate can be constructed using CNOT gates and single-qubit operations. For example, the CZ gate can be implemented as:</p>
+<!-- ```{.tikz}
+%%| filename: cz-decomp
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}
+&& \ctrl{1} &&  \\
+& \gate{H} & \targ{} & \gate{H} & 
+\end{quantikz}
+``` -->
+<div id="fig-CZ-decomp" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-CZ-decomp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/tikz/cz-decomp.svg" class="img-fluid figure-img" style="width:40.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-CZ-decomp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Fig.&nbsp;3.4: The CZ gate can be decomposed into two Hadamards sandwiching a CNOT (CX) gate.
+</figcaption>
+</figure>
+</div>
+<p>This notation is flexible as well, we can begin to apply any unitary matrix <span class="math inline">\(U\)</span> onto a target qubit and have a control qubit for it. This generically will look like</p>
+<!-- ```{.tikz}
+%%| filename: cu-gate
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}
+& \ctrl{1} & \\
+& \gate{U} & 
+\end{quantikz}
+```  -->
+<div id="fig-CU-gate" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-CU-gate-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/tikz/cu-gate.svg" class="img-fluid figure-img" style="width:20.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-CU-gate-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Fig.&nbsp;3.5: An arbitrary controlled gate
+</figcaption>
+</figure>
+</div>
+<p>Mathematically, we can write this out in a four-by-four matrix <span class="math display">\[
+\text{CU} = \begin{pmatrix}
+1 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 1 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; U_{11} &amp; U_{12} \\
+0 &amp; 0 &amp; U_{21} &amp; U_{22}
+\end{pmatrix}
+\]</span></p>
+<p>where <span class="math inline">\(U_{ij}\)</span> are the matrix elements of the single-qubit unitary <span class="math inline">\(U = \begin{pmatrix} U_{11} &amp; U_{12} \\ U_{21} &amp; U_{22} \end{pmatrix}\)</span>.</p>
+<p>Another important two-qubit gate is the SWAP gate, which exchanges the states of two qubits. The SWAP gate can be written as a four-by-four matrix:</p>
+<p><span class="math display">\[
+\text{SWAP} = \begin{pmatrix}
+1 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 1 &amp; 0 \\
+0 &amp; 1 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 1
+\end{pmatrix}
+\]</span></p>
+<p>Unlike controlled gates, the SWAP gate cannot create entanglement - it simply swaps the quantum states between the qubits. The circuit notation for a SWAP gate is:</p>
+<!-- ```{.tikz}
+%%| filename: swap-gate
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}
+& \swap{1} & \\
+& \targX{} &
+\end{quantikz}
+``` -->
+<div id="fig-swap-gate" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-swap-gate-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/tikz/swap-gate.svg" class="img-fluid figure-img" style="width:20.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-swap-gate-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Fig.&nbsp;3.6: SWAP gate circuit notation
+</figcaption>
+</figure>
+</div>
+<p>We’ve seen how this can already create entanglement even though one qubit is merely acting as “control,” and how we can “SWAP” two qubits. However, we can also write down more general four-by-four matrices on two qubits and if we have a generic four-by-four matrix <span class="math inline">\(U_4\)</span>, we will write that circuit element as</p>
+<!-- ```{.tikz}
+%%| filename: u4-gate
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}
+& \gate[2]{U_4} & \\
+& \qw & 
+\end{quantikz}
+``` -->
+<div id="fig-u4-gate" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-u4-gate-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/tikz/u4-gate.svg" class="img-fluid figure-img" style="width:20.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-u4-gate-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Fig.&nbsp;3.7: A generic unitary on two qubits can be represented by a block spanning the two qubits
+</figcaption>
+</figure>
+</div>
+<p>These two-qubit gates form the foundation for quantum computation with multiple qubits. The controlled operations, particularly the CNOT gate, are essential building blocks for quantum algorithms, while general two-qubit unitaries give us the full power to manipulate quantum states in ways impossible with just single-qubit operations. Understanding how these gates create and manipulate entanglement is crucial.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<strong>Example</strong>: Creating different entangled states
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let’s see how different combinations of gates create distinct entangled states:</p>
+<ol type="1">
+<li><p>Bell state <span class="math inline">\(\ket{\Phi^+}\)</span>:</p>
+<pre><code>|0⟩ --H--•--|
+         |
+|0⟩ -----X--|</code></pre>
+<p><span class="math inline">\(\ket{00} \xrightarrow{H \otimes I} \frac{\ket{00} + \ket{10}}{\sqrt{2}} \xrightarrow{CNOT} \frac{\ket{00} + \ket{11}}{\sqrt{2}}\)</span></p></li>
+<li><p>Bell state <span class="math inline">\(\ket{\Psi^+}\)</span>:</p>
+<pre><code>|0⟩ --H--•--|
+         |
+|0⟩ --X--X--|</code></pre>
+<p><span class="math inline">\(\ket{00} \xrightarrow{I \otimes X} \ket{01} \xrightarrow{H \otimes I} \frac{\ket{01} + \ket{11}}{\sqrt{2}} \xrightarrow{CNOT} \frac{\ket{01} + \ket{10}}{\sqrt{2}}\)</span></p></li>
+</ol>
+<p>This shows how different gate sequences can create different types of entanglement. <em>Note: We have used the fixed-width font notation for circuit diagrams here.</em></p>
+</div>
+</div>
+<section id="universal-gate-sets" class="level4" data-number="3.3.2.1">
+<h4 data-number="3.3.2.1" class="anchored" data-anchor-id="universal-gate-sets"><span class="header-section-number">3.3.2.1</span> Universal gate sets</h4>
+<p>Just as classical computation can be performed using a small set of universal gates (like NAND or NOR), quantum computation can be achieved using a finite set of quantum gates that can approximate any unitary operation to arbitrary precision. This is known as a universal gate set.</p>
+<p>A common universal gate set consists of:</p>
+<ol type="1">
+<li>The CNOT gate</li>
+<li>Single-qubit rotations (or equivalently, any set of gates that can approximate any single-qubit rotation)</li>
+</ol>
+<p>Remarkably, these are sufficient to construct any unitary operation on any number of qubits, though the construction may require many gates. This is analogous to how NAND gates can be used to build any classical logic circuit.</p>
+<p>There are several alternative universal gate sets. Some common ones include:</p>
+<ul>
+<li>CZ (or CY) + single-qubit rotations</li>
+<li>CNOT + Hadamard + Phase (S) gate + T gate</li>
+<li>Toffoli + Hadamard</li>
+</ul>
+<p>The choice of which universal gate set to use often depends on the physical implementation of the quantum computer. For example, some quantum computing architectures might naturally implement CZ gates rather than CNOT gates, making the CZ-based universal set more practical.</p>
+<p>It’s worth noting that while we can approximate any unitary to arbitrary precision with these gate sets, the number of gates required might grow exponentially with the desired precision. This is known as the Solovay-Kitaev theorem, which provides an algorithm for finding such approximations.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<strong>Example</strong>: Creating a GHZ State
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A three-qubit GHZ state is <span class="math display">\[
+| \text{GHZ} \rangle = \frac{|000\rangle + |111\rangle}{\sqrt{2}}.
+\]</span></p>
+<p>We can create this state using the following sequence of gates:</p>
+<ol type="1">
+<li>Start from <span class="math inline">\(|000\rangle\)</span></li>
+<li>Apply a Hadamard gate to the first qubit: <span class="math display">\[
+|000\rangle \xrightarrow{H \otimes I \otimes I} \frac{|000\rangle + |100\rangle}{\sqrt{2}}
+\]</span></li>
+<li>Apply two consecutive CNOTs, using the first qubit as the control: <span class="math display">\[
+\begin{aligned}
+&amp;\frac{|000\rangle + |100\rangle}{\sqrt{2}}
+\xrightarrow{\text{CNOT on qubits 1→2}}
+\frac{|000\rangle + |110\rangle}{\sqrt{2}} \\
+&amp;\quad \xrightarrow{\text{CNOT on qubits 1→3}}
+\frac{|000\rangle + |111\rangle}{\sqrt{2}}
+\end{aligned}
+\]</span></li>
+</ol>
+<p>Measuring any qubit in the computational basis will instantly project the entire system into either <span class="math inline">\(|000\rangle\)</span> or <span class="math inline">\(|111\rangle\)</span>, illustrating the strong correlations present in multipartite entanglement.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="measurement" class="level3" data-number="3.3.3">
+<h3 data-number="3.3.3" class="anchored" data-anchor-id="measurement"><span class="header-section-number">3.3.3</span> Measurement</h3>
+<p>When measuring multiple qubits, we need to extend our understanding of single-qubit measurements. For a single qubit, measuring in the computational basis was straightforward - we would get either <span class="math inline">\(\ket{0}\)</span> or <span class="math inline">\(\ket{1}\)</span>. However, in a multi-qubit system, measuring just one qubit introduces an important concept: partial measurements and degeneracy.</p>
+<p>Consider measuring the first qubit of a two-qubit state in the computational basis. The measurement operators are:</p>
+<p><span class="math display">\[
+P_0 = |0\rangle\langle 0| \otimes I = \begin{pmatrix} 1 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 0 \end{pmatrix}
+\]</span></p>
+<p><span class="math display">\[
+P_1 = |1\rangle\langle 1| \otimes I = \begin{pmatrix} 0 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 1 \end{pmatrix}
+\]</span></p>
+<p>These operators are degenerate - for example, <span class="math inline">\(P_0\)</span> projects onto both <span class="math inline">\(|00\rangle\)</span> and <span class="math inline">\(|01\rangle\)</span> states. This means when we measure the first qubit and get 0, the second qubit remains in a quantum state.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example: Partial Measurement
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Consider the state: <span class="math display">\[
+|\psi\rangle = \frac{1}{2}(|00\rangle + |01\rangle + |10\rangle + |11\rangle)
+\]</span></p>
+<p>If we measure the first qubit and get 0, the state collapses to: <span class="math display">\[
+|\psi'\rangle = \frac{1}{\sqrt{2}}(|00\rangle + |01\rangle)
+\]</span></p>
+<p>The second qubit remains in a superposition!</p>
+</div>
+</div>
+<p>When measuring multiple qubits, we need to be careful about how we calculate probabilities. For a single qubit, the probability of measuring <span class="math inline">\(\ket{0}\)</span> was simply <span class="math inline">\(\lvert\braket{0|\psi}\rvert^2\)</span>. However, with multiple qubits, we need to sum over all possible configurations of the unmeasured qubits.</p>
+<p>For example, if we have a two-qubit state <span class="math inline">\(|\psi\rangle\)</span> and measure only the first qubit, the probability of getting 0 is:</p>
+<p><span class="math display">\[
+p(0) = \sum_i |\langle 0i|\psi\rangle|^2
+\]</span></p>
+<p>where <span class="math inline">\(i\)</span> runs over all possible states of the second qubit (0 and 1). This sum accounts for all ways we could get outcome 0 on the first qubit, regardless of what state the second qubit is in.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example: Calculating Measurement Probabilities
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Consider again the state: <span class="math display">\[
+|\psi\rangle = \frac{1}{2}(|00\rangle + |01\rangle + |10\rangle + |11\rangle)
+\]</span></p>
+<p>The probability of measuring 0 on the first qubit is: <span class="math display">\[
+\begin{aligned}
+p(0) &amp;= |\langle 00|\psi\rangle|^2 + |\langle 01|\psi\rangle|^2 \\
+&amp;= \left|\frac{1}{2}\right|^2 + \left|\frac{1}{2}\right|^2 \\
+&amp;= \frac{1}{2}
+\end{aligned}
+\]</span></p>
+<p>This matches our intuition - the first qubit is equally likely to be 0 or 1.</p>
+</div>
+</div>
+<section id="measuring-general-observables" class="level4" data-number="3.3.3.1">
+<h4 data-number="3.3.3.1" class="anchored" data-anchor-id="measuring-general-observables"><span class="header-section-number">3.3.3.1</span> Measuring General Observables</h4>
+<p>In practice, we may be restricted in what we can measure on a quantum computer, such as only in the computational (<span class="math inline">\(Z\)</span>) basis. However, we often need to measure other observables. For example, we might want to measure the parity of two qubits (<span class="math inline">\(Z_1Z_2\)</span>) or their correlation (<span class="math inline">\(X_1X_2\)</span>).</p>
+<p>To measure these observables, we need to transform our state before measurement. This is done by applying appropriate unitary operations that map our desired measurement basis to the computational basis.</p>
+<p>For example, as we saw in the single qubit section, to measure in the X basis, we first apply <span class="math inline">\(H\)</span> before measuring in the computational basis.</p>
+<p>For two-qubit observables like <span class="math inline">\(Z_1 Z_2\)</span>, we can use controlled operations to map the eigenspaces to computational basis states. Here’s how we might measure <span class="math inline">\(Z_1 Z_2\)</span>.</p>
+<p>First, let’s write out how <span class="math inline">\(Z_1 Z_2\)</span> acts on the computational basis, separting out the +1 eigenvalues from the -1 eigenvalues</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>State</th>
+<th><span class="math inline">\(Z_1Z_2\)</span></th>
+<th><span class="math inline">\(Z_2\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(\ket{00}\)</span></td>
+<td><span class="math inline">\(+1\)</span></td>
+<td><span class="math inline">\(+1\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\ket{01}\)</span></td>
+<td><span class="math inline">\(-1\)</span></td>
+<td><span class="math inline">\(-1\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\ket{10}\)</span></td>
+<td><span class="math inline">\(-1\)</span></td>
+<td><span class="math inline">\(+1\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\ket{11}\)</span></td>
+<td><span class="math inline">\(+1\)</span></td>
+<td><span class="math inline">\(-1\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Notice that these operators have the same number of +1 and -1 eigenvalues. On top of that, the states <span class="math inline">\(\ket{00}\)</span> and <span class="math inline">\(\ket{01}\)</span> have the same eigenvalue, and <span class="math inline">\(\ket{10}\)</span> and <span class="math inline">\(\ket{11}\)</span> flips. This sounds like a CNOT gate, in fact if we have a unitary that takes <span class="math inline">\(\ket{10} \mapsto \ket{11}\)</span> and <span class="math inline">\(\ket{11} \mapsto \ket{10}\)</span>, while leaving <span class="math inline">\(\ket{00}\)</span> and <span class="math inline">\(\ket{01}\)</span> alone, these operators match.</p>
+<p>Let’s build out a way to relate these operators which we will then use to measure <em>any</em> string Pauli matrices. With the above, we note that <span class="math display">\[
+\begin{aligned}
+\ket{00} &amp; \mapsto \ket{00},\\
+\ket{01} &amp; \mapsto \ket{01}, \\
+\ket{10} &amp; \mapsto \ket{11}, \\
+\ket{11} &amp; \mapsto \ket{10}
+\end{aligned}
+\]</span> will let us map <span class="math inline">\(Z_1 Z_2 \mapsto Z_2\)</span>. This has a simple matrix form <span class="math display">\[
+\begin{pmatrix}
+1 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 1 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 1 \\
+0 &amp; 0 &amp; 1 &amp; 0
+\end{pmatrix}.
+\]</span> In other words, the CNOT gate. Formally, this means that <span id="eq-CNOT-Z1Z2-CNOT"><span class="math display">\[
+\text{CNOT}\, Z_1 Z_2\, \text{CNOT} = Z_2,
+\tag{3.3}\]</span></span> which can be verified with matrix mulitplation. However, we can also note that if we apply <span class="math inline">\(\ket{b_1 b_2}\)</span> to both sides, <span class="math display">\[
+Z_1 Z_2 \text{CNOT} \ket{b_1 b_2} = \mathrm{CNOT} (-1)^{b_2} \ket{b_1 b_2} = (-1)^{b_2} \mathrm{CNOT} \ket{b_1 b_2},
+\]</span> which verifies that <span class="math inline">\(\mathrm{CNOT}\ket{b_1 b_2}\)</span> is an eigenvector of <span class="math inline">\(Z_1 Z_2\)</span> with eigenvalue <span class="math inline">\((-1)^{b_2}\)</span> (this assume <a href="#eq-CNOT-Z1Z2-CNOT" class="quarto-xref">Eq.&nbsp;<span>3.3</span></a> is correct).</p>
+<p>Therefore, to <em>measure</em> <span class="math inline">\(Z_1 Z_2\)</span>, we perform CNOT, then measure the target qubit (number two). The circuit diagram looks like this</p>
+<!-- ```{.tikz}
+%%| filename: zz-measure
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}& \ctrl{1} &  \\& \targ{} & \meter{}\end{quantikz}
+``` -->
+<div id="fig-zz-measure" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-zz-measure-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/tikz/zz-measure.svg" class="img-fluid figure-img" style="width:20.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-zz-measure-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Fig.&nbsp;3.8: Circuit to measure <span class="math inline">\(Z_1Z_2\)</span>
+</figcaption>
+</figure>
+</div>
+<p>and if we want to not only measure <span class="math inline">\(Z_1 Z_2\)</span> but ensure the system goes into an eigenstate of <span class="math inline">\(Z_1 Z_2\)</span>, we need to perform CNOT again</p>
+<!-- ```{.tikz}
+%%| filename: zz-measure-restore
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}& \ctrl{1} & & \ctrl{1} &  \\& \targ{} & \meter{} & \targ{} & \end{quantikz}
+```
+
+```{.tikz}
+%%| filename: big-zz-measure
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz} & \meter[2]{Z_1Z_2} &  \\ &  & \end{quantikz}
+``` -->
+<div id="fig-ZZ-meas" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ZZ-meas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row quarto-layout-valign-bottom">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-ZZ-meas" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-big-zz-measure" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-big-zz-measure-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/tikz/big-zz-measure.svg" class="img-fluid figure-img" style="width:40.0%" data-ref-parent="fig-ZZ-meas">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-big-zz-measure-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Circuit to measure <span class="math inline">\(Z_1Z_2\)</span> with a single symbol
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-ZZ-meas" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-zz-measure-restore" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-zz-measure-restore-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/tikz/zz-measure-restore.svg" class="img-fluid figure-img" style="width:80.0%" data-ref-parent="fig-ZZ-meas">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-zz-measure-restore-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Circuit to measure <span class="math inline">\(Z_1Z_2\)</span> with explicit gates
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ZZ-meas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Fig.&nbsp;3.9: Circuit diagrams for the <span class="math inline">\(Z_1 Z_2\)</span> measurement. These two circuits are equivalent to each other.
+</figcaption>
+</figure>
+</div>
+<p>But what about measuring other Pauli strings? We can use the fact that <span class="math inline">\(X = H Z H\)</span> and <span class="math inline">\(Y = S X S^\dagger\)</span> to convert any Pauli string measurement into a <span class="math inline">\(Z\)</span>-type measurement. For example, to measure <span class="math inline">\(X_1 X_2\)</span>, we can apply Hadamard gates to both qubits, measure <span class="math inline">\(Z_1 Z_2\)</span>, and then apply Hadamard gates again:</p>
+<!-- ```{.tikz}
+%%| filename: xx-measure
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}& \gate{H} & \ctrl{1} & & \ctrl{1} & \gate{H} &  \\& \gate{H} & \targ{} & \meter{} & \targ{} & \gate{H} & \end{quantikz}
+```
+
+```{.tikz}
+%%| filename: big-xx-measure
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz} & \meter[2]{X_1X_2} &  \\ &  & \end{quantikz}
+```   -->
+<div id="fig-XX-meas" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-XX-meas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row quarto-layout-valign-bottom">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-XX-meas" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-big-xx-measure" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-big-xx-measure-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/tikz/big-xx-measure.svg" class="img-fluid figure-img" style="width:40.0%" data-ref-parent="fig-XX-meas">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-big-xx-measure-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Circuit to measure <span class="math inline">\(X_1X_2\)</span> with a single symbol
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-XX-meas" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-xx-measure-restore" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-xx-measure-restore-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/tikz/xx-measure.svg" class="img-fluid figure-img" style="width:95.0%" data-ref-parent="fig-XX-meas">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-xx-measure-restore-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Circuit to measure <span class="math inline">\(X_1X_2\)</span> with explicit gates
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-XX-meas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Fig.&nbsp;3.10: Circuit diagrams for the <span class="math inline">\(X_1 X_2\)</span> measurement. These two circuits are equivalent to each other.
+</figcaption>
+</figure>
+</div>
+<p>This gives us a way to measure any Pauli string</p>
+<ol type="1">
+<li>Perform single-particle unitaries to convert it to only <span class="math inline">\(Z\)</span> and <span class="math inline">\(I\)</span> operators.</li>
+<li>Find the permutation matrix that relates +1 and -1 eigenvalues of your <span class="math inline">\(Z\)</span>-Pauli string to a single <span class="math inline">\(Z_n\)</span> and apply that unitary matrix (this could be a complicated combination of CNOT gates)</li>
+<li>Measure <span class="math inline">\(Z_n\)</span>.</li>
+<li>If the correct measured state is needed, undo the unitary in #2 followed by the single-particle unitaries in #1.</li>
+</ol>
+<p>Pauli strings are particularly “simple.” Measuring more complicated observables requires more thought and sometimes ancillary systems to assist in that measurement.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<strong>Example</strong>: Measuring X on One Qubit of a Two-Qubit System
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Suppose we have a two-qubit state: <span class="math display">\[
+|\phi\rangle = \alpha|00\rangle + \beta|01\rangle + \gamma|10\rangle + \delta|11\rangle,
+\]</span> and we want to measure the first qubit in the <span class="math inline">\(X\)</span> basis while leaving the second qubit unmeasured.</p>
+<ol type="1">
+<li>Recall <span class="math inline">\(H X H = Z\)</span>. So to measure <span class="math inline">\(X\)</span> on the first qubit, apply a Hadamard on that qubit to map the <span class="math inline">\(X\)</span> basis to the <span class="math inline">\(Z\)</span> basis: <span class="math display">\[
+(H \otimes I)|\phi\rangle.
+\]</span></li>
+<li>Measure the first qubit in the computational basis (effectively measuring <span class="math inline">\(Z\)</span> on the transformed state).</li>
+<li>After the measurement, unapply the <span class="math inline">\(H\)</span> if you want to restore the original basis of the first qubit.</li>
+</ol>
+<p>This procedure effectively measures <span class="math inline">\(X_1\)</span> while leaving qubit 2 untouched (can it still be entangled?).</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<strong>Example</strong>: Creating entanglement through measurement
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let’s see how we can create entanglement through measurement. We’ll start with the product state <span class="math inline">\(|{+}{+}\rangle\)</span> and use a <span class="math inline">\(Z_1Z_2\)</span> measurement to create a maximally entangled state.</p>
+<ol type="1">
+<li><p>Initial state: <span class="math display">\[
+|{+}{+}\rangle = \frac{1}{2}(|00\rangle + |01\rangle + |10\rangle + |11\rangle)
+\]</span></p></li>
+<li><p>Measuring <span class="math inline">\(Z_1Z_2\)</span> projects onto the +1 or -1 eigenspaces:</p>
+<ul>
+<li>+1 eigenspace: span{<span class="math inline">\(|00\rangle\)</span>, <span class="math inline">\(|11\rangle\)</span>}</li>
+<li>-1 eigenspace: span{<span class="math inline">\(|01\rangle\)</span>, <span class="math inline">\(|10\rangle\)</span>}</li>
+</ul></li>
+<li><p>After measurement:</p>
+<ul>
+<li>If outcome = +1: <span class="math display">\[
+|\Phi^+\rangle = \frac{|00\rangle + |11\rangle}{\sqrt{2}}
+\]</span></li>
+<li>If outcome = -1: <span class="math display">\[
+|\Psi^+\rangle = \frac{|01\rangle + |10\rangle}{\sqrt{2}}
+\]</span></li>
+</ul></li>
+<li><p>If we get -1, we can apply <span class="math inline">\(X\)</span> to the second qubit to transform to <span class="math inline">\(|\Psi^{+}\rangle\)</span>: <span class="math display">\[
+(I \otimes X)\frac{|01\rangle + |10\rangle}{\sqrt{2}} = \frac{|00\rangle + |11\rangle}{\sqrt{2}}
+\]</span></p></li>
+</ol>
+<p>This procedure creates the Bell state <span class="math inline">\(|\Phi^+\rangle\)</span> regardless of measurement outcome, demonstrating how measurement plus conditional corrections can generate entanglement from separable states.</p>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="decoherence-in-multi-qubit-systems" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="decoherence-in-multi-qubit-systems"><span class="header-section-number">3.4</span> Decoherence in multi-qubit systems</h2>
+<p>When dealing with multiple qubits, decoherence becomes even more challenging than in single-qubit systems. Not only can each qubit experience individual decoherence, but the interactions between qubits can create new pathways for errors. The main types of multi-qubit decoherence are:</p>
+<ol type="1">
+<li><strong>Independent decoherence</strong>: Each qubit experiences its own local noise</li>
+<li><strong>Correlated decoherence</strong>: Environmental effects that simultaneously affect multiple qubits</li>
+<li><strong>Cross-talk</strong>: Unwanted interactions between qubits that should be isolated</li>
+</ol>
+<p>For example, consider a two-qubit state that starts in a Bell state: <span class="math display">\[
+|\Phi^+\rangle = \frac{1}{\sqrt{2}}(|00\rangle + |11\rangle)
+\]</span> The density matrix for this pure state is: <span class="math display">\[
+|\Phi^+\rangle\langle\Phi^+| = \frac{1}{2}\begin{pmatrix}
+1 &amp; 0 &amp; 0 &amp; 1 \\
+0 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 0 \\
+1 &amp; 0 &amp; 0 &amp; 1
+\end{pmatrix}
+\]</span></p>
+<p>Under independent dephasing, each qubit loses phase coherence separately: <span class="math display">\[
+\rho(t) = \frac{1}{2}\begin{pmatrix}
+1 &amp; 0 &amp; 0 &amp; e^{-2\gamma t} \\
+0 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 0 \\
+e^{-2\gamma t} &amp; 0 &amp; 0 &amp; 1
+\end{pmatrix}
+\]</span></p>
+<p>which would represent exponential decay in entanglement over time; this could occur even with pure local noise. This highlights a crucial feature of quantum systems: even when noise acts independently on each qubit (i.e., local noise), it can destroy global quantum properties like entanglement. In other words, we don’t need correlated noise to degrade entanglement - local noise channels are sufficient to compromise the quantum advantages that entanglement provides.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<strong>Example</strong>: Impact of different noise types
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Consider a Bell state under different noise channels:</p>
+<ol type="1">
+<li><p>Amplitude damping on first qubit only: <span class="math display">\[
+\rho(t) = \begin{pmatrix}
+1-\frac{e^{-\gamma t}}{2} &amp; 0 &amp; 0 &amp; \frac{e^{-\gamma t/2}}{\sqrt{2}} \\
+0 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 0 \\
+\frac{e^{-\gamma t/2}}{\sqrt{2}} &amp; 0 &amp; 0 &amp; \frac{e^{-\gamma t}}{2}
+\end{pmatrix}
+\]</span></p></li>
+<li><p>Dephasing on both qubits: <span class="math display">\[
+\rho(t) = \frac{1}{2}\begin{pmatrix}
+1 &amp; 0 &amp; 0 &amp; e^{-2\gamma t} \\
+0 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 0 \\
+e^{-2\gamma t} &amp; 0 &amp; 0 &amp; 1
+\end{pmatrix}
+\]</span></p></li>
+</ol>
+<p>This shows how different noise channels affect the quantum correlations in distinct ways.</p>
+</div>
+</div>
+<section id="gate-errors" class="level3" data-number="3.4.1">
+<h3 data-number="3.4.1" class="anchored" data-anchor-id="gate-errors"><span class="header-section-number">3.4.1</span> Gate Errors</h3>
+<p>In addition to decoherence during idle times, errors can occur during gate operations. These gate errors come in several forms:</p>
+<ol type="1">
+<li><strong>Systematic errors</strong>: Consistent over/under-rotation of gates</li>
+<li><strong>Random errors</strong>: Fluctuations in gate parameters</li>
+<li><strong>Cross-talk errors</strong>: Gates affecting neighboring qubits</li>
+<li><strong>Leakage errors</strong>: System leaving the computational basis</li>
+</ol>
+<p>For two-qubit gates like CNOT, errors are typically higher than single-qubit gates because:</p>
+<ul>
+<li>They require stronger interactions between qubits</li>
+<li>Take longer to implement</li>
+<li>Are more sensitive to timing and control errors (e.g.,some qubits have to wait while single-qubit operations “catch up”).</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Current State of Gate Fidelities
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>As of 2021, record error rates are:</p>
+<ul>
+<li>Single-qubit gates: 0.03%</li>
+<li>Two-qubit gates: 0.5%</li>
+<li>Measurement: 0.2%</li>
+</ul>
+<p>These numbers are representative of state-of-the-art superconducting qubit platforms, as reported in <span class="citation" data-cites="DeLeonSteuerman2021">&nbsp;[<a href="references.html#ref-DeLeonSteuerman2021" role="doc-biblioref">12</a>]</span>.</p>
+</div>
+</div>
+
+
+<div id="refs" class="references csl-bib-body" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-Schrodinger1935" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">E. Schrödinger, <a href="https://doi.org/10.1017/S0305004100013554">Discussion of <span>Probability Relations</span> between <span>Separated Systems</span></a>, Mathematical Proceedings of the Cambridge Philosophical Society <strong>31</strong>, 555 (1935).</div>
+</div>
+<div id="ref-EinsteinRosen1935" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">A. Einstein, B. Podolsky, and N. Rosen, <a href="https://doi.org/10.1103/PhysRev.47.777">Can <span>Quantum-Mechanical Description</span> of <span>Physical Reality Be Considered Complete</span>?</a>, Physical Review <strong>47</strong>, 777 (1935).</div>
+</div>
+<div id="ref-Bell1964a" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">J. S. Bell, <a href="https://doi.org/10.1103/PhysicsPhysiqueFizika.1.195">On the <span>Einstein Podolsky Rosen</span> paradox</a>, Physics Physique Fizika <strong>1</strong>, 195 (1964).</div>
+</div>
+<div id="ref-FreedmanClauser1972" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">S. J. Freedman and J. F. Clauser, <a href="https://doi.org/10.1103/PhysRevLett.28.938">Experimental <span>Test</span> of <span>Local Hidden-Variable Theories</span></a>, Physical Review Letters <strong>28</strong>, 938 (1972).</div>
+</div>
+<div id="ref-AspectRoger1982" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[5] </div><div class="csl-right-inline">A. Aspect, J. Dalibard, and G. Roger, <a href="https://doi.org/10.1103/PhysRevLett.49.1804">Experimental <span>Test</span> of <span>Bell</span>’s <span>Inequalities Using Time- Varying Analyzers</span></a>, Physical Review Letters <strong>49</strong>, 1804 (1982).</div>
+</div>
+<div id="ref-PuseyRudolph2012" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[6] </div><div class="csl-right-inline">M. F. Pusey, J. Barrett, and T. Rudolph, <a href="https://doi.org/10.1038/nphys2309">On the reality of the quantum state</a>, Nature Physics <strong>8</strong>, 475 (2012).</div>
+</div>
+<div id="ref-Mermin1981" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[7] </div><div class="csl-right-inline">N. D. Mermin, <a href="https://doi.org/10.1119/1.12594">Bringing home the atomic world: <span>Quantum</span> mysteries for anybody</a>, American Journal of Physics <strong>49</strong>, 940 (1981).</div>
+</div>
+<div id="ref-Horodecki2009" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[8] </div><div class="csl-right-inline">R. Horodecki, M. Horodecki, and K. Horodecki, <a href="https://doi.org/10.1103/RevModPhys.81.865">Quantum entanglement</a>, Reviews of Modern Physics <strong>81</strong>, 865 (2009).</div>
+</div>
+<div id="ref-Wootters2001" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[9] </div><div class="csl-right-inline">W. Wootters, Entanglement of formation and concurrence, Quantum Information and Computation <strong>1</strong>, 27 (2001).</div>
+</div>
+<div id="ref-Dur2000" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[10] </div><div class="csl-right-inline">W. Dür, G. Vidal, and J. I. Cirac, <a href="https://doi.org/10.1103/PhysRevA.62.062314">Three qubits can be entangled in two inequivalent ways</a>, Physical Review A <strong>62</strong>, 62314 (2000).</div>
+</div>
+<div id="ref-GreenbergerZeilinger1990" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[11] </div><div class="csl-right-inline">D. M. Greenberger, M. A. Horne, A. Shimony, and A. Zeilinger, <a href="https://doi.org/10.1119/1.16243">Bell’s theorem without inequalities</a>, American Journal of Physics <strong>58</strong>, 1131 (1990).</div>
+</div>
+<div id="ref-DeLeonSteuerman2021" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[12] </div><div class="csl-right-inline">N. P. De Leon, K. M. Itoh, D. Kim, K. K. Mehta, T. E. Northup, H. Paik, B. S. Palmer, N. Samarth, S. Sangtawesin, and D. W. Steuerman, <a href="https://doi.org/10.1126/science.abb2823">Materials challenges and opportunities for quantum computing hardware</a>, Science <strong>372</strong>, eabb2823 (2021).</div>
+</div>
+</div>
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>This is true for pure states, but can be easily generalized to mixed states, see <span class="citation" data-cites="Horodecki2009">&nbsp;[<a href="references.html#ref-Horodecki2009" role="doc-biblioref">8</a>]</span>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>This is also known as the CX-gate (the controlled-<span class="math inline">\(X\)</span> gate).<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./qubit.html" class="pagination-link" aria-label="The Qubit">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Qubit</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./references.html" class="pagination-link" aria-label="References">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
