@@ -4,7 +4,7 @@ Before we hop into the platforms where we might be able to perform these algorit
 
 ## DiVincenzo's Criteria for Quantum Computation
 
-In 2000, David DiVincenzo outlined a set of criteria @DiVincenzo2000 that any physical system must meet to be considered a viable quantum computer. These criteria serve as a benchmark for evaluating different quantum computing platforms and guiding research efforts. The criteria can be summarized as follows:
+In 2000, David DiVincenzo outlined a set of criteria @DiVincenzo1997 that any physical system must meet to be considered a viable quantum computer. These criteria serve as a benchmark for evaluating different quantum computing platforms and guiding research efforts. The criteria can be summarized as follows:
 
 1.  **Scalable qubits:** A practical quantum computer must be able to scale to a large number of qubits. The number of qubits required depends on the complexity of the problem being solved, but fault-tolerant quantum computation generally requires thousands or even millions of qubits.
 
