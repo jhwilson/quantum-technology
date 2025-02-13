@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>References – Quantum Technology</title>
+<title>Interlude: Hardwire requirements – Quantum Technology</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -24,6 +24,7 @@ ul.task-list li input[type="checkbox"] {
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -49,7 +50,8 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./interlude.html" rel="prev">
+<link href="./references.html" rel="next">
+<link href="./basic_algorithms.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -98,6 +100,35 @@ window.MathJax = {
 };
 </script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -110,7 +141,7 @@ window.MathJax = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./references.html">References</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./interlude.html">Interlude: Hardwire requirements</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -170,13 +201,13 @@ window.MathJax = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./interlude.html" class="sidebar-item-text sidebar-link">
+  <a href="./interlude.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Interlude: Hardwire requirements</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link active">
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
 </li>
@@ -185,15 +216,27 @@ window.MathJax = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#divincenzos-criteria-for-quantum-computation" id="toc-divincenzos-criteria-for-quantum-computation" class="nav-link active" data-scroll-target="#divincenzos-criteria-for-quantum-computation">DiVincenzo’s Criteria for Quantum Computation</a></li>
+  <li><a href="#measurement-based-quantum-computation" id="toc-measurement-based-quantum-computation" class="nav-link" data-scroll-target="#measurement-based-quantum-computation">Measurement-Based Quantum Computation</a></li>
+  <li><a href="#magic-state-distillation" id="toc-magic-state-distillation" class="nav-link" data-scroll-target="#magic-state-distillation">Magic State Distillation</a>
+  <ul class="collapse">
+  <li><a href="#the-need-for-magic-states" id="toc-the-need-for-magic-states" class="nav-link" data-scroll-target="#the-need-for-magic-states">The Need for Magic States</a></li>
+  <li><a href="#resource-overhead-and-error-correction" id="toc-resource-overhead-and-error-correction" class="nav-link" data-scroll-target="#resource-overhead-and-error-correction">Resource Overhead and Error Correction</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">References</h1>
+<h1 class="title">Interlude: Hardwire requirements</h1>
 </div>
 
 
@@ -210,202 +253,58 @@ window.MathJax = {
 </header>
 
 
-<div id="refs" class="references csl-bib-body" data-entry-spacing="0" role="list">
-<div id="ref-AruteMartinis2019" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[1] </div><div class="csl-right-inline">F.
-Arute et al., <a href="https://doi.org/10.1038/s41586-019-1666-5">Quantum supremacy using
-a programmable superconducting processor</a>, Nature
-<strong>574</strong>, 505 (2019).</div>
-</div>
-<div id="ref-GoogleQuantumAIandCollaboratorsZobrist2024" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[2] </div><div class="csl-right-inline">Google Quantum AI and Collaborators et al., <a href="https://doi.org/10.1038/s41586-024-08449-y">Quantum error
-correction below the surface code threshold</a>, Nature (2024).</div>
-</div>
-<div id="ref-PednaultWisnieff2019" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[3] </div><div class="csl-right-inline">E.
-Pednault, J. A. Gunnels, G. Nannicini, L. Horesh, and R. Wisnieff, <a href="https://doi.org/10.48550/arXiv.1910.09534">Leveraging
-<span>Secondary Storage</span> to <span>Simulate Deep</span> 54-qubit
-<span>Sycamore Circuits</span></a>, arXiv:1910.09534 (2019).</div>
-</div>
-<div id="ref-PanZhang2022" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[4] </div><div class="csl-right-inline">F.
-Pan, K. Chen, and P. Zhang, <a href="https://doi.org/10.1103/PhysRevLett.129.090502">Solving the
-<span>Sampling Problem</span> of the <span>Sycamore Quantum
-Circuits</span></a>, Physical Review Letters <strong>129</strong>,
-090502 (2022).</div>
-</div>
-<div id="ref-NielsenChuang2011" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[5] </div><div class="csl-right-inline">M.
-A. Nielsen and I. L. Chuang, <em>Quantum <span>Computation</span> and
-<span>Quantum Information</span>: 10th <span>Anniversary
-Edition</span></em>, Anniversary edition (Cambridge University Press,
-Cambridge ; New York, 2011).</div>
-</div>
-<div id="ref-Turing1937" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[6] </div><div class="csl-right-inline">A.
-M. Turing, <a href="https://doi.org/10.1112/plms/s2-42.1.230">On
-<span>Computable Numbers</span>, with an <span>Application</span> to the
-<span>Entscheidungsproblem</span></a>, Proceedings of the London
-Mathematical Society <strong>s2-42</strong>, 230 (1937).</div>
-</div>
-<div id="ref-Hoddeson1981" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[7] </div><div class="csl-right-inline">L.
-Hoddeson, <a href="https://doi.org/10.2307/27757489">The
-<span>Discovery</span> of the <span>Point-Contact Transistor</span></a>,
-Historical Studies in the Physical Sciences <strong>12</strong>, 41
-(1981).</div>
-</div>
-<div id="ref-BravyiKitaev2005" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[8] </div><div class="csl-right-inline">S.
-Bravyi and A. Kitaev, <a href="https://doi.org/10.1103/PhysRevA.71.022316">Universal quantum
-computation with ideal <span>Clifford</span> gates and noisy
-ancillas</a>, Physical Review A <strong>71</strong>, 022316
-(2005).</div>
-</div>
-<div id="ref-Feynman1982" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[9] </div><div class="csl-right-inline">R.
-P. Feynman, <a href="https://doi.org/10.1007/BF02650179">Simulating
-physics with computers</a>, International Journal of Theoretical Physics
-<strong>21</strong>, 467 (1982).</div>
-</div>
-<div id="ref-Deutsch1985" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[10] </div><div class="csl-right-inline">D.
-Deutsch, <a href="https://doi.org/10.1098/rspa.1985.0070">Quantum
-theory, the <span>Church</span>–<span>Turing</span> principle and the
-universal quantum computer</a>, Proceedings of the Royal Society of
-London. A. Mathematical and Physical Sciences <strong>400</strong>, 97
-(1985).</div>
-</div>
-<div id="ref-DeutschJozsa1992" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[11] </div><div class="csl-right-inline">D.
-Deutsch and R. Jozsa, <a href="https://doi.org/10.1098/rspa.1992.0167">Rapid solution of problems
-by quantum computation</a>, Proceedings of the Royal Society of London.
-Series A: Mathematical and Physical Sciences <strong>439</strong>, 553
-(1992).</div>
-</div>
-<div id="ref-BernsteinVazirani1997" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[12] </div><div class="csl-right-inline">E.
-Bernstein and U. Vazirani, <a href="https://doi.org/10.1137/S0097539796300921">Quantum
-<span>Complexity Theory</span></a>, SIAM Journal on Computing
-<strong>26</strong>, 1411 (1997).</div>
-</div>
-<div id="ref-Simon1997" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[13] </div><div class="csl-right-inline">D.
-R. Simon, <a href="https://doi.org/10.1137/S0097539796298637">On the
-<span>Power</span> of <span>Quantum Computation</span></a>, SIAM Journal
-on Computing <strong>26</strong>, 1474 (1997).</div>
-</div>
-<div id="ref-Shor1994" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[14] </div><div class="csl-right-inline">P.
-W. Shor, <em><a href="https://doi.org/10.1109/SFCS.1994.365700">Algorithms for Quantum
-Computation: Discrete Logarithms and Factoring</a></em>, in
-<em>Proceedings 35th <span>Annual Symposium</span> on
-<span>Foundations</span> of <span>Computer Science</span></em> (IEEE
-Comput. Soc. Press, Santa Fe, NM, USA, 1994), pp. 124–134.</div>
-</div>
-<div id="ref-Grover1996" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[15] </div><div class="csl-right-inline">L.
-K. Grover, <em><a href="https://doi.org/10.1145/237814.237866">A Fast
-Quantum Mechanical Algorithm for Database Search</a></em>, in
-<em>Proceedings of the Twenty-Eighth Annual <span>ACM</span> Symposium
-on <span>Theory</span> of Computing - <span>STOC</span> ’96</em> (ACM
-Press, Philadelphia, Pennsylvania, United States, 1996), pp.
-212–219.</div>
-</div>
-<div id="ref-WoottersZurek1982" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[16] </div><div class="csl-right-inline">W.
-K. Wootters and W. H. Zurek, <a href="https://doi.org/10.1038/299802a0">A single quantum cannot be
-cloned</a>, Nature <strong>299</strong>, 802 (1982).</div>
-</div>
-<div id="ref-Wilde2017" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[17] </div><div class="csl-right-inline">M.
-M. Wilde, <em>Quantum Information Theory</em>, 2nd ed (Cambridge
-university press, Cambridge, 2017).</div>
-</div>
-<div id="ref-EinsteinRosen1935" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[18] </div><div class="csl-right-inline">A.
-Einstein, B. Podolsky, and N. Rosen, <a href="https://doi.org/10.1103/PhysRev.47.777">Can
-<span>Quantum-Mechanical Description</span> of <span>Physical Reality Be
-Considered Complete</span>?</a>, Physical Review <strong>47</strong>,
-777 (1935).</div>
-</div>
-<div id="ref-Schrodinger1935" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[19] </div><div class="csl-right-inline">E.
-Schrödinger, <a href="https://doi.org/10.1017/S0305004100013554">Discussion of
-<span>Probability Relations</span> between <span>Separated
-Systems</span></a>, Mathematical Proceedings of the Cambridge
-Philosophical Society <strong>31</strong>, 555 (1935).</div>
-</div>
-<div id="ref-Bell1964a" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[20] </div><div class="csl-right-inline">J.
-S. Bell, <a href="https://doi.org/10.1103/PhysicsPhysiqueFizika.1.195">On the
-<span>Einstein Podolsky Rosen</span> paradox</a>, Physics Physique
-Fizika <strong>1</strong>, 195 (1964).</div>
-</div>
-<div id="ref-FreedmanClauser1972" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[21] </div><div class="csl-right-inline">S.
-J. Freedman and J. F. Clauser, <a href="https://doi.org/10.1103/PhysRevLett.28.938">Experimental
-<span>Test</span> of <span>Local Hidden-Variable Theories</span></a>,
-Physical Review Letters <strong>28</strong>, 938 (1972).</div>
-</div>
-<div id="ref-AspectRoger1982" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[22] </div><div class="csl-right-inline">A.
-Aspect, J. Dalibard, and G. Roger, <a href="https://doi.org/10.1103/PhysRevLett.49.1804">Experimental
-<span>Test</span> of <span>Bell</span>’s <span>Inequalities Using Time-
-Varying Analyzers</span></a>, Physical Review Letters
-<strong>49</strong>, 1804 (1982).</div>
-</div>
-<div id="ref-PuseyRudolph2012" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[23] </div><div class="csl-right-inline">M.
-F. Pusey, J. Barrett, and T. Rudolph, <a href="https://doi.org/10.1038/nphys2309">On the reality of the quantum
-state</a>, Nature Physics <strong>8</strong>, 475 (2012).</div>
-</div>
-<div id="ref-Mermin1981" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[24] </div><div class="csl-right-inline">N.
-D. Mermin, <a href="https://doi.org/10.1119/1.12594">Bringing home the
-atomic world: <span>Quantum</span> mysteries for anybody</a>, American
-Journal of Physics <strong>49</strong>, 940 (1981).</div>
-</div>
-<div id="ref-Horodecki2009" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[25] </div><div class="csl-right-inline">R.
-Horodecki, M. Horodecki, and K. Horodecki, <a href="https://doi.org/10.1103/RevModPhys.81.865">Quantum
-entanglement</a>, Reviews of Modern Physics <strong>81</strong>, 865
-(2009).</div>
-</div>
-<div id="ref-Wootters2001" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[26] </div><div class="csl-right-inline">W.
-Wootters, Entanglement of formation and concurrence, Quantum Information
-and Computation <strong>1</strong>, 27 (2001).</div>
-</div>
-<div id="ref-GreenbergerZeilinger1990" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[27] </div><div class="csl-right-inline">D.
-M. Greenberger, M. A. Horne, A. Shimony, and A. Zeilinger, <a href="https://doi.org/10.1119/1.16243">Bell’s theorem without
-inequalities</a>, American Journal of Physics <strong>58</strong>, 1131
-(1990).</div>
-</div>
-<div id="ref-Dur2000" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[28] </div><div class="csl-right-inline">W.
-Dür, G. Vidal, and J. I. Cirac, <a href="https://doi.org/10.1103/PhysRevA.62.062314">Three qubits can be
-entangled in two inequivalent ways</a>, Physical Review A
-<strong>62</strong>, 62314 (2000).</div>
-</div>
+<p>Before we hop into the platforms where we might be able to perform these algorithms to solve problems, we need to specify what we want.</p>
+<section id="divincenzos-criteria-for-quantum-computation" class="level2">
+<h2 class="anchored" data-anchor-id="divincenzos-criteria-for-quantum-computation">DiVincenzo’s Criteria for Quantum Computation</h2>
+<p>In 2000, David DiVincenzo outlined a set of criteria <span class="citation" data-cites="DiVincenzo2000">&nbsp;[<a href="references.html#ref-DiVincenzo2000" role="doc-biblioref"><strong>DiVincenzo2000?</strong></a>]</span> that any physical system must meet to be considered a viable quantum computer. These criteria serve as a benchmark for evaluating different quantum computing platforms and guiding research efforts. The criteria can be summarized as follows:</p>
+<ol type="1">
+<li><p><strong>Scalable qubits:</strong> A practical quantum computer must be able to scale to a large number of qubits. The number of qubits required depends on the complexity of the problem being solved, but fault-tolerant quantum computation generally requires thousands or even millions of qubits.</p></li>
+<li><p><strong>Initialization:</strong> The ability to initialize the qubits to a known state, such as <span class="math inline">\(\ket{0}^{\otimes n}\)</span>, is crucial. This provides a well-defined starting point for quantum algorithms.</p></li>
+<li><p><strong>Long coherence times:</strong> Qubits must maintain their quantum coherence for a sufficiently long time to allow complex quantum operations to be performed. Decoherence, the loss of quantum information to the environment, is a major obstacle to quantum computation. Coherence times must be much longer than the gate operation times.</p></li>
+<li><p><strong>Universal gate set:</strong> A universal set of quantum gates is required to perform arbitrary quantum computations. A universal gate set is a small set of gates that can be combined to approximate any other quantum gate. Examples include the Hadamard gate, the CNOT gate, and single-qubit rotation gates.</p></li>
+<li><p><strong>Measurement:</strong> The ability to accurately measure the state of the qubits is essential for extracting the results of a quantum computation. Measurements must be reliable and have high fidelity.</p></li>
+</ol>
+<p>In addition to these five criteria, DiVincenzo also proposed two criteria for quantum communication:</p>
+<ol start="6" type="1">
+<li><p><strong>Interconvertible quantum and classical bits:</strong> The ability to convert quantum information into classical information and vice versa is important for interfacing with classical computers and communication networks.</p></li>
+<li><p><strong>Faithful transmission of qubits:</strong> The ability to transmit qubits reliably between different locations is essential for building distributed quantum computers and quantum networks.</p></li>
+</ol>
+<p>Meeting these criteria is a significant challenge, and different quantum computing platforms are at various stages of development with respect to each criterion. Superconducting qubits, trapped ions, neutral atoms, quantum dots, and topological qubits are among the leading candidates for building practical quantum computers. Each platform has its own strengths and weaknesses, and ongoing research is focused on overcoming the challenges associated with each approach <span class="citation" data-cites="DeLeonSteuerman2021">&nbsp;[<a href="references.html#ref-DeLeonSteuerman2021" role="doc-biblioref">1</a>]</span>.</p>
+</section>
+<section id="measurement-based-quantum-computation" class="level2">
+<h2 class="anchored" data-anchor-id="measurement-based-quantum-computation">Measurement-Based Quantum Computation</h2>
+<p>It’s worth noting that some quantum computing platforms employ a different paradigm called measurement-based quantum computation (MBQC). Unlike the gate-based approach we’ve primarily discussed, MBQC relies on creating a highly entangled resource state, often a cluster state, and then performing computation by making a series of single-qubit measurements. The specific measurements performed and their order determine the quantum algorithm being executed. While the underlying physics and qubit requirements are similar, the programming and control aspects of MBQC differ significantly from gate-based quantum computation.</p>
+</section>
+<section id="magic-state-distillation" class="level2">
+<h2 class="anchored" data-anchor-id="magic-state-distillation">Magic State Distillation</h2>
+<p>Achieving a universal gate set is crucial for implementing arbitrary quantum algorithms. While some quantum computing platforms can directly implement a universal gate set, others have a limited set of native gates. In such cases, additional resources and techniques are required to achieve universality. One common approach is to use <em>magic state distillation</em>.</p>
+<section id="the-need-for-magic-states" class="level3">
+<h3 class="anchored" data-anchor-id="the-need-for-magic-states">The Need for Magic States</h3>
+<p>A restricted gate set, such as those that are Clifford gates, can perform a limited set of quantum computations efficiently. Clifford gates consist of Hadamard, CNOT, and phase gates. The Gottesman-Knill theorem states that quantum circuits consisting only of Clifford gates, preparation of computational basis states (e.g., <span class="math inline">\(\ket{0}\)</span>), and measurement in the computational basis can be efficiently simulated on a classical computer. Therefore, to achieve true quantum supremacy, we need non-Clifford gates.</p>
+<p>Magic state distillation is a technique used to create high-fidelity <em>magic states</em>, which can then be used along with Clifford gates to implement non-Clifford gates, such as the <span class="math inline">\(T\)</span> gate (also known as the <span class="math inline">\(\pi/8\)</span> gate). The <span class="math inline">\(T\)</span> gate adds a phase of <span class="math inline">\(\pi/4\)</span> to the <span class="math inline">\(\ket{1}\)</span> state:</p>
+<p><span class="math display">\[
+T = \begin{pmatrix}
+1 &amp; 0 \\
+0 &amp; e^{i\pi/4}
+\end{pmatrix}
+\]</span></p>
+<p>A magic state, often denoted as <span class="math inline">\(\ket{A}\)</span>, is a specific quantum state that, when combined with Clifford gates through a process called <em>state injection</em>, allows for the implementation of non-Clifford gates.</p>
+<p>By adding the T gate to the Clifford gates, we obtain a universal gate set.</p>
+</section>
+<section id="resource-overhead-and-error-correction" class="level3">
+<h3 class="anchored" data-anchor-id="resource-overhead-and-error-correction">Resource Overhead and Error Correction</h3>
+<p>Magic state distillation introduces significant resource overhead in terms of the number of physical qubits and quantum gates required. Generating high-fidelity magic states is a computationally intensive process, often requiring multiple rounds of distillation and significant post-selection to obtain the desired fidelity. This overhead can be a limiting factor in the overall performance and scalability of quantum algorithms.</p>
+<p>Furthermore, magic state distillation is often intertwined with quantum error correction. Since the distillation process itself is susceptible to errors, robust error correction schemes are necessary to protect the fragile quantum information during distillation. The interplay between magic state distillation and error correction adds another layer of complexity and resource requirements.</p>
+<p>Despite these challenges, for many quantum computing platforms with restricted native gate sets, magic state distillation remains the most viable path to achieving universality and unlocking the full potential of fault-tolerant quantum computation. Ongoing research focuses on developing more efficient distillation protocols and error correction codes to reduce the resource overhead and improve the overall performance of quantum algorithms.</p>
+
+
+<div id="refs" class="references csl-bib-body" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-DeLeonSteuerman2021" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[29] </div><div class="csl-right-inline">N.
-P. De Leon, K. M. Itoh, D. Kim, K. K. Mehta, T. E. Northup, H. Paik, B.
-S. Palmer, N. Samarth, S. Sangtawesin, and D. W. Steuerman, <a href="https://doi.org/10.1126/science.abb2823">Materials challenges and
-opportunities for quantum computing hardware</a>, Science
-<strong>372</strong>, eabb2823 (2021).</div>
-</div>
-<div id="ref-HarrowLloyd2009" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[30] </div><div class="csl-right-inline">A.
-W. Harrow, A. Hassidim, and S. Lloyd, <a href="https://doi.org/10.1103/PhysRevLett.103.150502">Quantum
-<span>Algorithm</span> for <span>Linear Systems</span> of
-<span>Equations</span></a>, Physical Review Letters
-<strong>103</strong>, 150502 (2009).</div>
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">N. P. De Leon, K. M. Itoh, D. Kim, K. K. Mehta, T. E. Northup, H. Paik, B. S. Palmer, N. Samarth, S. Sangtawesin, and D. W. Steuerman, <a href="https://doi.org/10.1126/science.abb2823">Materials challenges and opportunities for quantum computing hardware</a>, Science <strong>372</strong>, eabb2823 (2021).</div>
 </div>
 </div>
-
-
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -971,11 +870,14 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./interlude.html" class="pagination-link" aria-label="Interlude: Hardwire requirements">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Interlude: Hardwire requirements</span>
+      <a href="./basic_algorithms.html" class="pagination-link" aria-label="Quantum Computing Algorithms">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Quantum Computing Algorithms</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./references.html" class="pagination-link" aria-label="References">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

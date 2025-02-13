@@ -1,0 +1,2184 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.39">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>4&nbsp; Quantum Computing Algorithms – Quantum Technology</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./interlude.html" rel="next">
+<link href="./multiple_qubits.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-d166b450ba5a8e9f7a0ab969bf6592c1.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-b7c2d8834e08b04a63bb76a724ffbcac.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-c1966a8c70583a3816b1e3a216c1caf1.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script>
+window.MathJax = {
+  tex: {
+    macros: {
+      tr: "\\operatorname{tr}"
+    }
+  }
+};
+</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./basic_algorithms.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Quantum Computing Algorithms</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Quantum Technology</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./qubit.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Qubit</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./multiple_qubits.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Multiple Qubits</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./basic_algorithms.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Quantum Computing Algorithms</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./interlude.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Interlude: Hardwire requirements</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#deutschs-algorithm" id="toc-deutschs-algorithm" class="nav-link active" data-scroll-target="#deutschs-algorithm"><span class="header-section-number">4.1</span> Deutsch’s Algorithm</a>
+  <ul class="collapse">
+  <li><a href="#the-problem-statement" id="toc-the-problem-statement" class="nav-link" data-scroll-target="#the-problem-statement"><span class="header-section-number">4.1.1</span> The Problem Statement</a></li>
+  <li><a href="#quantum-implementation" id="toc-quantum-implementation" class="nav-link" data-scroll-target="#quantum-implementation"><span class="header-section-number">4.1.2</span> Quantum Implementation</a></li>
+  <li><a href="#key-insights" id="toc-key-insights" class="nav-link" data-scroll-target="#key-insights"><span class="header-section-number">4.1.3</span> Key Insights</a></li>
+  <li><a href="#mathematical-details" id="toc-mathematical-details" class="nav-link" data-scroll-target="#mathematical-details"><span class="header-section-number">4.1.4</span> Mathematical Details</a></li>
+  </ul></li>
+  <li><a href="#deutschjozsa-algorithm" id="toc-deutschjozsa-algorithm" class="nav-link" data-scroll-target="#deutschjozsa-algorithm"><span class="header-section-number">4.2</span> Deutsch–Jozsa Algorithm</a>
+  <ul class="collapse">
+  <li><a href="#the-problem-statement-1" id="toc-the-problem-statement-1" class="nav-link" data-scroll-target="#the-problem-statement-1"><span class="header-section-number">4.2.1</span> The Problem Statement</a></li>
+  <li><a href="#quantum-implementation-1" id="toc-quantum-implementation-1" class="nav-link" data-scroll-target="#quantum-implementation-1"><span class="header-section-number">4.2.2</span> Quantum Implementation</a></li>
+  <li><a href="#mathematical-analysis" id="toc-mathematical-analysis" class="nav-link" data-scroll-target="#mathematical-analysis"><span class="header-section-number">4.2.3</span> Mathematical Analysis</a></li>
+  <li><a href="#key-insights-1" id="toc-key-insights-1" class="nav-link" data-scroll-target="#key-insights-1"><span class="header-section-number">4.2.4</span> Key Insights</a></li>
+  </ul></li>
+  <li><a href="#bernsteinvazirani-algorithm" id="toc-bernsteinvazirani-algorithm" class="nav-link" data-scroll-target="#bernsteinvazirani-algorithm"><span class="header-section-number">4.3</span> Bernstein–Vazirani Algorithm</a>
+  <ul class="collapse">
+  <li><a href="#problem-statement" id="toc-problem-statement" class="nav-link" data-scroll-target="#problem-statement"><span class="header-section-number">4.3.1</span> Problem Statement</a></li>
+  <li><a href="#quantum-implementation-2" id="toc-quantum-implementation-2" class="nav-link" data-scroll-target="#quantum-implementation-2"><span class="header-section-number">4.3.2</span> Quantum Implementation</a></li>
+  <li><a href="#step-by-step-state-evolution-with-hadamard-gates" id="toc-step-by-step-state-evolution-with-hadamard-gates" class="nav-link" data-scroll-target="#step-by-step-state-evolution-with-hadamard-gates"><span class="header-section-number">4.3.3</span> Step-by-step state evolution with Hadamard gates</a></li>
+  <li><a href="#connection-to-deutsch-jozsa-algorithm" id="toc-connection-to-deutsch-jozsa-algorithm" class="nav-link" data-scroll-target="#connection-to-deutsch-jozsa-algorithm"><span class="header-section-number">4.3.4</span> Connection to Deutsch-Jozsa Algorithm</a></li>
+  </ul></li>
+  <li><a href="#simons-algorithm" id="toc-simons-algorithm" class="nav-link" data-scroll-target="#simons-algorithm"><span class="header-section-number">4.4</span> Simon’s Algorithm</a>
+  <ul class="collapse">
+  <li><a href="#problem-statement-1" id="toc-problem-statement-1" class="nav-link" data-scroll-target="#problem-statement-1"><span class="header-section-number">4.4.1</span> Problem Statement</a></li>
+  <li><a href="#quantum-implementation-3" id="toc-quantum-implementation-3" class="nav-link" data-scroll-target="#quantum-implementation-3"><span class="header-section-number">4.4.2</span> Quantum Implementation</a></li>
+  <li><a href="#quantum-speedup" id="toc-quantum-speedup" class="nav-link" data-scroll-target="#quantum-speedup"><span class="header-section-number">4.4.3</span> Quantum Speedup</a></li>
+  </ul></li>
+  <li><a href="#quantum-phase-estimation" id="toc-quantum-phase-estimation" class="nav-link" data-scroll-target="#quantum-phase-estimation"><span class="header-section-number">4.5</span> Quantum Phase Estimation</a>
+  <ul class="collapse">
+  <li><a href="#problem-statement-2" id="toc-problem-statement-2" class="nav-link" data-scroll-target="#problem-statement-2"><span class="header-section-number">4.5.1</span> Problem Statement</a></li>
+  <li><a href="#quantum-implementation-4" id="toc-quantum-implementation-4" class="nav-link" data-scroll-target="#quantum-implementation-4"><span class="header-section-number">4.5.2</span> Quantum Implementation</a></li>
+  <li><a href="#accuracy" id="toc-accuracy" class="nav-link" data-scroll-target="#accuracy"><span class="header-section-number">4.5.3</span> Accuracy</a></li>
+  <li><a href="#example-1" id="toc-example-1" class="nav-link" data-scroll-target="#example-1"><span class="header-section-number">4.5.4</span> Example</a></li>
+  <li><a href="#applications" id="toc-applications" class="nav-link" data-scroll-target="#applications"><span class="header-section-number">4.5.5</span> Applications</a></li>
+  </ul></li>
+  <li><a href="#grovers-algorithm" id="toc-grovers-algorithm" class="nav-link" data-scroll-target="#grovers-algorithm"><span class="header-section-number">4.6</span> Grover’s Algorithm</a>
+  <ul class="collapse">
+  <li><a href="#the-unstructured-search-problem" id="toc-the-unstructured-search-problem" class="nav-link" data-scroll-target="#the-unstructured-search-problem"><span class="header-section-number">4.6.1</span> The Unstructured Search Problem</a></li>
+  <li><a href="#quantum-oracle" id="toc-quantum-oracle" class="nav-link" data-scroll-target="#quantum-oracle"><span class="header-section-number">4.6.2</span> Quantum Oracle</a></li>
+  <li><a href="#the-diffusion-operator" id="toc-the-diffusion-operator" class="nav-link" data-scroll-target="#the-diffusion-operator"><span class="header-section-number">4.6.3</span> The Diffusion Operator</a></li>
+  <li><a href="#grover-iteration-as-a-rotation" id="toc-grover-iteration-as-a-rotation" class="nav-link" data-scroll-target="#grover-iteration-as-a-rotation"><span class="header-section-number">4.6.4</span> Grover Iteration as a Rotation</a></li>
+  <li><a href="#measurement" id="toc-measurement" class="nav-link" data-scroll-target="#measurement"><span class="header-section-number">4.6.5</span> Measurement</a></li>
+  <li><a href="#quantum-speedup-1" id="toc-quantum-speedup-1" class="nav-link" data-scroll-target="#quantum-speedup-1"><span class="header-section-number">4.6.6</span> Quantum Speedup</a></li>
+  </ul></li>
+  <li><a href="#shors-algorithm-high-level-overview" id="toc-shors-algorithm-high-level-overview" class="nav-link" data-scroll-target="#shors-algorithm-high-level-overview"><span class="header-section-number">4.7</span> Shor’s Algorithm (High-Level Overview)</a>
+  <ul class="collapse">
+  <li><a href="#quantum-period-finding-in-shors-algorithm" id="toc-quantum-period-finding-in-shors-algorithm" class="nav-link" data-scroll-target="#quantum-period-finding-in-shors-algorithm"><span class="header-section-number">4.7.1</span> Quantum Period Finding in Shor’s Algorithm</a></li>
+  </ul></li>
+  <li><a href="#hhl-algorithm" id="toc-hhl-algorithm" class="nav-link" data-scroll-target="#hhl-algorithm"><span class="header-section-number">4.8</span> HHL Algorithm</a>
+  <ul class="collapse">
+  <li><a href="#the-linear-systems-problem" id="toc-the-linear-systems-problem" class="nav-link" data-scroll-target="#the-linear-systems-problem"><span class="header-section-number">4.8.1</span> The Linear Systems Problem</a></li>
+  <li><a href="#quantum-solution-approach" id="toc-quantum-solution-approach" class="nav-link" data-scroll-target="#quantum-solution-approach"><span class="header-section-number">4.8.2</span> Quantum Solution Approach</a></li>
+  <li><a href="#mathematical-details-1" id="toc-mathematical-details-1" class="nav-link" data-scroll-target="#mathematical-details-1"><span class="header-section-number">4.8.3</span> Mathematical Details</a></li>
+  <li><a href="#assumptions-and-limitations" id="toc-assumptions-and-limitations" class="nav-link" data-scroll-target="#assumptions-and-limitations"><span class="header-section-number">4.8.4</span> Assumptions and Limitations</a></li>
+  <li><a href="#applications-1" id="toc-applications-1" class="nav-link" data-scroll-target="#applications-1"><span class="header-section-number">4.8.5</span> Applications</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">4.8.6</span> Conclusion</a></li>
+  </ul></li>
+  <li><a href="#hybrid-quantum-classical-algorithms" id="toc-hybrid-quantum-classical-algorithms" class="nav-link" data-scroll-target="#hybrid-quantum-classical-algorithms"><span class="header-section-number">4.9</span> Hybrid Quantum-Classical Algorithms</a>
+  <ul class="collapse">
+  <li><a href="#variational-quantum-eigensolver-vqe" id="toc-variational-quantum-eigensolver-vqe" class="nav-link" data-scroll-target="#variational-quantum-eigensolver-vqe"><span class="header-section-number">4.9.1</span> Variational Quantum Eigensolver (VQE)</a></li>
+  <li><a href="#quantum-approximate-optimization-algorithm-qaoa" id="toc-quantum-approximate-optimization-algorithm-qaoa" class="nav-link" data-scroll-target="#quantum-approximate-optimization-algorithm-qaoa"><span class="header-section-number">4.9.2</span> Quantum Approximate Optimization Algorithm (QAOA)</a></li>
+  </ul></li>
+  <li><a href="#overview-and-comparison-with-classical" id="toc-overview-and-comparison-with-classical" class="nav-link" data-scroll-target="#overview-and-comparison-with-classical"><span class="header-section-number">4.10</span> Overview and comparison with classical</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Quantum Computing Algorithms</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>We now have a solid foundation in the building blocks of quantum computing. We understand how individual qubits work - their quantum states, how they evolve under unitary operations, and how we measure them. We’ve also explored how multiple qubits interact and become entangled, creating quantum correlations that have no classical analog.</p>
+<p>With these fundamental tools in hand, we can now explore what makes quantum computing truly powerful - the algorithms that harness quantum mechanics to solve problems more efficiently than classical computers. These algorithms cleverly combine quantum superposition, interference, and entanglement to achieve computational speedups that would be impossible using classical bits alone.</p>
+<p>The key insight is that quantum algorithms can process multiple computational paths simultaneously through superposition, while entanglement allows us to correlate these paths in useful ways. When we finally measure the system, quantum interference helps guide us toward the solution we seek. In the following sections, we’ll examine several landmark quantum algorithms that demonstrate these principles and show how quantum computers can tackle important practical problems.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+A Key Insight About Quantum Computing
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Scott Aaronson famously wrote on his blog: “If you take nothing else from this blog: quantum computers won’t solve hard problems instantly by just trying all solutions in parallel.”</p>
+<p>This gets at a crucial misconception about quantum computing. While quantum computers can indeed explore multiple computational paths simultaneously through superposition, we can’t simply read out all those paths at the end. When we measure a quantum system, it collapses to just one classical outcome. The art of quantum algorithm design lies in cleverly using interference to amplify the paths leading to the solution we want, while suppressing paths leading to incorrect answers. This is why quantum algorithms require careful construction - we need to choreograph the quantum evolution so that when we finally measure, we’re likely to get useful information.</p>
+</div>
+</div>
+<section id="deutschs-algorithm" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="deutschs-algorithm"><span class="header-section-number">4.1</span> Deutsch’s Algorithm</h2>
+<p>Deutsch’s algorithm, published in 1985 <span class="citation" data-cites="Deutsch1985">&nbsp;[<a href="references.html#ref-Deutsch1985" role="doc-biblioref">1</a>]</span>, represents the first quantum algorithm to demonstrate a speedup over classical computation. While the problem it solves is quite simple, it beautifully illustrates the key principles of quantum computation: superposition, interference, and parallelism.</p>
+<section id="the-problem-statement" class="level3" data-number="4.1.1">
+<h3 data-number="4.1.1" class="anchored" data-anchor-id="the-problem-statement"><span class="header-section-number">4.1.1</span> The Problem Statement</h3>
+<p>Consider a black box (oracle) function <span class="math inline">\(f: \{0,1\} \rightarrow \{0,1\}\)</span> that takes a single bit as input and returns a single bit as output. There are only four possible such functions:</p>
+<ol type="1">
+<li><span class="math inline">\(f_1(x) = 0\)</span> for all <span class="math inline">\(x\)</span> (constant function)</li>
+<li><span class="math inline">\(f_2(x) = 1\)</span> for all <span class="math inline">\(x\)</span> (constant function)</li>
+<li><span class="math inline">\(f_3(x) = x\)</span> (balanced function)</li>
+<li><span class="math inline">\(f_4(x) = \text{NOT}(x)\)</span> (balanced function)</li>
+</ol>
+<p>The task is to determine whether <span class="math inline">\(f\)</span> is constant (same output for all inputs) or balanced (equal number of 0s and 1s in output). Classically, this requires evaluating <span class="math inline">\(f(0)\)</span> and <span class="math inline">\(f(1)\)</span> - two function calls. Deutsch’s algorithm solves this problem with a single quantum query.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+What is an Oracle?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>An oracle is a black box function that implements a specific operation without revealing its internal workings. In quantum computing, an oracle is typically provided as a unitary transformation that can be queried but whose implementation details are hidden. Oracles are crucial in algorithm analysis because they let us:</p>
+<ol type="1">
+<li>Focus on the number of queries needed rather than implementation details</li>
+<li>Prove lower bounds on algorithmic complexity</li>
+<li>Compare classical and quantum approaches on an equal footing</li>
+</ol>
+<p>For example, in Deutsch’s algorithm, we don’t care how <span class="math inline">\(f(x)\)</span> is computed internally - we just care that we can access it as a quantum operation <span class="math inline">\(U_f\)</span> that preserves quantum superposition.</p>
+</div>
+</div>
+</section>
+<section id="quantum-implementation" class="level3" data-number="4.1.2">
+<h3 data-number="4.1.2" class="anchored" data-anchor-id="quantum-implementation"><span class="header-section-number">4.1.2</span> Quantum Implementation</h3>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The Power of Hadamard Gates
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The Hadamard transform is crucial in this algorithm because:</p>
+<ol type="1">
+<li><p>Initial H-gates create a superposition of all possible bit strings: <span class="math display">\[H^{\otimes n}\ket{0}^{\otimes n} = \frac{1}{\sqrt{2^n}}\sum_{x\in\{0,1\}^n}\ket{x}\]</span></p></li>
+<li><p>Final H-gates convert phase differences into bit values:</p>
+<ul>
+<li>If a bit in s is 0: H maps <span class="math inline">\(\ket{0} \rightarrow \ket{0}\)</span></li>
+<li>If a bit in s is 1: H maps <span class="math inline">\(-\ket{0} \rightarrow \ket{1}\)</span></li>
+</ul></li>
+</ol>
+<p>This is why measuring after the final Hadamard gates directly reveals the hidden string s!</p>
+</div>
+</div>
+<p>The quantum circuit requires two qubits:</p>
+<ul>
+<li>An input qubit initialized to <span class="math inline">\(\ket{0}\)</span></li>
+<li>An auxiliary qubit initialized to <span class="math inline">\(\ket{1}\)</span></li>
+</ul>
+<!-- ```{.tikz}
+%%| filename: deutsch-circuit
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}
+\lstick{$\ket{0}$} & \gate{H} & \gate[2]{U_f} & \gate{H} & \meter{} \\
+\lstick{$\ket{1}$} & \gate{H} & & \qw & \qw
+\end{quantikz}
+``` -->
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/tikz/deutsch-circuit.svg" class="img-fluid figure-img"></p>
+<figcaption>Circuit for Deutsch algorithm</figcaption>
+</figure>
+</div>
+<p>The algorithm proceeds as follows:</p>
+<ol type="1">
+<li><p>Apply Hadamard gates to both qubits: <span class="math display">\[\ket{0}\ket{1} \xrightarrow{H \otimes H} \frac{1}{\sqrt{2}}(\ket{0}+\ket{1})\otimes\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})\]</span></p></li>
+<li><p>Apply the quantum oracle <span class="math inline">\(U_f\)</span>, which implements: <span class="math display">\[\ket{x}\ket{y} \rightarrow \ket{x}\ket{y \oplus f(x)}\]</span> where <span class="math inline">\(\oplus\)</span> denotes addition modulo 2.</p></li>
+<li><p>Apply another Hadamard gate to the first qubit.</p></li>
+<li><p>Measure the first qubit.</p></li>
+</ol>
+<p>The interference in Deutsch’s algorithm occurs in the final Hadamard transformation. To see this explicitly, let’s track how the phases accumulate:</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Phase Kickback
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Phase kickback is a phenomenon in quantum computing where the phase shift caused by an operation on one qubit (often called the target qubit) is “kicked back” onto another qubit (often called the control qubit). This happens particularly in controlled operations when the target qubit is in an eigenstate of the operation.</p>
+<p>In Deutsch’s algorithm, we have four possibilities in the code basis</p>
+<ol type="1">
+<li><span class="math inline">\(\ket{0}\ket{y} \mapsto \ket{0}\ket{y+0}\)</span> and <span class="math inline">\(\ket{1}\ket{y}\mapsto\ket{1}\ket{y+0}\)</span>. In this case, nothing changes and <span class="math display">\[
+\ket{+}\ket{-} \mapsto \ket{+}\ket{-}.
+\]</span></li>
+<li><span class="math inline">\(\ket{0}\ket{y} \mapsto \ket{0}\ket{y+1}\)</span> and <span class="math inline">\(\ket{1}\ket{y}\mapsto\ket{1}\ket{y+1}\)</span>. In this case, both basis states get a phase kickback, and <span class="math display">\[
+\ket{+}\ket{-} \mapsto -\ket{+}\ket{-}.
+\]</span> Yet an overall phase does not affect the state.</li>
+<li><span class="math inline">\(\ket{0}\ket{y} \mapsto \ket{0}\ket{y+0}\)</span> and <span class="math inline">\(\ket{1}\ket{y}\mapsto\ket{1}\ket{y+1}\)</span>. In this case, only the <span class="math inline">\(\ket{1}\)</span> basis state gets a phase kickback, and <span class="math display">\[
+\ket{+}\ket{-} \mapsto \ket{0}\ket{-} - \ket{1}\ket{-} = \ket{-}\ket{-}.
+\]</span></li>
+<li><span class="math inline">\(\ket{0}\ket{y} \mapsto \ket{0}\ket{y+1}\)</span> and <span class="math inline">\(\ket{1}\ket{y}\mapsto\ket{1}\ket{y+0}\)</span>. In this case, only the <span class="math inline">\(\ket{0}\)</span> basis state gets a phase kickback, and <span class="math display">\[
+\ket{+}\ket{-} \mapsto -\ket{0}\ket{-} + \ket{1}\ket{-} = -\ket{-}\ket{-}.
+\]</span></li>
+</ol>
+<p>Even though the extra qubit is not changed by the oracle, it provides an important function with its <span class="math inline">\(-1\)</span> phase, allowing it to change the phase of other qubits from <span class="math inline">\(\ket{+}\)</span> to <span class="math inline">\(\ket{-}\)</span> in a strategic way to allow interference.</p>
+<p>Generically, when <span class="math inline">\(U_f\)</span> acts on <span class="math inline">\(\ket{x}\ket{-}\)</span>, it transforms the state as follows:</p>
+<p><span class="math display">\[
+U_f \ket{x}\ket{-} = (-1)^{f(x)} \ket{x} \ket{-}
+\]</span></p>
+<p>The phase factor <span class="math inline">\((-1)^{f(x)}\)</span> appears on the input qubit <span class="math inline">\(\ket{x}\)</span>. This phase encodes whether <span class="math inline">\(f(x)\)</span> is 0 or 1. This is how the global properties of f are transferred to the first qubit.</p>
+</div>
+</div>
+<p>After the oracle <span class="math inline">\(U_f\)</span> acts on the state <span class="math inline">\(\frac{1}{\sqrt{2}}(\ket{0}+\ket{1})\otimes\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})\)</span>, the first qubit (ignoring the auxiliary qubit, which remains in the state <span class="math inline">\(\ket{-} = \frac{1}{\sqrt{2}}(\ket{0}-\ket{1})\)</span>), becomes:</p>
+<p><span class="math display">\[
+\frac{1}{\sqrt{2}} \left[ (-1)^{f(0)}\ket{0} + (-1)^{f(1)}\ket{1} \right]
+\]</span></p>
+<p>The key here is that the function values <span class="math inline">\(f(0)\)</span> and <span class="math inline">\(f(1)\)</span> are now encoded as <em>phases</em> in front of the basis states <span class="math inline">\(\ket{0}\)</span> and <span class="math inline">\(\ket{1}\)</span> (this is <strong>phase kickback</strong>, see above callout box). Let’s consider the two possibilities for <span class="math inline">\(f(x)\)</span>: constant or balanced.</p>
+<ul>
+<li><p><strong>Constant Functions:</strong> If <span class="math inline">\(f(x)\)</span> is constant, then <span class="math inline">\(f(0) = f(1)\)</span>. The state is then either <span class="math inline">\(\pm \frac{1}{\sqrt{2}}(\ket{0} + \ket{1})\)</span>, depending on whether <span class="math inline">\(f(x) = 0\)</span> or <span class="math inline">\(f(x) = 1\)</span>.</p></li>
+<li><p><strong>Balanced Functions:</strong> If <span class="math inline">\(f(x)\)</span> is balanced, then <span class="math inline">\(f(0) \neq f(1)\)</span>. This means one of the function values is 0 and the other is 1. The state is then either <span class="math inline">\(\pm \frac{1}{\sqrt{2}}(\ket{0} - \ket{1})\)</span>.</p></li>
+</ul>
+<p>Now we apply the final Hadamard gate to the first qubit. Recall that <span class="math inline">\(H\)</span> transforms the basis states as:</p>
+<p><span class="math display">\[
+H\ket{0} = \frac{1}{\sqrt{2}}(\ket{0} + \ket{1})
+\]</span></p>
+<p><span class="math display">\[
+H\ket{1} = \frac{1}{\sqrt{2}}(\ket{0} - \ket{1})
+\]</span></p>
+<p>Applying the Hadamard gate <span class="math inline">\(H\)</span> to the first qubit transforms the state based on whether <span class="math inline">\(f(x)\)</span> is constant or balanced:</p>
+<ul>
+<li><p><strong>Constant Functions:</strong> If <span class="math inline">\(f(0) = f(1) = c\)</span>, the state before the Hadamard gate is <span class="math inline">\(\frac{(-1)^c}{\sqrt{2}}(\ket{0} + \ket{1})\)</span>. Applying <span class="math inline">\(H\)</span> yields:</p>
+<p><span class="math display">\[
+H\left[\frac{(-1)^c}{\sqrt{2}}(\ket{0} + \ket{1})\right] = (-1)^c\ket{0}
+\]</span> Therefore, we <em>always</em> measure <span class="math inline">\(\ket{0}\)</span>.</p></li>
+<li><p><strong>Balanced Functions:</strong> If <span class="math inline">\(f(0) \neq f(1)\)</span>, the state before the Hadamard gate is <span class="math inline">\(\pm\frac{1}{\sqrt{2}}(\ket{0} - \ket{1})\)</span>. Applying <span class="math inline">\(H\)</span> yields:</p>
+<p><span class="math display">\[
+H\left[\pm\frac{1}{\sqrt{2}}(\ket{0} - \ket{1})\right] = \pm\ket{1}
+\]</span> Therefore, we <em>always</em> measure <span class="math inline">\(\ket{1}\)</span>.</p></li>
+</ul>
+<p>The final Hadamard gate creates an interference effect, channeling the global property of <span class="math inline">\(f\)</span> (constant or balanced) into a single, easily measurable property of the first qubit.</p>
+<p>In summary, if <span class="math inline">\(f\)</span> is constant, the final state of the first qubit will be <span class="math inline">\(\ket{0}\)</span>. If <span class="math inline">\(f\)</span> is balanced, the final state will be <span class="math inline">\(\ket{1}\)</span>.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<strong>Example</strong>: Walking through Deutsch’s Algorithm
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let’s analyze how the algorithm behaves for each possible function, focusing on the state of the <em>first qubit</em> after the oracle and after the final Hadamard gate.</p>
+<ol type="1">
+<li><strong>For <span class="math inline">\(f_1(x) = 0\)</span> (constant):</strong>
+<ul>
+<li>Initial state (first qubit): <span class="math inline">\(\ket{+}\)</span></li>
+<li>State after oracle (first qubit): <span class="math inline">\(\frac{1}{\sqrt{2}} [(-1)^{f_1(0)}\ket{0} + (-1)^{f_1(1)}\ket{1}] = \ket{+}\)</span></li>
+<li>Apply final H gate: <span class="math inline">\(H\ket{+} = \ket{0}\)</span></li>
+<li>Measurement: Always <span class="math inline">\(\ket{0}\)</span> ✓ Constant</li>
+</ul></li>
+<li><strong>For <span class="math inline">\(f_2(x) = 1\)</span> (constant):</strong>
+<ul>
+<li>Initial state (first qubit): <span class="math inline">\(\ket{+}\)</span></li>
+<li>State after oracle (first qubit): <span class="math inline">\(\frac{1}{\sqrt{2}} [(-1)^{f_2(0)}\ket{0} + (-1)^{f_2(1)}\ket{1}] = -\ket{+}\)</span></li>
+<li>Apply final H gate: <span class="math inline">\(H(-\ket{+}) = -\ket{0}\)</span></li>
+<li>Measurement: Always <span class="math inline">\(\ket{0}\)</span> ✓ Constant</li>
+</ul></li>
+<li><strong>For <span class="math inline">\(f_3(x) = x\)</span> (balanced):</strong>
+<ul>
+<li>Initial state (first qubit): <span class="math inline">\(\ket{+}\)</span></li>
+<li>State after oracle (first qubit): <span class="math inline">\(\frac{1}{\sqrt{2}} [(-1)^{f_3(0)}\ket{0} + (-1)^{f_3(1)}\ket{1}] = \ket{-}\)</span></li>
+<li>Apply final H gate: <span class="math inline">\(H\ket{-} = \ket{1}\)</span></li>
+<li>Measurement: Always <span class="math inline">\(\ket{1}\)</span> ✓ Balanced</li>
+</ul></li>
+</ol>
+</div>
+</div>
+<!-- ::: {.callout-note icon=false}
+## **Example**: Walking through Deutsch's Algorithm
+
+Let's analyze how the algorithm behaves for each possible function:
+
+1. For $f_1(x) = 0$ (constant):
+   - After oracle: $\frac{1}{2}[(+1)\ket{0}+(+1)\ket{1}](\ket{0}-\ket{1})$
+   - Final state: $\ket{0}(\ket{0}-\ket{1})$
+   - Measurement: Always $\ket{0}$ ✓ Constant
+
+2. For $f_2(x) = 1$ (constant):
+   - After oracle: $\frac{1}{2}[(-1)\ket{0}+(-1)\ket{1}](\ket{0}-\ket{1})$
+   - Final state: $\ket{0}(\ket{0}-\ket{1})$
+   - Measurement: Always $\ket{0}$ ✓ Constant
+
+3. For $f_3(x) = x$ (balanced):
+   - After oracle: $\frac{1}{2}[(+1)\ket{0}+(-1)\ket{1}](\ket{0}-\ket{1})$
+   - Final state: $\ket{1}(\ket{0}-\ket{1})$
+   - Measurement: Always $\ket{1}$ ✓ Balanced
+
+4. For $f_4(x) = \text{NOT}(x)$ (balanced):
+   - After oracle: $\frac{1}{2}[(-1)\ket{0}+(+1)\ket{1}](\ket{0}-\ket{1})$
+   - Final state: $\ket{1}(\ket{0}-\ket{1})$
+   - Measurement: Always $\ket{1}$ ✓ Balanced
+
+In all cases, a single measurement correctly identifies whether $f$ is constant or balanced.
+::: -->
+</section>
+<section id="key-insights" class="level3" data-number="4.1.3">
+<h3 data-number="4.1.3" class="anchored" data-anchor-id="key-insights"><span class="header-section-number">4.1.3</span> Key Insights</h3>
+<p>Several quantum principles make this speedup possible:</p>
+<ol type="1">
+<li><p><strong>Superposition</strong>: The initial Hadamard transforms create a superposition that allows us to evaluate <span class="math inline">\(f(0)\)</span> and <span class="math inline">\(f(1)\)</span> simultaneously.</p></li>
+<li><p><strong>Phase Kickback</strong>: The auxiliary qubit, initialized to <span class="math inline">\(\ket{1}\)</span> and transformed by Hadamard, enables the function’s output to be encoded in the phase of the first qubit.</p></li>
+<li><p><strong>Interference</strong>: The final Hadamard transform converts the phase difference into a measurable bit value.</p></li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Historical Context
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Deutsch’s algorithm was the first to demonstrate that quantum computers could solve certain problems faster than classical computers. While the problem itself is artificial, the techniques it introduced - particularly the use of quantum parallelism and interference - became fundamental building blocks for more practical quantum algorithms.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Understanding Balanced vs Constant Functions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Consider a single-bit function <span class="math inline">\(f(x)\)</span>. There are only four possible functions:</p>
+<p><strong>Constant Functions:</strong></p>
+<ul>
+<li><span class="math inline">\(f_1(x) = 0\)</span> for all <span class="math inline">\(x\)</span></li>
+<li><span class="math inline">\(f_2(x) = 1\)</span> for all <span class="math inline">\(x\)</span></li>
+</ul>
+<p><strong>Balanced Functions:</strong></p>
+<ul>
+<li><span class="math inline">\(f_3(x) = x\)</span> (identity)</li>
+<li><span class="math inline">\(f_4(x) = \text{NOT}(x)\)</span></li>
+</ul>
+<p>The quantum algorithm can distinguish between these cases with just one query, while classically we need two queries to be certain!</p>
+</div>
+</div>
+</section>
+<section id="mathematical-details" class="level3" data-number="4.1.4">
+<h3 data-number="4.1.4" class="anchored" data-anchor-id="mathematical-details"><span class="header-section-number">4.1.4</span> Mathematical Details</h3>
+<p>Let’s examine how the state evolves through the circuit. After the initial Hadamard gates, we have:</p>
+<p><span class="math display">\[\frac{1}{2}(\ket{0}+\ket{1})(\ket{0}-\ket{1})\]</span></p>
+<p>After applying <span class="math inline">\(U_f\)</span>, the state becomes:</p>
+<p><span class="math display">\[\frac{1}{2}[(-1)^{f(0)}\ket{0}+(-1)^{f(1)}\ket{1}](\ket{0}-\ket{1})\]</span></p>
+<p>The final Hadamard on the first qubit gives:</p>
+<p><span class="math display">\[\frac{1}{2}[(-1)^{f(0)}+(-1)^{f(1)}]\ket{0} + \frac{1}{2}[(-1)^{f(0)}-(-1)^{f(1)}]\ket{1}\]</span></p>
+<p>For constant functions, <span class="math inline">\(f(0)=f(1)\)</span>, leading to a measurement of <span class="math inline">\(\ket{0}\)</span>. For balanced functions, <span class="math inline">\(f(0)\neq f(1)\)</span>, leading to a measurement of <span class="math inline">\(\ket{1}\)</span>.</p>
+<p>This elegant algorithm demonstrates how quantum interference can extract global properties of a function (constant vs.&nbsp;balanced) with fewer queries than classically possible.</p>
+</section>
+</section>
+<section id="deutschjozsa-algorithm" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="deutschjozsa-algorithm"><span class="header-section-number">4.2</span> Deutsch–Jozsa Algorithm</h2>
+<p>The Deutsch-Jozsa algorithm, published in 1992 <span class="citation" data-cites="DeutschJozsa1992">&nbsp;[<a href="references.html#ref-DeutschJozsa1992" role="doc-biblioref">2</a>]</span>, generalizes Deutsch’s algorithm to handle functions with n-bit inputs. It provides one of the first examples of an exponential speedup over classical deterministic algorithms, though for a somewhat artificial problem.</p>
+<section id="the-problem-statement-1" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="the-problem-statement-1"><span class="header-section-number">4.2.1</span> The Problem Statement</h3>
+<p>Consider a black box function <span class="math inline">\(f: \{0,1\}^n \rightarrow \{0,1\}\)</span> that takes n bits as input and returns a single bit. We are promised that <span class="math inline">\(f\)</span> is either:</p>
+<ul>
+<li>Constant: returns the same value (0 or 1) for all inputs</li>
+<li>Balanced: returns 0 for exactly half of the inputs and 1 for the other half</li>
+</ul>
+<p>The task is to determine whether <span class="math inline">\(f\)</span> is constant or balanced.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Classical vs.&nbsp;Quantum Complexity
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Classically, in the worst case, we need to evaluate <span class="math inline">\(f(x)\)</span> for <span class="math inline">\(2^{n-1} + 1\)</span> different inputs to be certain of the answer. This is because we might need to check more than half the possible inputs before finding two different outputs. The Deutsch-Jozsa algorithm solves this problem with just one quantum query!</p>
+</div>
+</div>
+</section>
+<section id="quantum-implementation-1" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="quantum-implementation-1"><span class="header-section-number">4.2.2</span> Quantum Implementation</h3>
+<p>The quantum circuit requires:</p>
+<ul>
+<li>n qubits for the input register, initialized to <span class="math inline">\(\ket{0}^{\otimes n}\)</span></li>
+<li>One auxiliary qubit initialized to <span class="math inline">\(\ket{1}\)</span></li>
+</ul>
+<!-- ```{.tikz}
+%%| filename: deutsch-jozsa-circuit
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}
+\lstick{$\ket{0}$} & \gate{H} & \gate[5]{U_f} & \gate{H} & \meter{} \\
+\lstick{$\ket{0}$} & \gate{H} &  & \gate{H} & \meter{} \\
+\lstick{$\ket{0}$} & \gate{H} &  & \gate{H} & \meter{} \\
+\lstick{$\ket{0}$} & \gate{H} &  & \gate{H} & \meter{} \\
+\lstick{$\ket{1}$} & \gate{H} &  & \qw & \qw
+\end{quantikz}
+```  -->
+<div id="fig-deutsch-jozsa-circuit" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-deutsch-jozsa-circuit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/tikz/deutsch-jozsa-circuit.svg" class="img-fluid figure-img" style="width:50.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-deutsch-jozsa-circuit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Fig.&nbsp;4.1: The implementation of the Deutsch-Jozsa Algorithm for four bits.
+</figcaption>
+</figure>
+</div>
+<p>The Deutsch-Jozsa algorithm can be summarized as follows:</p>
+<ol type="1">
+<li>Apply Hadamard gates to all input qubits and the auxiliary qubit.</li>
+<li>Apply the quantum oracle <span class="math inline">\(U_f\)</span>.</li>
+<li>Apply Hadamard gates to the input qubits.</li>
+<li>Measure the input qubits.</li>
+</ol>
+<p>To understand the algorithm more deeply, let’s analyze each step mathematically.</p>
+</section>
+<section id="mathematical-analysis" class="level3" data-number="4.2.3">
+<h3 data-number="4.2.3" class="anchored" data-anchor-id="mathematical-analysis"><span class="header-section-number">4.2.3</span> Mathematical Analysis</h3>
+<ol type="1">
+<li><p><strong>Initialization and Hadamard Transform:</strong></p>
+<p>We begin with the state <span class="math inline">\(\ket{0}^{\otimes n}\ket{1}\)</span>. Applying Hadamard gates to all <span class="math inline">\(n+1\)</span> qubits transforms the state as follows:</p>
+<p><span class="math display">\[\ket{0}^{\otimes n}\ket{1} \xrightarrow{H^{\otimes (n+1)}} \frac{1}{\sqrt{2^n}}\sum_{x\in\{0,1\}^n}\ket{x}\otimes\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})\]</span></p></li>
+<li><p><strong>Application of the Quantum Oracle:</strong></p>
+<p>The quantum oracle <span class="math inline">\(U_f\)</span> is applied, which implements the transformation:</p>
+<p><span class="math display">\[\ket{x}\ket{y} \rightarrow \ket{x}\ket{y \oplus f(x)}\]</span></p>
+<p>This transforms the state to:</p>
+<p><span class="math display">\[
+\frac{1}{\sqrt{2^n}}\sum_{x\in\{0,1\}^n}\ket{x}\otimes\frac{1}{\sqrt{2}}(\ket{f(x)}-\ket{\overline{f(x)}})
+\]</span></p>
+<p>where <span class="math inline">\(\overline{f(x)}\)</span> represents the complement of <span class="math inline">\(f(x)\)</span>. This can be rewritten via phase kickback as:</p>
+<p><span class="math display">\[
+\frac{1}{\sqrt{2^n}}\sum_{x\in\{0,1\}^n}(-1)^{f(x)}\ket{x}\otimes\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})
+\]</span></p></li>
+<li><p><strong>Final Hadamard Transform:</strong></p>
+<p>Hadamard gates are applied to the <span class="math inline">\(n\)</span> input qubits. To see the effect, we apply the Hadamard transform to each qubit. Recall that <span class="math inline">\(H\ket{x} = \frac{1}{\sqrt{2}}\sum_{z \in \{0,1\}} (-1)^{x \cdot z} \ket{z}\)</span>. Applying this to all <span class="math inline">\(n\)</span> qubits, we get:</p>
+<p><span class="math display">\[
+H^{\otimes n} \ket{x} = \frac{1}{\sqrt{2^n}} \sum_{z \in \{0,1\}^n} (-1)^{x \cdot z} \ket{z}
+\]</span></p>
+<p>where <span class="math inline">\(x \cdot z = x_1z_1 \oplus x_2z_2 \oplus \dots \oplus x_nz_n\)</span>. Therefore, the state becomes:</p>
+<p><span class="math display">\[
+\frac{1}{\sqrt{2^n}}\sum_{x\in\{0,1\}^n} (-1)^{f(x)} \left( \frac{1}{\sqrt{2^n}} \sum_{z \in \{0,1\}^n} (-1)^{x \cdot z} \ket{z} \right) \otimes \frac{1}{\sqrt{2}}(\ket{0}-\ket{1})
+\]</span></p>
+<p>Rearranging the summation, we have:</p>
+<p><span class="math display">\[
+\frac{1}{2^n}\sum_{z\in\{0,1\}^n} \left( \sum_{x\in\{0,1\}^n} (-1)^{f(x) + x \cdot z} \right) \ket{z} \otimes \frac{1}{\sqrt{2}}(\ket{0}-\ket{1})
+\]</span></p>
+<p><strong>Constant Function Case:</strong></p>
+<p>If <span class="math inline">\(f(x)\)</span> is a constant function, meaning <span class="math inline">\(f(x) = c\)</span> for all <span class="math inline">\(x\)</span>, the state simplifies to:</p>
+<p><span class="math display">\[
+\pm \ket{0}^{\otimes n}\otimes\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})
+\]</span></p>
+<p>The sign depends on the value of <span class="math inline">\(c\)</span>. Measuring the first <span class="math inline">\(n\)</span> qubits will yield <span class="math inline">\(\ket{0}^{\otimes n}\)</span> with certainty.</p>
+<p><strong>Balanced Function Case:</strong></p>
+<p>If <span class="math inline">\(f(x)\)</span> is a balanced function, the interference is such that the amplitude of the <span class="math inline">\(\ket{0}^{\otimes n}\)</span> state becomes zero. Therefore, when measuring the first <span class="math inline">\(n\)</span> qubits, the probability of obtaining <span class="math inline">\(\ket{0}^{\otimes n}\)</span> is 0. This means we are guaranteed to measure a state other than <span class="math inline">\(\ket{0}^{\otimes n}\)</span>.</p></li>
+<li><p><strong>Measurement:</strong></p>
+<p>Finally, we measure the <span class="math inline">\(n\)</span> input qubits. If the measurement result is <span class="math inline">\(\ket{0}^{\otimes n}\)</span>, the function is constant. Otherwise, if any of the qubits are measured to be <span class="math inline">\(\ket{1}\)</span>, the function is balanced.</p></li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Superposition from Product of Plus States
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Applying a Hadamard gate to each qubit in the <span class="math inline">\(\ket{0}^{\otimes n}\)</span> state creates a superposition of all possible <span class="math inline">\(n\)</span>-bit strings. This is because:</p>
+<p><span class="math display">\[
+\begin{aligned}
+H^{\otimes n}\ket{0}^{\otimes n} &amp; = H\ket{0} \otimes H\ket{0} \otimes \dots \otimes H\ket{0} \\ &amp; = \ket{+}^{\otimes n} \\ &amp; = \frac{1}{\sqrt{2^n}}\sum_{x\in\{0,1\}^n}\ket{x}
+\end{aligned}
+\]</span></p>
+<p>Each qubit is in an equal superposition of <span class="math inline">\(\ket{0}\)</span> and <span class="math inline">\(\ket{1}\)</span>, and since the qubits are independent, the overall state is a superposition of all <span class="math inline">\(2^n\)</span> possible combinations of <span class="math inline">\(\ket{0}\)</span> and <span class="math inline">\(\ket{1}\)</span>.</p>
+<p>For <span class="math inline">\(n=1\)</span>:</p>
+<p><span class="math display">\[H\ket{0} = \frac{\ket{0} + \ket{1}}{\sqrt{2}} = \frac{1}{\sqrt{2}}\sum_{x\in\{0,1\}}\ket{x}\]</span></p>
+<p>For <span class="math inline">\(n=2\)</span>:</p>
+<p><span class="math display">\[
+\begin{aligned}
+H^{\otimes 2}\ket{00} &amp; = H\ket{0} \otimes H\ket{0} \\
+&amp; = \frac{\ket{0} + \ket{1}}{\sqrt{2}} \otimes \frac{\ket{0} + \ket{1}}{\sqrt{2}} \\
+&amp; = \frac{\ket{00} + \ket{01} + \ket{10} + \ket{11}}{2} \\
+&amp; = \frac{1}{2}\sum_{x\in\{0,1\}^2}\ket{x}
+\end{aligned}
+\]</span></p>
+<p>For <span class="math inline">\(n=3\)</span>:</p>
+<p><span class="math display">\[
+\begin{aligned}
+H^{\otimes 3}\ket{000} &amp; = H\ket{0} \otimes H\ket{0} \otimes H\ket{0} \\
+&amp; = \frac{\ket{0} + \ket{1}}{\sqrt{2}} \otimes \frac{\ket{0} + \ket{1}}{\sqrt{2}} \otimes \frac{\ket{0} + \ket{1}}{\sqrt{2}} \\
+&amp; = \frac{\ket{000} + \ket{001} + \ket{010} + \ket{011}}{2\sqrt{2}} \\
+&amp; \;\;\; + \frac{\ket{100} + \ket{101} + \ket{110} + \ket{111}}{2\sqrt{2}} \\
+&amp; = \frac{1}{2\sqrt{2}}\sum_{x\in\{0,1\}^3}\ket{x}
+\end{aligned}
+\]</span></p>
+</div>
+</div>
+<p>The amplitude of the <span class="math inline">\(\ket{0}^{\otimes n}\)</span> state after the final Hadamard transform is given by:</p>
+<p><span class="math display">\[
+\frac{1}{2^n}\sum_{x\in\{0,1\}^n}(-1)^{f(x)}
+\]</span></p>
+<p>This sum evaluates to:</p>
+<ul>
+<li><span class="math inline">\(\pm 1\)</span> if <span class="math inline">\(f(x)\)</span> is a constant function.</li>
+<li><span class="math inline">\(0\)</span> if <span class="math inline">\(f(x)\)</span> is a balanced function.</li>
+</ul>
+<p>If the sum is <span class="math inline">\(\pm 1\)</span>, this means that the amplitude of the <span class="math inline">\(\ket{0}^{\otimes n}\)</span> state is non-zero, and when we measure the qubits, we will obtain the <span class="math inline">\(\ket{0}^{\otimes n}\)</span> state with certainty (or its opposite, depending on the sign). Conversely, if the sum is <span class="math inline">\(0\)</span>, the amplitude of the <span class="math inline">\(\ket{0}^{\otimes n}\)</span> state is zero, meaning that when we measure the qubits, we are guaranteed <em>not</em> to obtain the <span class="math inline">\(\ket{0}^{\otimes n}\)</span> state. This implies that at least one of the qubits must be in the <span class="math inline">\(\ket{1}\)</span> state.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Illustrating Quantum Parallelism
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The unitary operator <span class="math inline">\(U_f\)</span> performs: <span class="math display">\[\ket{x}\ket{y} \rightarrow \ket{x}\ket{y \oplus f(x)}\]</span></p>
+<p>When applied to a superposition of all possible inputs: <span class="math display">\[\frac{1}{\sqrt{2^n}}\sum_{x}\ket{x}\ket{-} \rightarrow \frac{1}{\sqrt{2^n}}\sum_{x} (-1)^{f(x)}\ket{x}\ket{-}\]</span></p>
+<p>This single operation effectively computes <span class="math inline">\(f(x)\)</span> for all <span class="math inline">\(2^n\)</span> inputs simultaneously! This is a key feature of quantum computation.</p>
+</div>
+</div>
+</section>
+<section id="key-insights-1" class="level3" data-number="4.2.4">
+<h3 data-number="4.2.4" class="anchored" data-anchor-id="key-insights-1"><span class="header-section-number">4.2.4</span> Key Insights</h3>
+<ol type="1">
+<li><p><strong>Quantum Parallelism</strong>: The algorithm processes all possible inputs simultaneously through superposition.</p></li>
+<li><p><strong>Interference</strong>: The final Hadamard transforms create interference patterns that distinguish between constant and balanced functions.</p></li>
+<li><p><strong>Promise Problem</strong>: The algorithm’s exponential speedup relies crucially on the promise that <span class="math inline">\(f\)</span> is either constant or balanced. Without this promise, the quantum advantage disappears.</p></li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example with n=2
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For n=2, the classical algorithm needs to evaluate <span class="math inline">\(f(00)\)</span>, <span class="math inline">\(f(01)\)</span>, and possibly <span class="math inline">\(f(10)\)</span> to determine if <span class="math inline">\(f\)</span> is constant or balanced. The quantum algorithm still requires just one query regardless of n.</p>
+<p>Consider a balanced function <span class="math inline">\(f(00)=f(01)=0\)</span> and <span class="math inline">\(f(10)=f(11)=1\)</span>:</p>
+<ol type="1">
+<li>Initial state after Hadamards: <span class="math inline">\(\frac{1}{2}(\ket{00}+\ket{01}+\ket{10}+\ket{11})(\ket{0}-\ket{1})\)</span></li>
+<li>After oracle: <span class="math inline">\(\frac{1}{2}(\ket{00}+\ket{01}-\ket{10}-\ket{11})(\ket{0}-\ket{1})\)</span></li>
+<li>Final state after Hadamards: <span class="math inline">\(\ket{\psi}\otimes\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})\)</span> where <span class="math inline">\(\ket{\psi}\)</span> has zero amplitude for <span class="math inline">\(\ket{00}\)</span>: <span class="math display">\[
+\ket{\psi} = \frac{1}{2}(\ket{00}+\ket{01}-\ket{10}-\ket{11})
+\]</span> <span class="math display">\[
+H^{\otimes 2}\ket{\psi} = \ket{10}
+\]</span></li>
+</ol>
+</div>
+</div>
+<p>The Deutsch-Jozsa algorithm, while solving an artificial problem, demonstrates the potential power of quantum computation and introduces techniques that appear in many more practical quantum algorithms.</p>
+</section>
+</section>
+<section id="bernsteinvazirani-algorithm" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="bernsteinvazirani-algorithm"><span class="header-section-number">4.3</span> Bernstein–Vazirani Algorithm</h2>
+<p>Building upon the Deutsch and Deutsch-Jozsa algorithms, the Bernstein-Vazirani algorithm <span class="citation" data-cites="BernsteinVazirani1997">&nbsp;[<a href="references.html#ref-BernsteinVazirani1997" role="doc-biblioref">3</a>]</span> tackles a different problem: instead of determining a global property of a function (like whether it’s constant or balanced), it aims to learn a hidden string encoded within the function’s behavior. While the Deutsch-Jozsa algorithm distinguishes between constant and balanced functions, the Bernstein-Vazirani algorithm identifies a specific string <span class="math inline">\(s\)</span> that defines the function <span class="math inline">\(f(x) = s \cdot x \pmod{2}\)</span>. This algorithm showcases how quantum computation can be used to extract specific information from a function with just a single query, offering an exponential speedup compared to classical approaches.</p>
+<section id="problem-statement" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="problem-statement"><span class="header-section-number">4.3.1</span> Problem Statement</h3>
+<p>The Bernstein-Vazirani algorithm is designed to solve the following problem:</p>
+<p>Given a hidden string <span class="math inline">\(s \in \{0, 1\}^n\)</span>, and a function <span class="math inline">\(f: \{0, 1\}^n \rightarrow \{0, 1\}\)</span> such that <span class="math inline">\(f(x) = s \cdot x \pmod{2}\)</span>, where <span class="math inline">\(s \cdot x\)</span> is the bitwise dot product of <span class="math inline">\(s\)</span> and <span class="math inline">\(x\)</span>, the goal is to find the hidden string <span class="math inline">\(s\)</span>.</p>
+<p>Classically, determining <span class="math inline">\(s\)</span> requires <span class="math inline">\(n\)</span> queries to the function <span class="math inline">\(f\)</span>. The Bernstein-Vazirani algorithm can find <span class="math inline">\(s\)</span> with just one quantum query.</p>
+</section>
+<section id="quantum-implementation-2" class="level3" data-number="4.3.2">
+<h3 data-number="4.3.2" class="anchored" data-anchor-id="quantum-implementation-2"><span class="header-section-number">4.3.2</span> Quantum Implementation</h3>
+<p>The quantum circuit consists of:</p>
+<ul>
+<li><span class="math inline">\(n\)</span> input qubits initialized to <span class="math inline">\(\ket{0}^{\otimes n}\)</span></li>
+<li>One auxiliary qubit initialized to <span class="math inline">\(\ket{1}\)</span></li>
+</ul>
+<p>The algorithm proceeds as follows:</p>
+<ol type="1">
+<li>Apply Hadamard gates to all <span class="math inline">\(n\)</span> input qubits and the auxiliary qubit.</li>
+<li>Apply the quantum oracle <span class="math inline">\(U_f\)</span>, defined as <span class="math inline">\(\ket{x}\ket{y} \rightarrow \ket{x}\ket{y \oplus f(x)}\)</span>.</li>
+<li>Apply Hadamard gates to the <span class="math inline">\(n\)</span> input qubits.</li>
+<li>Measure the <span class="math inline">\(n\)</span> input qubits. The measurement outcome will be the hidden string <span class="math inline">\(s\)</span>.</li>
+</ol>
+</section>
+<section id="step-by-step-state-evolution-with-hadamard-gates" class="level3" data-number="4.3.3">
+<h3 data-number="4.3.3" class="anchored" data-anchor-id="step-by-step-state-evolution-with-hadamard-gates"><span class="header-section-number">4.3.3</span> Step-by-step state evolution with Hadamard gates</h3>
+<p>Let’s break down how the quantum state evolves as Hadamard gates are applied. This will give you a clearer picture of how the algorithm works.</p>
+<ol type="1">
+<li><p><strong>Initialization:</strong> We start with <span class="math inline">\(n\)</span> qubits in the <span class="math inline">\(\ket{0}\)</span> state and one auxiliary qubit in the <span class="math inline">\(\ket{1}\)</span> state: <span class="math display">\[
+\ket{\psi_0} = \ket{0}^{\otimes n} \ket{1} = \ket{00...0}\otimes \ket{1}
+\]</span></p></li>
+<li><p><strong>Applying Hadamards:</strong> We apply Hadamard gates to all <span class="math inline">\(n+1\)</span> qubits. Recall that the Hadamard gate transforms <span class="math inline">\(\ket{0}\)</span> to <span class="math inline">\(\frac{1}{\sqrt{2}}(\ket{0} + \ket{1})\)</span> and <span class="math inline">\(\ket{1}\)</span> to <span class="math inline">\(\frac{1}{\sqrt{2}}(\ket{0} - \ket{1})\)</span>. Applying <span class="math inline">\(H^{\otimes n}\)</span> to the first <span class="math inline">\(n\)</span> qubits transforms <span class="math inline">\(\ket{0}^{\otimes n}\)</span> into an equal superposition of all possible <span class="math inline">\(n\)</span>-bit strings: <span class="math display">\[
+H^{\otimes n}\ket{0}^{\otimes n} = \frac{1}{\sqrt{2^n}} \sum_{x \in \{0, 1\}^n} \ket{x}
+\]</span> Applying a Hadamard gate to the auxiliary qubit transforms <span class="math inline">\(\ket{1}\)</span> to <span class="math inline">\(\frac{1}{\sqrt{2}}(\ket{0} - \ket{1})\)</span>. Therefore, after applying the Hadamard gates, the state becomes: <span class="math display">\[
+\begin{aligned}
+\ket{\psi_1} &amp;= \frac{1}{\sqrt{2^n}} \sum_{x \in \{0, 1\}^n} \ket{x} \otimes \frac{1}{\sqrt{2}}(\ket{0} - \ket{1}) \\
+&amp;= \frac{1}{\sqrt{2^{n+1}}} \sum_{x \in \{0, 1\}^n} \ket{x}(\ket{0} - \ket{1})
+\end{aligned}
+\]</span></p></li>
+<li><p><strong>Applying the Quantum Oracle:</strong> The quantum oracle <span class="math inline">\(U_f\)</span> acts as <span class="math inline">\(\ket{x}\ket{y} \rightarrow \ket{x}\ket{y \oplus f(x)}\)</span>. Applying <span class="math inline">\(U_f\)</span> to <span class="math inline">\(\ket{\psi_1}\)</span> gives: <span class="math display">\[
+\ket{\psi_2} = \frac{1}{\sqrt{2^{n+1}}} \sum_{x \in \{0, 1\}^n} \ket{x}\ket{f(x) \oplus 1}
+\]</span> Since <span class="math inline">\(f(x) = s \cdot x \pmod{2}\)</span>, we can rewrite this as: <span class="math display">\[
+\ket{\psi_2} = \frac{1}{\sqrt{2^{n+1}}} \sum_{x \in \{0, 1\}^n} \ket{x}\ket{s \cdot x \oplus 1}
+\]</span> We can rewrite <span class="math inline">\(\ket{s \cdot x \oplus 1}\)</span> as <span class="math inline">\((-1)^{s \cdot x}\ket{1}\)</span>, so the state becomes: <span id="eq-BV-pre-Hadamard"><span class="math display">\[
+\ket{\psi_2} = \frac{1}{\sqrt{2^{n+1}}} \sum_{x \in \{0, 1\}^n} (-1)^{s \cdot x}\ket{x}(\ket{0} - \ket{1})
+\tag{4.1}\]</span></span></p></li>
+<li><p><strong>Applying Hadamards Again:</strong> We apply Hadamard gates to the first <span class="math inline">\(n\)</span> qubits again. Let’s consider what happens if we apply <span class="math inline">\(H^{\otimes n}\)</span> to the state <span class="math inline">\(\ket{s}\)</span>. <span class="math display">\[
+H^{\otimes n}\ket{s} = \frac{1}{\sqrt{2^n}} \sum_{y \in \{0, 1\}^n} (-1)^{s \cdot y} \ket{y}
+\]</span> Notice that this is <a href="#eq-BV-pre-Hadamard" class="quarto-xref">Eq.&nbsp;<span>4.1</span></a>, and since <span class="math inline">\(H^2 = I\)</span>, we can invert this to see that <span class="math display">\[
+\ket{s} \otimes \ket{-}= \frac{1}{\sqrt{2^n}} H^{\otimes n}\sum_{x \in \{0, 1\}^n} (-1)^{s \cdot x} \ket{x} \ket{-}
+\]</span></p></li>
+<li><p><strong>Measurement:</strong> Measuring the first <span class="math inline">\(n\)</span> qubits yields the hidden string <span class="math inline">\(s\)</span> with certainty. The auxiliary qubit is left in the state <span class="math inline">\(\frac{1}{\sqrt{2}}(\ket{0} - \ket{1})\)</span>, which we can ignore after the measurement.</p></li>
+</ol>
+<p>In summary, the algorithm cleverly uses Hadamard gates and the quantum oracle to transform the initial state into a state where measuring the first <span class="math inline">\(n\)</span> qubits directly reveals the hidden string <span class="math inline">\(s\)</span>. The key is the interference caused by the Hadamard gates and the phase kickback from the oracle, which amplifies the amplitude of the state corresponding to the hidden string.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Classical vs.&nbsp;Quantum Speed
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The Bernstein-Vazirani algorithm showcases a significant speedup <em>for this specific problem</em> compared to its classical counterpart. Classically, determining the hidden string <span class="math inline">\(s\)</span> would require <span class="math inline">\(n\)</span> queries to the function <span class="math inline">\(f(x)\)</span>, while the quantum algorithm achieves the same result with just a single query to the quantum oracle <span class="math inline">\(U_f\)</span>. This demonstrates an exponential speedup highlighting the power of quantum computation for specific tasks.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<strong>Bernstein-Vazirani Algorithm Example (n=2, s=10)</strong>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let’s consider the Bernstein-Vazirani algorithm for <span class="math inline">\(n=2\)</span> with the hidden string <span class="math inline">\(s = 10\)</span>. The function <span class="math inline">\(f(x)\)</span> computes the dot product of <span class="math inline">\(x\)</span> and <span class="math inline">\(s\)</span> modulo 2: <span class="math inline">\(f(x) = (s \cdot x) \pmod{2}\)</span>. In our case, <span class="math inline">\(f(x) = (10 \cdot x) \pmod{2}\)</span>.</p>
+<ol type="1">
+<li>Initialization: We begin with a three-qubit state, with the first two qubits in state <span class="math inline">\(\ket{0}\)</span> and the auxiliary qubit in state <span class="math inline">\(\ket{1}\)</span>: <span class="math display">\[
+\ket{\psi_0} = \ket{001} = \ket{0} \otimes \ket{0} \otimes \ket{1}
+\]</span></li>
+<li>Apply Hadamard Gates: Apply Hadamard gates to each qubit. Recall that <span class="math inline">\(H\ket{0} = \frac{1}{\sqrt{2}}(\ket{0} + \ket{1})\)</span> and <span class="math inline">\(H\ket{1} = \frac{1}{\sqrt{2}}(\ket{0} - \ket{1})\)</span>. Applying <span class="math inline">\(H^{\otimes 3}\)</span> to <span class="math inline">\(\ket{\psi_0}\)</span>: <span class="math display">\[
+\begin{aligned}
+\ket{\psi_1} &amp;= H^{\otimes 3} \ket{001} \\
+&amp;= (H \otimes H \otimes H) (\ket{0} \otimes \ket{0} \otimes \ket{1}) \\
+&amp;= (H\ket{0}) \otimes (H\ket{0}) \otimes (H\ket{1}) \\
+&amp;= \left[ \frac{1}{\sqrt{2}}(\ket{0} + \ket{1}) \right] \otimes \left[ \frac{1}{\sqrt{2}}(\ket{0} + \ket{1}) \right] \otimes \left[ \frac{1}{\sqrt{2}}(\ket{0} - \ket{1}) \right] \\
+&amp;= \frac{1}{\sqrt{8}} (\ket{0} + \ket{1}) (\ket{0} + \ket{1}) (\ket{0} - \ket{1}) \\
+&amp;= \frac{1}{\sqrt{8}} (\ket{00} + \ket{01} + \ket{10} + \ket{11}) (\ket{0} - \ket{1})
+\end{aligned}
+\]</span></li>
+<li>Apply Quantum Oracle (U<sub>f</sub>): Apply the quantum oracle <span class="math inline">\(U_f\)</span> which acts as <span class="math inline">\(\ket{x}\ket{y} \rightarrow \ket{x}\ket{y \oplus f(x)}\)</span>. We use phase kickback by initializing the auxiliary qubit to <span class="math inline">\(\ket{-} = H\ket{1} = \frac{1}{\sqrt{2}}(\ket{0} - \ket{1})\)</span>. Thus, the oracle effectively applies a phase <span class="math inline">\((-1)^{f(x)}\)</span> to the computational basis states of the input qubits: <span class="math inline">\(\ket{x} \rightarrow (-1)^{f(x)} \ket{x}\)</span>. For <span class="math inline">\(s = 10\)</span>, we have: <span class="math inline">\(f(00) = (10) \cdot (00) = 0\)</span> <span class="math inline">\(f(01) = (10) \cdot (01) = 0\)</span> <span class="math inline">\(f(10) = (10) \cdot (10) = 1\)</span> <span class="math inline">\(f(11) = (10) \cdot (11) = 1\)</span> Applying the oracle <span class="math inline">\(U_f\)</span> to <span class="math inline">\(\ket{\psi_1}\)</span> and utilizing phase kickback, we get: <span class="math display">\[
+\begin{aligned}
+\ket{\psi_2} &amp;= U_f \ket{\psi_1} \\
+&amp;= \frac{1}{\sqrt{8}} \left[ (-1)^{f(00)}\ket{00} + (-1)^{f(01)}\ket{01} + (-1)^{f(10)}\ket{10} + (-1)^{f(11)}\ket{11} \right] (\ket{0} - \ket{1}) \\
+&amp;= \frac{1}{\sqrt{8}} \left[ \ket{00} + \ket{01} - \ket{10} - \ket{11} \right] (\ket{0} - \ket{1})
+\end{aligned}
+\]</span></li>
+<li>Apply Hadamard Gates Again: Apply Hadamard gates to the first two qubits (input qubits) only, <span class="math inline">\(H^{\otimes 2} \otimes I\)</span> to <span class="math inline">\(\ket{\psi_2}\)</span>: <span class="math display">\[
+\begin{aligned}
+\ket{\psi_3} &amp;= (H^{\otimes 2} \otimes I) \ket{\psi_2} \\
+&amp;= (H \otimes H \otimes I) \left[ \frac{1}{\sqrt{8}} (\ket{00} + \ket{01} - \ket{10} - \ket{11}) (\ket{0} - \ket{1}) \right] \\
+&amp;= \ket{10} \otimes \left( \frac{\ket{0} - \ket{1}}{\sqrt{2}} \right)
+\end{aligned}
+\]</span></li>
+<li>Measurement: Measuring the first two qubits in the computational basis will yield the state <span class="math inline">\(\ket{10}\)</span> with probability 1. This directly reveals the hidden string <span class="math inline">\(s = 10\)</span>. The auxiliary qubit is left in the state <span class="math inline">\(\frac{1}{\sqrt{2}}(\ket{0} - \ket{1}) = \ket{-}\)</span>, but we are only interested in the measurement outcome of the first two qubits.</li>
+</ol>
+</div>
+</div>
+</section>
+<section id="connection-to-deutsch-jozsa-algorithm" class="level3" data-number="4.3.4">
+<h3 data-number="4.3.4" class="anchored" data-anchor-id="connection-to-deutsch-jozsa-algorithm"><span class="header-section-number">4.3.4</span> Connection to Deutsch-Jozsa Algorithm</h3>
+<p>The Bernstein-Vazirani algorithm can be seen as a generalization of the Deutsch-Jozsa algorithm. While Deutsch-Jozsa distinguishes between constant and balanced functions, Bernstein-Vazirani identifies a specific hidden string. If we consider the Deutsch-Jozsa problem as determining whether the dot product <span class="math inline">\(s \cdot x\)</span> is always 0 (constant function) or not (balanced function), Bernstein-Vazirani extends this to find the specific string <span class="math inline">\(s\)</span> that defines this dot product. Both algorithms leverage the power of quantum parallelism and interference to achieve an exponential speedup over classical algorithms for specific problems related to function evaluation.</p>
+<!-- 3.1 Problem Statement and Classical Approach
+3.2 Quantum Solution and Circuit Implementation
+3.3 Comparison with Classical Query Complexity -->
+</section>
+</section>
+<section id="simons-algorithm" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="simons-algorithm"><span class="header-section-number">4.4</span> Simon’s Algorithm</h2>
+<p>Simon’s algorithm, introduced by Daniel Simon in 1994 <span class="citation" data-cites="Simon1997">&nbsp;[<a href="references.html#ref-Simon1997" role="doc-biblioref">4</a>]</span>, solves a problem that exhibits an exponential speedup over the best-known classical algorithm. It distinguishes itself as one of the early quantum algorithms demonstrating a significant advantage, albeit for a specific problem.</p>
+<section id="problem-statement-1" class="level3" data-number="4.4.1">
+<h3 data-number="4.4.1" class="anchored" data-anchor-id="problem-statement-1"><span class="header-section-number">4.4.1</span> Problem Statement</h3>
+<p>Consider a function <span class="math inline">\(f: \{0, 1\}^n \rightarrow \{0, 1\}^n\)</span> with the following promise:</p>
+<ul>
+<li>There exists a secret string <span class="math inline">\(s \in \{0, 1\}^n\)</span> such that for all <span class="math inline">\(x, y \in \{0, 1\}^n\)</span>, <span class="math inline">\(f(x) = f(y)\)</span> if and only if <span class="math inline">\(x \oplus y = 0^n\)</span> or <span class="math inline">\(x \oplus y = s\)</span>, where <span class="math inline">\(\oplus\)</span> denotes bitwise XOR.</li>
+</ul>
+<p>In simpler terms, <span class="math inline">\(f\)</span> is two-to-one, and it maps <span class="math inline">\(x\)</span> and <span class="math inline">\(x \oplus s\)</span> to the same value. The goal is to find the hidden string <span class="math inline">\(s\)</span>.</p>
+<p>Classically, solving this problem requires <span class="math inline">\(O(2^{n/2})\)</span> queries to <span class="math inline">\(f\)</span> using a collision-finding algorithm. Simon’s algorithm solves it in <em>polynomial time</em> with <span class="math inline">\(O(n)\)</span> queries.</p>
+</section>
+<section id="quantum-implementation-3" class="level3" data-number="4.4.2">
+<h3 data-number="4.4.2" class="anchored" data-anchor-id="quantum-implementation-3"><span class="header-section-number">4.4.2</span> Quantum Implementation</h3>
+<!-- ```{.tikz}
+%%| filename: simons-algorithm-3qubit-circuit
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}
+\lstick{$\ket{0}$} & \qw & \gate{H} & \gate[6]{U_f} & & \gate{H} & \meter{} & \rstick[3]{ $y$ ($y \cdot s = 0$)} \\
+\lstick{$\ket{0}$} & \qw & \gate{H} & & & \gate{H} & \meter{} & \\
+\lstick{$\ket{0}$} & \qw & \gate{H} & & & \gate{H} & \meter{} & \\
+\lstick{$\ket{0}$} & \qw &  & & \meter{} & \rstick[3]{$f(x_0)$} \\
+\lstick{$\ket{0}$} & \qw &  & & \meter{} & \\
+\lstick{$\ket{0}$} & \qw &  & & \meter{} & 
+\end{quantikz}
+``` -->
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/tikz/simons-algorithm-3qubit-circuit.svg" class="img-fluid figure-img"></p>
+<figcaption>The Simon’s algorithm reveals an <span class="math inline">\(y\)</span> such that <span class="math inline">\(s\cdot y = 0\)</span>.</figcaption>
+</figure>
+</div>
+<p>The quantum circuit for Simon’s algorithm involves the following steps:</p>
+<ol type="1">
+<li><p><strong>Initialization:</strong> Start with two registers of <span class="math inline">\(n\)</span> qubits each, both initialized to <span class="math inline">\(\ket{0}^{\otimes n}\)</span>.</p>
+<p><span class="math display">\[
+\ket{\psi_0} = \ket{0}^{\otimes n} \ket{0}^{\otimes n}
+\]</span></p></li>
+<li><p><strong>Superposition:</strong> Apply a Hadamard gate to each qubit in the first register. This creates an equal superposition of all possible <span class="math inline">\(n\)</span>-bit strings.</p>
+<p><span class="math display">\[
+\ket{\psi_1} = \frac{1}{\sqrt{2^n}} \sum_{x \in \{0, 1\}^n} \ket{x} \ket{0}^{\otimes n}
+\]</span></p></li>
+<li><p><strong>Query the Oracle:</strong> Apply the quantum oracle <span class="math inline">\(U_f\)</span> that implements the function <span class="math inline">\(f\)</span>: <span class="math inline">\(\ket{x}\ket{y} \rightarrow \ket{x}\ket{y \oplus f(x)}\)</span>.</p>
+<p><span class="math display">\[
+\ket{\psi_2} = \frac{1}{\sqrt{2^n}} \sum_{x \in \{0, 1\}^n} \ket{x} \ket{f(x)}
+\]</span></p></li>
+<li><p><strong>Measure the Second Register:</strong> Measure the second register. This yields a value <span class="math inline">\(f(x_0)\)</span> for some <span class="math inline">\(x_0 \in \{0, 1\}^n\)</span>. Due to the property of <span class="math inline">\(f\)</span>, we know that <span class="math inline">\(f(x_0) = f(x_0 \oplus s)\)</span>. Therefore, the first register collapses to an equal superposition of <span class="math inline">\(\ket{x_0}\)</span> and <span class="math inline">\(\ket{x_0 \oplus s}\)</span>:</p>
+<p><span class="math display">\[
+\ket{\psi_3} = \frac{1}{\sqrt{2}} (\ket{x_0} + \ket{x_0 \oplus s}) \ket{f(x_0)}
+\]</span></p>
+<p>We can ignore the second register from now on, as it is no longer needed. Consider only the first register, which is now in the state:</p>
+<p><span class="math display">\[
+\ket{\psi_3'} = \frac{1}{\sqrt{2}} (\ket{x_0} + \ket{x_0 \oplus s})
+\]</span></p></li>
+<li><p><strong>Apply Hadamard Transform:</strong> Apply a Hadamard gate to each qubit in the first register.</p>
+<p><span class="math display">\[
+\ket{\psi_4} =  H^{\otimes n} \left[ \frac{1}{\sqrt{2}} (\ket{x_0} + \ket{x_0 \oplus s}) \right]
+\]</span></p>
+<p>Recall that <span class="math inline">\(H^{\otimes n} \ket{x} = \frac{1}{\sqrt{2^n}} \sum_{y \in \{0, 1\}^n} (-1)^{x \cdot y} \ket{y}\)</span>. Therefore:</p>
+<p><span class="math display">\[
+\ket{\psi_4} = \frac{1}{\sqrt{2^{n+1}}} \sum_{y \in \{0, 1\}^n} \left[ (-1)^{x_0 \cdot y} + (-1)^{(x_0 \oplus s) \cdot y} \right] \ket{y}
+\]</span></p>
+<p>Simplifying the exponent, we have <span class="math inline">\((x_0 \oplus s) \cdot y = (x_0 \cdot y) \oplus (s \cdot y)\)</span>. Thus:</p>
+<p><span class="math display">\[
+\ket{\psi_4} = \frac{1}{\sqrt{2^{n+1}}} \sum_{y \in \{0, 1\}^n} (-1)^{x_0 \cdot y} \left[ 1 + (-1)^{s \cdot y} \right] \ket{y}
+\]</span></p>
+<p>Notice that if <span class="math inline">\(s \cdot y = 1\)</span>, then the term in the brackets becomes <span class="math inline">\(1 + (-1) = 0\)</span>. Therefore, we only get non-zero amplitudes for <span class="math inline">\(y\)</span> such that <span class="math inline">\(s \cdot y = 0\)</span>.</p></li>
+<li><p><strong>Measure the First Register:</strong> Measure the first register. The measurement outcome <span class="math inline">\(y\)</span> will satisfy the equation <span class="math inline">\(s \cdot y = 0 \pmod{2}\)</span>.</p></li>
+<li><p><strong>Repeat:</strong> Repeat steps 2-6 <span class="math inline">\(O(n)\)</span> times to obtain <span class="math inline">\(n-1\)</span> linearly independent equations of the form <span class="math inline">\(s \cdot y_i = 0 \pmod{2}\)</span>.</p></li>
+<li><p><strong>Solve the System of Equations:</strong> Solve the system of linear equations to find the hidden string <span class="math inline">\(s\)</span>. This can be done efficiently using classical Gaussian elimination.</p></li>
+</ol>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let’s walk through an example to make this clearer. Imagine the hidden string is <span class="math inline">\(s = 110\)</span> and the input size is <span class="math inline">\(n=3\)</span>. This means the function has the property <span class="math inline">\(f(x) = f(x \oplus 110)\)</span>. Simon’s algorithm will give us vectors <span class="math inline">\(y_i\)</span> that satisfy <span class="math inline">\(s \cdot y_i = 0 \pmod{2}\)</span>.</p>
+<p>For instance, we might get <span class="math inline">\(y_1 = 001\)</span> and <span class="math inline">\(y_2 = 010\)</span> after running the quantum part of the algorithm a couple of times. These vectors correspond to the following equations:</p>
+<p><span class="math inline">\(s_1 \cdot 0 + s_2 \cdot 0 + s_3 \cdot 1 = 0 \pmod{2}\)</span> <span class="math inline">\(s_1 \cdot 0 + s_2 \cdot 1 + s_3 \cdot 0 = 0 \pmod{2}\)</span></p>
+<p>Which simplifies to:</p>
+<p><span class="math inline">\(s_3 = 0\)</span> <span class="math inline">\(s_2 = 0\)</span></p>
+<p>To find all the bits of <span class="math inline">\(s\)</span>, we need one more <em>linearly independent</em> equation. Let’s say we then get <span class="math inline">\(y_3 = 100\)</span>. This would imply <span class="math inline">\(s_1 = 0\)</span>, which is wrong! This tells us that we need to run the quantum part of the algorithm again to get a different <span class="math inline">\(y_3\)</span> that gives us new information. The key is that the new <span class="math inline">\(y_3\)</span> needs to be linearly independent from <span class="math inline">\(y_1\)</span> and <span class="math inline">\(y_2\)</span>.</p>
+<p>Instead, suppose we get <span class="math inline">\(y_3 = 111\)</span>. Then:</p>
+<p><span class="math inline">\(s_1 + s_2 + s_3 = 0 \pmod{2}\)</span></p>
+<p>Since we already know <span class="math inline">\(s_3 = 0\)</span> and <span class="math inline">\(s_2 = 1\)</span>, we can substitute those values in: <span class="math inline">\(s_1 + 1 + 0 = 0 \pmod{2}\)</span>. This means <span class="math inline">\(s_1 = 1\)</span>. So, we’ve found the hidden string: <span class="math inline">\(s = 110\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Simon’s Secret: How Identical Outputs Reveal the Hidden String
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Simon’s algorithm cleverly exploits the function’s special property: <span class="math inline">\(f(x) = f(x \oplus s)\)</span>.</p>
+<ol type="1">
+<li><strong>Superposition:</strong> The initial Hadamard gates create a superposition of all possible inputs: <span class="math display">\[\frac{1}{\sqrt{2^n}}\sum_{x\in\{0,1\}^n}\ket{x}\]</span></li>
+<li><strong>Oracle’s Role:</strong> The oracle maps each input to its corresponding output: <span class="math display">\[\frac{1}{\sqrt{2^n}}\sum_{x\in\{0,1\}^n}\ket{x}\ket{f(x)}\]</span></li>
+<li><strong>The Magic:</strong> Because <span class="math inline">\(f(x) = f(x \oplus s)\)</span>, measuring the second register (the output) <em>entangles</em> pairs of inputs (<span class="math inline">\(x\)</span> and <span class="math inline">\(x \oplus s\)</span>) that produce the <em>same</em> output. This entanglement creates a special interference pattern in the first register that, after more steps, allows us to extract the hidden string <span class="math inline">\(s\)</span>.</li>
+</ol>
+</div>
+</div>
+</section>
+<section id="quantum-speedup" class="level3" data-number="4.4.3">
+<h3 data-number="4.4.3" class="anchored" data-anchor-id="quantum-speedup"><span class="header-section-number">4.4.3</span> Quantum Speedup</h3>
+<p>Simon’s algorithm provides an exponential speedup over classical algorithms for finding the hidden string <span class="math inline">\(s\)</span>. The classical algorithm requires <span class="math inline">\(O(2^{n/2})\)</span> queries, while Simon’s algorithm requires only <span class="math inline">\(O(n)\)</span> quantum queries and polynomial classical post-processing. This demonstrates the potential of quantum computers to solve certain problems much more efficiently than their classical counterparts.</p>
+<!-- 4.1 The Hidden Subgroup Problem
+4.2 Quantum Circuit and Measurement
+4.3 Classical Post-processing and Exponential Speedup -->
+</section>
+</section>
+<section id="quantum-phase-estimation" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="quantum-phase-estimation"><span class="header-section-number">4.5</span> Quantum Phase Estimation</h2>
+<p>Quantum Phase Estimation (QPE) is a crucial quantum algorithm used to estimate the eigenvalue (or phase) of an eigenvector of a unitary operator. It serves as a building block for many other quantum algorithms, including Shor’s algorithm for factoring and algorithms for simulating quantum systems.</p>
+<section id="problem-statement-2" class="level3" data-number="4.5.1">
+<h3 data-number="4.5.1" class="anchored" data-anchor-id="problem-statement-2"><span class="header-section-number">4.5.1</span> Problem Statement</h3>
+<p>Given a unitary operator <span class="math inline">\(U\)</span> and an eigenstate <span class="math inline">\(\ket{\psi}\)</span> such that <span class="math inline">\(U\ket{\psi} = e^{2\pi i \theta} \ket{\psi}\)</span>, the goal of QPE is to estimate the value of <span class="math inline">\(\theta\)</span>. Here, <span class="math inline">\(\theta\)</span> is the phase we want to estimate, and it lies in the range <span class="math inline">\([0, 1)\)</span>.</p>
+</section>
+<section id="quantum-implementation-4" class="level3" data-number="4.5.2">
+<h3 data-number="4.5.2" class="anchored" data-anchor-id="quantum-implementation-4"><span class="header-section-number">4.5.2</span> Quantum Implementation</h3>
+<!-- 
+```{.tikz}
+%%| filename: qpe-3qubit-circuit
+%%| header-includes: \usetikzlibrary{quantikz2}
+%%| additionalPackages: \usepackage{braket}
+\begin{quantikz}
+\lstick{$\ket{0}$} & \gate{H} & \ctrl{3} & \qw & \qw & \qw &  \gate[3]{\mathrm{QFT}^\dagger} & \meter{} \\
+\lstick{$\ket{0}$} & \gate{H} & \qw & \ctrl{2} & \qw & \qw & \qw  &\meter{} \\
+\lstick{$\ket{0}$} & \gate{H} & \qw & \qw & \ctrl{1} & \qw & \qw  &\meter{} \\
+\lstick{$\ket{\psi}$} & \qw & \gate{U^{2^0}} & \gate{U^{2^1}} & \gate{U^{2^2}} & \qw & \qw & \qw 
+\end{quantikz}
+```  -->
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/tikz/qpe-3qubit-circuit.svg" class="img-fluid figure-img"></p>
+<figcaption>QPE circuit with 3 qubits in the control register (for 3 digit accuracy)</figcaption>
+</figure>
+</div>
+<p>The QPE algorithm uses two registers:</p>
+<ol type="1">
+<li><strong>The Control Register:</strong> This register consists of <span class="math inline">\(t\)</span> qubits, initialized to <span class="math inline">\(\ket{0}^{\otimes t}\)</span>. The number of qubits <span class="math inline">\(t\)</span> determines the precision of the phase estimation.</li>
+<li><strong>The Eigenstate Register:</strong> This register holds the eigenstate <span class="math inline">\(\ket{\psi}\)</span> of the unitary operator <span class="math inline">\(U\)</span>.</li>
+</ol>
+<p>The algorithm proceeds as follows:</p>
+<ol type="1">
+<li><p><strong>Initialization:</strong> Prepare the control register in the state <span class="math inline">\(\ket{0}^{\otimes t}\)</span> and the eigenstate register in the state <span class="math inline">\(\ket{\psi}\)</span>.</p>
+<p><span class="math display">\[
+\ket{\psi_0} = \ket{0}^{\otimes t} \ket{\psi}
+\]</span></p></li>
+<li><p><strong>Superposition:</strong> Apply a Hadamard gate to each qubit in the control register to create an equal superposition.</p>
+<p><span class="math display">\[
+\ket{\psi_1} = \frac{1}{\sqrt{2^t}} \sum_{x=0}^{2^t-1} \ket{x} \ket{\psi}
+\]</span></p></li>
+<li><p><strong>Controlled Unitary Operations:</strong> Apply controlled-<span class="math inline">\(U\)</span> operations, where <span class="math inline">\(U\)</span> is applied <span class="math inline">\(2^j\)</span> times conditioned on the <span class="math inline">\(j\)</span>-th qubit (counting from 0) of the control register. This means applying <span class="math inline">\(U^{2^j}\)</span> when the <span class="math inline">\(j\)</span>-th qubit is <span class="math inline">\(\ket{1}\)</span>.</p>
+<p><span class="math display">\[
+\ket{\psi_2} = \frac{1}{\sqrt{2^t}} \sum_{x=0}^{2^t-1} \ket{x} U^x \ket{\psi} = \frac{1}{\sqrt{2^t}} \sum_{x=0}^{2^t-1} \ket{x} e^{2\pi i \theta x} \ket{\psi}
+\]</span></p>
+<p>We can rewrite this as:</p>
+<p><span class="math display">\[
+\ket{\psi_2} = \frac{1}{\sqrt{2^t}} \left( \sum_{x=0}^{2^t-1} e^{2\pi i \theta x} \ket{x} \right) \ket{\psi}
+\]</span></p></li>
+<li><p><strong>Inverse Quantum Fourier Transform (QFT†):</strong> Apply the inverse Quantum Fourier Transform (QFT†) to the control register. The QFT† transforms the state:</p>
+<p><span class="math display">\[
+\text{QFT}^\dagger \ket{x} = \frac{1}{\sqrt{2^t}} \sum_{y=0}^{2^t-1} e^{-2\pi i xy / 2^t} \ket{y}
+\]</span></p>
+<p>Applying QFT† to the control register of <span class="math inline">\(\ket{\psi_2}\)</span> yields:</p>
+<p><span class="math display">\[
+\ket{\psi_3} = \frac{1}{2^t} \sum_{x=0}^{2^t-1} \sum_{y=0}^{2^t-1} e^{2\pi i \theta x} e^{-2\pi i xy / 2^t} \ket{y} \ket{\psi}
+\]</span></p>
+<p>The amplitude of each state <span class="math inline">\(\ket{y}\)</span> in the control register is:</p>
+<p><span class="math display">\[
+\alpha_y = \frac{1}{2^t} \sum_{x=0}^{2^t-1} e^{2\pi i x (\theta - y/2^t)}
+\]</span></p>
+<p>This amplitude is large when <span class="math inline">\(y/2^t\)</span> is close to <span class="math inline">\(\theta\)</span>.</p></li>
+<li><p><strong>Measurement:</strong> Measure the control register in the computational basis. The measurement outcome <span class="math inline">\(y\)</span> provides an estimate of <span class="math inline">\(\theta\)</span> as <span class="math inline">\(\tilde{\theta} = y/2^t\)</span>.</p></li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Quantum Fourier Transform (QFT) and Factorization
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The Quantum Fourier Transform (QFT) is the quantum analogue of the discrete Fourier transform (DFT) and is a crucial component in many quantum algorithms, including Shor’s algorithm and quantum phase estimation. The QFT transforms a quantum state from the computational basis to the Fourier basis and vice versa. A key feature of the QFT is that it can be factored into a product of single-qubit rotations, enabling its efficient implementation on a quantum computer.</p>
+<p>Mathematically, the QFT is defined as the following transformation on a quantum state <span class="math inline">\(\ket{x}\)</span> with <span class="math inline">\(N\)</span> basis states, where <span class="math inline">\(N = 2^n\)</span> for <span class="math inline">\(n\)</span> qubits:</p>
+<p><span class="math display">\[
+\text{QFT} \ket{x} = \frac{1}{\sqrt{N}} \sum_{y=0}^{N-1} e^{2\pi i xy / N} \ket{y}
+\]</span></p>
+<p>Let’s express <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> in their binary representations: <span class="math inline">\(x = x_1 x_2 ... x_n\)</span> and <span class="math inline">\(y = y_1 y_2 ... y_n\)</span>, where <span class="math inline">\(x_i\)</span> and <span class="math inline">\(y_i\)</span> are the <span class="math inline">\(i\)</span>-th bits of <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, respectively. Then we can rewrite the QFT as:</p>
+<p><span class="math display">\[
+\text{QFT} \ket{x_1 x_2 ... x_n} = \frac{1}{\sqrt{N}} \sum_{y_1=0}^{1} \sum_{y_2=0}^{1} ... \sum_{y_n=0}^{1} e^{2\pi i x (\sum_{k=1}^{n} y_k 2^{-k})} \ket{y_1 y_2 ... y_n}
+\]</span></p>
+<p><span class="math display">\[
+= \frac{1}{\sqrt{N}} \sum_{y_1=0}^{1} \sum_{y_2=0}^{1} ... \sum_{y_n=0}^{1}  \prod_{k=1}^{n} e^{2\pi i x  y_k 2^{-k}} \ket{y_1 y_2 ... y_n}
+\]</span></p>
+<p><span class="math display">\[
+= \frac{1}{\sqrt{N}}  \bigotimes_{k=1}^{n} \sum_{y_k=0}^{1}   e^{2\pi i x  y_k 2^{-k}} \ket{y_k}
+\]</span></p>
+<p><span class="math display">\[
+=  \frac{1}{\sqrt{N}}  \bigotimes_{k=1}^{n}  \left( \ket{0} + e^{2\pi i x   2^{-k}} \ket{1} \right)
+\]</span></p>
+<p><span class="math display">\[
+= \frac{1}{2^{n/2}} \left( \ket{0} + e^{2\pi i x 2^{-1}} \ket{1} \right) \left( \ket{0} + e^{2\pi i x 2^{-2}} \ket{1} \right) ... \left( \ket{0} + e^{2\pi i x 2^{-n}} \ket{1} \right)
+\]</span></p>
+<p>This factorization shows that the QFT can be implemented by applying a series of single-qubit rotations conditioned on the values of other qubits. Specifically, the <span class="math inline">\(k\)</span>-th qubit is rotated by an angle that depends on the values of the qubits <span class="math inline">\(x_1, x_2, ..., x_n\)</span>. This decomposition is crucial for constructing the QFT circuit efficiently.</p>
+<p><strong>Key Properties and Implications:</strong></p>
+<ol type="1">
+<li><strong>Unitary Transformation:</strong> The QFT is a unitary transformation, meaning it preserves the norm of quantum states and can be implemented as a quantum circuit.</li>
+<li><strong>Efficient Implementation:</strong> The QFT can be implemented on a quantum computer using <span class="math inline">\(O(n^2)\)</span> quantum gates, where <span class="math inline">\(n\)</span> is the number of qubits. Note that unlike a classical FFT, direct readout of the quantum state does not give the full Fourier transform due to the nature of quantum measurement.</li>
+<li><strong>Period Finding:</strong> The QFT is particularly useful for finding periodic patterns in quantum states, which is a key step in Shor’s algorithm for factoring integers.</li>
+<li><strong>Phase Estimation:</strong> The QFT is used in the quantum phase estimation algorithm to accurately estimate the eigenvalues of unitary operators.</li>
+</ol>
+<p>The inverse Quantum Fourier Transform (QFT†) reverses the transformation:</p>
+<p><span class="math display">\[
+\text{QFT}^\dagger \ket{x} = \frac{1}{\sqrt{N}} \sum_{y=0}^{N-1} e^{-2\pi i xy / N} \ket{y}
+\]</span></p>
+<p>It also has an efficient implementation based on a similar factorization.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Unpacking the Quantum Fourier Transform: Controlled Phase Shifts
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The Quantum Fourier Transform (QFT) relies on a series of <em>controlled phase shift</em> gates to create interference patterns.</p>
+<ul>
+<li><p><strong>Controlled Phase Shift Gates:</strong> These gates apply a phase shift to a target qubit, conditioned on the state of a control qubit. The amount of the phase shift is different for each gate. For example:</p>
+<ul>
+<li><span class="math inline">\(R_2\)</span> gate: Adds a phase shift of <span class="math inline">\(\pi/2\)</span> (90 degrees).</li>
+<li><span class="math inline">\(R_3\)</span> gate: Adds a phase shift of <span class="math inline">\(\pi/4\)</span> (45 degrees).</li>
+<li>In general, <span class="math inline">\(R_k\)</span> gate: Adds a phase shift of <span class="math inline">\(\pi/2^{k-1}\)</span> radians.</li>
+</ul></li>
+<li><p><strong>Binary Representation Analogy:</strong> Think of these phase shifts as encoding information in binary. Each qubit represents a “digit” in the binary representation of a frequency. The earlier qubits in the circuit represent the more significant bits, and later qubits represent the less significant bits.</p></li>
+<li><p><strong>Creating Interference:</strong> By carefully controlling these phase shifts, the QFT creates a complex interference pattern that allows us to extract the frequency components of a quantum state. This is crucial for algorithms like Shor’s algorithm, where we need to find the period of a function.</p></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="accuracy" class="level3" data-number="4.5.3">
+<h3 data-number="4.5.3" class="anchored" data-anchor-id="accuracy"><span class="header-section-number">4.5.3</span> Accuracy</h3>
+<p>The accuracy of the phase estimation depends on the number of qubits <span class="math inline">\(t\)</span> in the control register. If <span class="math inline">\(\theta\)</span> can be written exactly as <span class="math inline">\(j/2^t\)</span> for some integer <span class="math inline">\(j\)</span>, then the measurement outcome will be exactly <span class="math inline">\(j\)</span> with probability 1. Otherwise, the measurement will yield an approximation <span class="math inline">\(\tilde{\theta}\)</span> of <span class="math inline">\(\theta\)</span>. With high probability, the estimated phase <span class="math inline">\(\tilde{\theta}\)</span> satisfies <span class="math inline">\(|\theta - \tilde{\theta}| \leq 2^{-t}\)</span>. Therefore, to achieve an accuracy of <span class="math inline">\(2^{-n}\)</span>, we need <span class="math inline">\(t = n + O(\log(1/\epsilon))\)</span> qubits in the control register to succeed with probability at least <span class="math inline">\(1 - \epsilon\)</span>.</p>
+</section>
+<section id="example-1" class="level3" data-number="4.5.4">
+<h3 data-number="4.5.4" class="anchored" data-anchor-id="example-1"><span class="header-section-number">4.5.4</span> Example</h3>
+<p>Suppose <span class="math inline">\(U\ket{\psi} = e^{2\pi i (1/4)} \ket{\psi}\)</span>, so <span class="math inline">\(\theta = 1/4 = 0.25\)</span>. Let’s use <span class="math inline">\(t=2\)</span> qubits in the control register. The possible measurement outcomes are <span class="math inline">\(00, 01, 10, 11\)</span>, corresponding to estimates <span class="math inline">\(0/4 = 0\)</span>, <span class="math inline">\(1/4 = 0.25\)</span>, <span class="math inline">\(2/4 = 0.5\)</span>, and <span class="math inline">\(3/4 = 0.75\)</span>. The algorithm will ideally measure <span class="math inline">\(\ket{01}\)</span> with high probability, giving the correct estimate <span class="math inline">\(\tilde{\theta} = 0.25\)</span>.</p>
+</section>
+<section id="applications" class="level3" data-number="4.5.5">
+<h3 data-number="4.5.5" class="anchored" data-anchor-id="applications"><span class="header-section-number">4.5.5</span> Applications</h3>
+<p>QPE is a fundamental algorithm with numerous applications:</p>
+<ul>
+<li><strong>Shor’s Algorithm:</strong> Used to find the order of an element, which is a crucial step in factoring integers.</li>
+<li><strong>Quantum Simulation:</strong> Used to estimate the energy levels of quantum systems.</li>
+<li><strong>Estimating Eigenvalues:</strong> Used in various quantum machine learning algorithms.</li>
+</ul>
+<p>QPE showcases the power of quantum computation by efficiently estimating the phase of an eigenvalue, a task that can be difficult or impossible for classical computers in certain scenarios.</p>
+<!-- 5.1 Mathematical Framework
+5.2 Circuit Implementation
+5.3 Applications and Connection to Other Algorithms -->
+</section>
+</section>
+<section id="grovers-algorithm" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="grovers-algorithm"><span class="header-section-number">4.6</span> Grover’s Algorithm</h2>
+<p>Grover’s algorithm <span class="citation" data-cites="Grover1996">&nbsp;[<a href="references.html#ref-Grover1996" role="doc-biblioref">5</a>]</span> is a quantum search algorithm for finding a specific item in an unsorted database of <span class="math inline">\(N\)</span> items with only <span class="math inline">\(O(\sqrt{N})\)</span> queries to the database, offering a quadratic speedup over classical search. The key idea is to use a quantum oracle to mark the target item and then apply a diffusion operator to amplify the probability of measuring the target. We can understand the power of Grover’s algorithm by considering the geometric interpretation of the oracle and diffusion operators as rotations on a Bloch sphere.</p>
+<section id="the-unstructured-search-problem" class="level3" data-number="4.6.1">
+<h3 data-number="4.6.1" class="anchored" data-anchor-id="the-unstructured-search-problem"><span class="header-section-number">4.6.1</span> The Unstructured Search Problem</h3>
+<p>Suppose we have a function <span class="math inline">\(f(x)\)</span> that takes an input <span class="math inline">\(x\)</span> from a set of <span class="math inline">\(N\)</span> items, where <span class="math inline">\(f(x) = 1\)</span> if <span class="math inline">\(x\)</span> is the item we are searching for (the “target”) and <span class="math inline">\(f(x) = 0\)</span> otherwise. Our goal is to find the value of <span class="math inline">\(x\)</span> such that <span class="math inline">\(f(x) = 1\)</span>. Classically, in the worst case, we might have to check every item in the database, requiring <span class="math inline">\(O(N)\)</span> queries.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Relating number of elements to qubits
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For a database of <span class="math inline">\(N\)</span> items, the number of qubits required to represent each item is <span class="math inline">\(n = \lceil \log_2 N \rceil\)</span>.</p>
+</div>
+</div>
+</section>
+<section id="quantum-oracle" class="level3" data-number="4.6.2">
+<h3 data-number="4.6.2" class="anchored" data-anchor-id="quantum-oracle"><span class="header-section-number">4.6.2</span> Quantum Oracle</h3>
+<p>The quantum oracle, <span class="math inline">\(O\)</span>, is a unitary operator that marks the target state. If the target state is <span class="math inline">\(|w\rangle\)</span>, the oracle acts as:</p>
+<p><span class="math display">\[
+O|x\rangle = \begin{cases}
+-|x\rangle &amp; \text{if } x = w \\
+|x\rangle &amp; \text{if } x \neq w
+\end{cases}
+\]</span></p>
+<p>This can be written more generally as <span class="math inline">\(O = I - 2|w\rangle\langle w|\)</span>, where <span class="math inline">\(I\)</span> is the identity operator. Geometrically, the oracle <span class="math inline">\(O\)</span> reflects the state about the hyperplane orthogonal to <span class="math inline">\(|w\rangle\)</span>.</p>
+</section>
+<section id="the-diffusion-operator" class="level3" data-number="4.6.3">
+<h3 data-number="4.6.3" class="anchored" data-anchor-id="the-diffusion-operator"><span class="header-section-number">4.6.3</span> The Diffusion Operator</h3>
+<p>The diffusion operator, <span class="math inline">\(D\)</span>, is defined as:</p>
+<p><span class="math display">\[
+D = 2|\psi\rangle\langle\psi| - I
+\]</span></p>
+<p>where <span class="math inline">\(|\psi\rangle\)</span> is the uniform superposition over all states:</p>
+<p><span class="math display">\[
+|\psi\rangle = \frac{1}{\sqrt{N}} \sum_{x=0}^{N-1} |x\rangle
+\]</span></p>
+<p>The diffusion operator <span class="math inline">\(D\)</span> reflects the state about the mean amplitude.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Demystifying the Grover Diffusion Operator: “Inversion About the Mean”
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The Grover diffusion operator (<span class="math inline">\(D = 2|\psi\rangle\langle\psi| - I\)</span>) might seem mysterious, but it’s essentially an “inversion about the mean” of the amplitudes. Here’s how to think about it:</p>
+<ol type="1">
+<li><p><strong>Calculate the Mean Amplitude:</strong> Imagine all the amplitudes of the quantum states as numbers. Calculate the average (mean) of these numbers. Since we start with a uniform superposition, this mean is initially close to zero.</p></li>
+<li><p><strong>Invert Around the Mean:</strong> For each state’s amplitude:</p>
+<ul>
+<li>Calculate the difference between the amplitude and the mean.</li>
+<li>Subtract this difference <em>again</em> from the mean. This “inverts” the amplitude around the mean. Mathematically, if <span class="math inline">\(a_i\)</span> is the amplitude of state <span class="math inline">\(\ket{i}\)</span> and <span class="math inline">\(\bar{a}\)</span> is the mean amplitude, the new amplitude <span class="math inline">\(a_i'\)</span> is calculated as: <span class="math display">\[a_i' = \bar{a} - (a_i - \bar{a}) = 2\bar{a} - a_i\]</span></li>
+</ul></li>
+</ol>
+<p><strong>Visual Analogy:</strong> Imagine a seesaw balanced at the mean amplitude (<span class="math inline">\(\bar{a}\)</span>). The diffusion operator flips each amplitude to the opposite side of the seesaw, relative to the balance point. This has the effect of <em>decreasing</em> the amplitudes of the majority of states and <em>increasing</em> the amplitude of the marked state(s).</p>
+<p><strong>Why this works:</strong> The marked state gets a larger “boost” because its amplitude is initially <em>negative</em> (due to the oracle’s phase flip), making it lower than the mean. This process, repeated multiple times, amplifies the marked state until it dominates the superposition.</p>
+</div>
+</div>
+</section>
+<section id="grover-iteration-as-a-rotation" class="level3" data-number="4.6.4">
+<h3 data-number="4.6.4" class="anchored" data-anchor-id="grover-iteration-as-a-rotation"><span class="header-section-number">4.6.4</span> Grover Iteration as a Rotation</h3>
+<p>The Grover iteration <span class="math inline">\(G = D \cdot O\)</span> can be understood as a rotation within the two-dimensional subspace spanned by the target state <span class="math inline">\(|w\rangle\)</span> and the superposition of non-target states. Let’s define <span class="math inline">\(|\psi_\perp\rangle\)</span> as the normalized superposition of all states orthogonal to the target state <span class="math inline">\(|w\rangle\)</span>. If the uniform superposition is <span class="math inline">\(|\psi\rangle = \frac{1}{\sqrt{N}} \sum_{x=0}^{N-1} |x\rangle\)</span> and the target state is <span class="math inline">\(|w\rangle\)</span>, we can express <span class="math inline">\(|\psi\rangle\)</span> in terms of <span class="math inline">\(|w\rangle\)</span> and <span class="math inline">\(|\psi_\perp\rangle\)</span>. <span class="math display">\[
+\ket{\psi} =  \frac1{\sqrt{N}}\ket{w} + \sqrt{1-\frac1N}\ket{\psi_\perp}.
+\]</span> Notice that there is a low chance <span class="math inline">\(1/N\)</span> of getting <span class="math inline">\(w\)</span> from this wavefunction as it currently stands.</p>
+<p>In the basis <span class="math inline">\(\{|\psi_\perp\rangle, |w\rangle\}\)</span>, the Grover operator <span class="math inline">\(G\)</span> takes the form of a rotation matrix:</p>
+<p><span class="math display">\[
+G = \begin{bmatrix}
+1 - \frac{2}{N} &amp; \frac{2\sqrt{N-1}}{N} \\
+-\frac{2\sqrt{N-1}}{N} &amp; 1 - \frac{2}{N}
+\end{bmatrix}
+\]</span> This matrix represents a rotation by an unknown angle <span class="math inline">\(\theta\)</span> on the Bloch sphere. If we let <span class="math inline">\(\sin(\theta/2) = \frac{2\sqrt{N-1}}{N}\)</span>, then <span class="math display">\[
+G = \begin{bmatrix} \cos(\theta/2) &amp; \sin(\theta/2) \\ -\sin(\theta/2) &amp; \cos(\theta/2) \end{bmatrix}
+\]</span> The goal is to rotate the initial state <span class="math inline">\(|\psi\rangle\)</span> as close as possible to the target state <span class="math inline">\(|w\rangle\)</span>. After <span class="math inline">\(k\)</span> iterations, the state is:</p>
+<p><span class="math display">\[
+G^k |\psi_\perp\rangle = \cos(k\theta/2) |\psi_\perp \rangle + \sin(k\theta/2) |w\rangle
+\]</span></p>
+<p>To maximize the probability of measuring <span class="math inline">\(|w\rangle\)</span>, we want <span class="math inline">\(\sin(k\theta)\)</span> to be as close to 1 as possible, which means <span class="math inline">\(k\theta \approx \pi\)</span>.</p>
+<p>Since <span class="math inline">\(\sin(\theta/2) = \frac{2\sqrt{N-1}}{N} \approx \frac{2\sqrt{N}}{N} = \frac{2}{\sqrt{N}}\)</span> for large <span class="math inline">\(N\)</span>, we have <span class="math inline">\(\theta/2 \approx \frac{2}{\sqrt{N}}\)</span>, so <span class="math inline">\(\theta \approx \frac{4}{\sqrt{N}}\)</span>.</p>
+<p>Therefore, <span class="math inline">\(k \approx \frac{\pi}{\theta} \approx \frac{\pi}{4} \sqrt{N}\)</span>.</p>
+<p>Thus, the optimal number of iterations is approximately <span class="math inline">\(\frac{\pi}{4} \sqrt{N}\)</span>.</p>
+</section>
+<section id="measurement" class="level3" data-number="4.6.5">
+<h3 data-number="4.6.5" class="anchored" data-anchor-id="measurement"><span class="header-section-number">4.6.5</span> Measurement</h3>
+<p>After applying the Grover iteration approximately <span class="math inline">\(\frac{\pi}{4} \sqrt{N}\)</span> times, measuring the state will yield the target state <span class="math inline">\(|w\rangle\)</span> with high probability.</p>
+</section>
+<section id="quantum-speedup-1" class="level3" data-number="4.6.6">
+<h3 data-number="4.6.6" class="anchored" data-anchor-id="quantum-speedup-1"><span class="header-section-number">4.6.6</span> Quantum Speedup</h3>
+<p>Grover’s algorithm achieves a quadratic speedup compared to classical search. While a classical search requires <span class="math inline">\(O(N)\)</span> queries in the worst case, Grover’s algorithm finds the target with <span class="math inline">\(O(\sqrt{N})\)</span> quantum queries. This speedup demonstrates the power of quantum computation for solving search problems.</p>
+<!-- 3.1 Unstructured Search Problem  
+3.2 Quantum Oracle and Amplitude Amplification  
+3.3 Performance and Quadratic Speedup   -->
+</section>
+</section>
+<section id="shors-algorithm-high-level-overview" class="level2" data-number="4.7">
+<h2 data-number="4.7" class="anchored" data-anchor-id="shors-algorithm-high-level-overview"><span class="header-section-number">4.7</span> Shor’s Algorithm (High-Level Overview)</h2>
+<p>Shor’s algorithm is a quantum algorithm for factoring large integers <span class="citation" data-cites="Shor1994">&nbsp;[<a href="references.html#ref-Shor1994" role="doc-biblioref">6</a>]</span>. It has exponential speedup compared to the best-known classical factoring algorithm. Factoring large numbers is a computationally hard problem that underlies the security of many public-key cryptosystems, such as RSA. Shor’s algorithm combines classical number theory with quantum computation to efficiently find the prime factors of an integer.</p>
+<p>The algorithm consists of two main parts:</p>
+<ol type="1">
+<li><p><strong>Classical Pre-processing:</strong> This involves reducing the factoring problem to the problem of finding the period of a function. This step leverages number-theoretic results but is executed on a classical computer.</p></li>
+<li><p><strong>Quantum Period Finding:</strong> This is the core quantum part of the algorithm. It uses the quantum Fourier transform (QFT) to efficiently find the period of the function defined in the classical pre-processing step. The quantum period finding provides an exponential speedup compared to classical period-finding algorithms.</p></li>
+<li><p><strong>Classical Post-processing:</strong> Once the period is found using the quantum computation, a classical computer performs some post-processing steps, using number theory, to deduce the factors of the original integer.</p></li>
+</ol>
+<p>The quantum part of Shor’s algorithm relies on the following key quantum computing concepts:</p>
+<ul>
+<li><strong>Quantum Fourier Transform (QFT):</strong> The QFT is used to find the period of a function by identifying the dominant frequencies in its Fourier transform. The QFT can be implemented efficiently on a quantum computer.</li>
+<li><strong>Superposition:</strong> Superposition is used to evaluate the function at multiple points simultaneously.</li>
+<li><strong>Quantum Measurement:</strong> Measurement is used to extract the period information from the quantum state.</li>
+</ul>
+<p>In summary, Shor’s algorithm leverages the QFT to perform period finding exponentially faster than any known classical algorithm, which allows us to factor large integers efficiently. The combination of classical pre- and post-processing with the quantum period-finding routine makes Shor’s algorithm a powerful tool with significant implications for cryptography.</p>
+<section id="quantum-period-finding-in-shors-algorithm" class="level3" data-number="4.7.1">
+<h3 data-number="4.7.1" class="anchored" data-anchor-id="quantum-period-finding-in-shors-algorithm"><span class="header-section-number">4.7.1</span> Quantum Period Finding in Shor’s Algorithm</h3>
+<p>The quantum period-finding algorithm is the heart of Shor’s algorithm, providing the exponential speedup over classical methods. Here’s a breakdown of how it works:</p>
+<ol type="1">
+<li><p><strong>Problem Setup:</strong> We are given an integer <span class="math inline">\(N\)</span> that we want to factor. We choose a random number <span class="math inline">\(a\)</span> such that <span class="math inline">\(1 &lt; a &lt; N\)</span> and <span class="math inline">\(\text{gcd}(a, N) = 1\)</span>. We define a function <span class="math inline">\(f(x) = a^x \mod N\)</span>. The goal is to find the period <span class="math inline">\(r\)</span> of this function, which is the smallest positive integer such that <span class="math inline">\(f(x + r) = f(x)\)</span> for all <span class="math inline">\(x\)</span>. In other words, <span class="math inline">\(a^r \equiv 1 \pmod{N}\)</span>.</p></li>
+<li><p><strong>Quantum Registers:</strong> We use two quantum registers:</p>
+<ul>
+<li>Register 1 (input register): This register consists of <span class="math inline">\(n\)</span> qubits, where <span class="math inline">\(n\)</span> is chosen such that <span class="math inline">\(N^2 \le 2^n &lt; 2N^2\)</span>. This register will hold the input values <span class="math inline">\(x\)</span> for the function <span class="math inline">\(f(x)\)</span>. It is initialized to <span class="math inline">\(\ket{0}^{\otimes n}\)</span>.</li>
+<li>Register 2 (output register): This register consists of <span class="math inline">\(m\)</span> qubits, where <span class="math inline">\(m\)</span> is large enough to store the possible values of <span class="math inline">\(f(x)\)</span>. It is initialized to <span class="math inline">\(\ket{0}^{\otimes m}\)</span>.</li>
+</ul></li>
+<li><p><strong>Superposition:</strong> Apply a Hadamard gate to each qubit in Register 1 to create an equal superposition of all possible input values:</p>
+<p><span class="math display">\[
+\ket{\psi_0} = \frac{1}{\sqrt{2^n}} \sum_{x=0}^{2^n-1} \ket{x} \ket{0}^{\otimes m}
+\]</span></p></li>
+<li><p><strong>Function Evaluation (Quantum Oracle):</strong> Apply a quantum oracle <span class="math inline">\(U_f\)</span> that performs the modular exponentiation: <span class="math inline">\(\ket{x}\ket{0} \rightarrow \ket{x}\ket{f(x)}\)</span>. This creates the entangled state:</p>
+<p><span class="math display">\[
+\ket{\psi_1} = \frac{1}{\sqrt{2^n}} \sum_{x=0}^{2^n-1} \ket{x} \ket{f(x)}
+\]</span></p></li>
+<li><p><strong>Quantum Fourier Transform (QFT):</strong> Apply the QFT to Register 1. This transforms the state as follows:</p>
+<p><span class="math display">\[
+\ket{\psi_2} = \frac{1}{\sqrt{2^n}} \sum_{x=0}^{2^n-1} \left( \frac{1}{\sqrt{2^n}} \sum_{y=0}^{2^n-1} e^{2\pi i xy / 2^n} \ket{y} \right) \ket{f(x)}
+\]</span></p>
+<p>Rearranging the summation, we get:</p>
+<p><span class="math display">\[
+\ket{\psi_2} = \frac{1}{2^n} \sum_{y=0}^{2^n-1} \sum_{x=0}^{2^n-1} e^{2\pi i xy / 2^n} \ket{y} \ket{f(x)}
+\]</span></p></li>
+<li><p><strong>Measurement:</strong> Measure Register 2. This collapses the superposition to a specific value <span class="math inline">\(f(x_0)\)</span>. The state of Register 1 becomes a superposition of states <span class="math inline">\(|x\rangle\)</span> such that <span class="math inline">\(f(x) = f(x_0)\)</span>. Since <span class="math inline">\(f(x)\)</span> is periodic with period <span class="math inline">\(r\)</span>, the register 1 will contain a superposition of states <span class="math inline">\(|x_0\rangle, |x_0 + r\rangle, |x_0 + 2r\rangle, ...\)</span></p></li>
+<li><p><strong>Second Measurement:</strong> Measure Register 1. The measurement result <span class="math inline">\(y\)</span> will be close to an integer multiple of <span class="math inline">\(2^n/r\)</span>. That is, <span class="math inline">\(y \approx c \cdot \frac{2^n}{r}\)</span> for some integer <span class="math inline">\(c\)</span>.</p></li>
+<li><p><strong>Classical Post-processing (Continued Fractions):</strong> Use the continued fractions algorithm to find the best rational approximation of <span class="math inline">\(y/2^n\)</span>. This gives us a candidate for the period <span class="math inline">\(r\)</span>.</p></li>
+<li><p><strong>Verification:</strong> Check if the candidate <span class="math inline">\(r\)</span> is indeed the period by verifying that <span class="math inline">\(a^r \equiv 1 \pmod{N}\)</span>. If it is not, repeat the algorithm.</p></li>
+<li><p><strong>Factoring:</strong> If <span class="math inline">\(r\)</span> is even, compute <span class="math inline">\(\text{gcd}(a^{r/2} + 1, N)\)</span> and <span class="math inline">\(\text{gcd}(a^{r/2} - 1, N)\)</span>. These are likely to be non-trivial factors of <span class="math inline">\(N\)</span>. If the factors are trivial or <span class="math inline">\(r\)</span> is odd, go back to step 1 and choose a different random <span class="math inline">\(a\)</span>.</p></li>
+</ol>
+<p>The QFT step is crucial because it transforms the periodic function <span class="math inline">\(f(x)\)</span> into a state where the period can be efficiently extracted through measurement and classical post-processing. The exponential speedup arises from the ability of the QFT to identify the period in a single quantum computation, whereas classical period-finding algorithms would require exponentially many evaluations of the function.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Why Modular Exponentiation?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Modular exponentiation (computing <span class="math inline">\(a^x \mod N\)</span>) is crucial because:</p>
+<ol type="1">
+<li>It’s periodic: For some period <span class="math inline">\(r\)</span>, <span class="math inline">\(a^{x+r} \equiv a^x \pmod{N}\)</span></li>
+<li>This period <span class="math inline">\(r\)</span> is related to the factors of <span class="math inline">\(N\)</span></li>
+<li>The quantum computer can find <span class="math inline">\(r\)</span> efficiently using the Quantum Fourier Transform (QFT)</li>
+</ol>
+<p>Key insight: We don’t need to know all values of <span class="math inline">\(a^x \mod N\)</span>, we just need to find how often they repeat!</p>
+<p>Example: For <span class="math inline">\(N = 15\)</span>, <span class="math inline">\(a = 7\)</span></p>
+<ul>
+<li><span class="math inline">\(7^1 \mod 15 = 7\)</span></li>
+<li><span class="math inline">\(7^2 \mod 15 = 4\)</span></li>
+<li><span class="math inline">\(7^3 \mod 15 = 13\)</span></li>
+<li><span class="math inline">\(7^4 \mod 15 = 1\)</span> ← Period found!</li>
+</ul>
+</div>
+</div>
+<!-- 4.1 Motivation (Factoring Problem)  
+4.2 Quantum Fourier Transform (QFT) Primer  
+4.3 Core Idea of Shor’s Algorithm (Without Full Implementation Details)   -->
+</section>
+</section>
+<section id="hhl-algorithm" class="level2" data-number="4.8">
+<h2 data-number="4.8" class="anchored" data-anchor-id="hhl-algorithm"><span class="header-section-number">4.8</span> HHL Algorithm</h2>
+<p>The HHL algorithm, named after Harrow, Hassidim, and Lloyd, is a quantum algorithm that solves linear systems of equations <span class="citation" data-cites="HarrowLloyd2009">&nbsp;[<a href="references.html#ref-HarrowLloyd2009" role="doc-biblioref">7</a>]</span>. Given a matrix <span class="math inline">\(A\)</span> and a vector <span class="math inline">\(\vec{b}\)</span>, the goal is to find the vector <span class="math inline">\(\vec{x}\)</span> such that <span class="math inline">\(A\vec{x} = \vec{b}\)</span>. While solving linear systems is a ubiquitous task in classical computing, the HHL algorithm offers a potential exponential speedup under certain conditions, making it a landmark result in quantum algorithm design.</p>
+<section id="the-linear-systems-problem" class="level3" data-number="4.8.1">
+<h3 data-number="4.8.1" class="anchored" data-anchor-id="the-linear-systems-problem"><span class="header-section-number">4.8.1</span> The Linear Systems Problem</h3>
+<p>In its most general form, a linear system of equations is represented as:</p>
+<p><span class="math display">\[
+A\vec{x} = \vec{b}
+\]</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline">\(A\)</span> is an <span class="math inline">\(N \times N\)</span> matrix.</li>
+<li><span class="math inline">\(\vec{x}\)</span> is an <span class="math inline">\(N\)</span>-dimensional vector we want to find.</li>
+<li><span class="math inline">\(\vec{b}\)</span> is an <span class="math inline">\(N\)</span>-dimensional vector.</li>
+</ul>
+<p>Classically, solving this problem typically requires <span class="math inline">\(O(N^3)\)</span> time using Gaussian elimination or <span class="math inline">\(O(N^{2.373})\)</span> using more advanced algorithms. For large <span class="math inline">\(N\)</span>, these algorithms can be computationally expensive.</p>
+</section>
+<section id="quantum-solution-approach" class="level3" data-number="4.8.2">
+<h3 data-number="4.8.2" class="anchored" data-anchor-id="quantum-solution-approach"><span class="header-section-number">4.8.2</span> Quantum Solution Approach</h3>
+<p>The HHL algorithm provides a quantum solution to this problem with a runtime complexity of <span class="math inline">\(O(\text{log}(N))\)</span>, under certain assumptions. Here’s a high-level overview of the algorithm:</p>
+<ol type="1">
+<li><p><strong>State Preparation:</strong> The input vector <span class="math inline">\(\vec{b}\)</span> is loaded into a quantum state <span class="math inline">\(|\vec{b}\rangle\)</span>. This step assumes that we have a way to efficiently prepare the state, which is a crucial requirement for the algorithm’s speedup.</p></li>
+<li><p><strong>Hamiltonian Simulation:</strong> The matrix <span class="math inline">\(A\)</span> is represented as a Hamiltonian, and we perform Hamiltonian simulation to implement the time evolution operator <span class="math inline">\(e^{iAt}\)</span> for some time <span class="math inline">\(t\)</span>. This step requires <span class="math inline">\(A\)</span> to be Hermitian. If <span class="math inline">\(A\)</span> is not Hermitian, it can be transformed into a Hermitian matrix by considering the augmented system:</p>
+<p><span class="math display">\[
+\begin{bmatrix}
+0 &amp; A \\
+A^\dagger &amp; 0
+\end{bmatrix}
+\]</span></p></li>
+<li><p><strong>Quantum Phase Estimation (QPE):</strong> QPE is applied to estimate the eigenvalues of <span class="math inline">\(A\)</span>. This involves applying the time evolution operator <span class="math inline">\(e^{iAt}\)</span> multiple times and using the quantum Fourier transform to extract the eigenvalues. The result is a quantum state where the eigenvalues are stored in a separate register.</p></li>
+<li><p><strong>Controlled Rotation:</strong> A controlled rotation is performed based on the estimated eigenvalues. This rotation effectively multiplies each eigenvector component by the inverse of its corresponding eigenvalue.</p></li>
+<li><p><strong>Uncomputation:</strong> The QPE is uncomputed to remove the eigenvalue register, leaving the solution in the original register.</p></li>
+<li><p><strong>Measurement:</strong> Finally, we measure the quantum state to obtain the solution vector <span class="math inline">\(\vec{x}\)</span>.</p></li>
+</ol>
+</section>
+<section id="mathematical-details-1" class="level3" data-number="4.8.3">
+<h3 data-number="4.8.3" class="anchored" data-anchor-id="mathematical-details-1"><span class="header-section-number">4.8.3</span> Mathematical Details</h3>
+<p>Let’s break down the key steps with some mathematical details:</p>
+<ul>
+<li><p><strong>Eigenvalue Decomposition:</strong> Assume <span class="math inline">\(A\)</span> is Hermitian and has the eigenvalue decomposition:</p>
+<p><span class="math display">\[
+A = \sum_{j=1}^N \lambda_j |u_j\rangle \langle u_j|
+\]</span></p>
+<p>where <span class="math inline">\(\lambda_j\)</span> are the eigenvalues and <span class="math inline">\(|u_j\rangle\)</span> are the corresponding eigenvectors.</p></li>
+<li><p><strong>Input State:</strong> The input state <span class="math inline">\(|\vec{b}\rangle\)</span> can be expressed in terms of the eigenvectors of <span class="math inline">\(A\)</span>:</p>
+<p><span class="math display">\[
+|\vec{b}\rangle = \sum_{j=1}^N b_j |u_j\rangle
+\]</span></p>
+<p>where <span class="math inline">\(b_j = \langle u_j | \vec{b} \rangle\)</span> are the coefficients.</p></li>
+<li><p><strong>Solution State:</strong> The solution vector <span class="math inline">\(\vec{x}\)</span> can also be expressed in terms of the eigenvectors:</p>
+<p><span class="math display">\[
+|\vec{x}\rangle = A^{-1} |\vec{b}\rangle = \sum_{j=1}^N \frac{b_j}{\lambda_j} |u_j\rangle
+\]</span></p>
+<p>The goal of the HHL algorithm is to prepare this state <span class="math inline">\(|\vec{x}\rangle\)</span>.</p></li>
+<li><p><strong>Quantum Phase Estimation:</strong> QPE allows us to estimate the eigenvalues <span class="math inline">\(\lambda_j\)</span>. After QPE, we have a state like:</p>
+<p><span class="math display">\[
+\sum_{j=1}^N b_j |\lambda_j\rangle |u_j\rangle
+\]</span></p>
+<p>where <span class="math inline">\(|\lambda_j\rangle\)</span> is a quantum register holding an estimate of the eigenvalue <span class="math inline">\(\lambda_j\)</span>.</p></li>
+<li><p><strong>Controlled Rotation:</strong> We then perform a controlled rotation. This rotation is applied to an ancilla qubit conditioned on the estimated eigenvalue <span class="math inline">\(|\lambda_j\rangle\)</span>. The state becomes:</p>
+<p><span class="math display">\[
+\sum_{j=1}^N b_j |\lambda_j\rangle \left( C \frac{1}{\lambda_j} |0\rangle + S |1\rangle \right) |u_j\rangle
+\]</span></p>
+<p>Here, <span class="math inline">\(|0\rangle\)</span> and <span class="math inline">\(|1\rangle\)</span> represent the states of the ancilla qubit, and <span class="math inline">\(C\)</span> and <span class="math inline">\(S\)</span> are chosen such that <span class="math inline">\(C^2/\lambda_j^2 + S^2 = 1\)</span>, ensuring normalization. The crucial point is that the amplitude of the <span class="math inline">\(|0\rangle\)</span> state is proportional to <span class="math inline">\(1/\lambda_j\)</span>. Measuring the ancilla qubit in the <span class="math inline">\(|0\rangle\)</span> state projects the system (approximately) onto the desired solution:</p>
+<p><span class="math display">\[
+\sum_{j=1}^N \frac{b_j}{\lambda_j} |u_j\rangle \propto |\vec{x}\rangle
+\]</span></p></li>
+</ul>
+</section>
+<section id="assumptions-and-limitations" class="level3" data-number="4.8.4">
+<h3 data-number="4.8.4" class="anchored" data-anchor-id="assumptions-and-limitations"><span class="header-section-number">4.8.4</span> Assumptions and Limitations</h3>
+<p>The HHL algorithm’s exponential speedup comes with several caveats:</p>
+<ol type="1">
+<li><p><strong>Sparse Matrix:</strong> The matrix <span class="math inline">\(A\)</span> must be sparse, meaning it has a small number of non-zero elements per row. This is necessary for efficient Hamiltonian simulation.</p></li>
+<li><p><strong>State Preparation:</strong> Efficiently preparing the input state <span class="math inline">\(|\vec{b}\rangle\)</span> is crucial. If this step is classically hard, the overall algorithm will not provide a speedup.</p></li>
+<li><p><strong>Condition Number:</strong> The condition number of <span class="math inline">\(A\)</span>, denoted as <span class="math inline">\(\kappa(A)\)</span>, affects the algorithm’s runtime. A large condition number indicates that <span class="math inline">\(A\)</span> is ill-conditioned, which can lead to numerical instability and increased runtime. The complexity scales as <span class="math inline">\(O(\kappa \text{log}(N))\)</span>.</p></li>
+<li><p><strong>Logarithmic Dependence:</strong> The algorithm’s runtime depends logarithmically on the size of the system, <span class="math inline">\(N\)</span>. This is where the exponential speedup comes from compared to classical algorithms that scale polynomially with <span class="math inline">\(N\)</span>. However, the logarithmic speedup is only advantageous for sufficiently large <span class="math inline">\(N\)</span>.</p></li>
+<li><p><strong>Output:</strong> The HHL algorithm outputs a quantum state <span class="math inline">\(|\vec{x}\rangle\)</span>, not the explicit values of the solution vector <span class="math inline">\(\vec{x}\)</span>. Extracting specific elements of <span class="math inline">\(\vec{x}\)</span> requires additional measurements, which can affect the overall runtime.</p></li>
+</ol>
+</section>
+<section id="applications-1" class="level3" data-number="4.8.5">
+<h3 data-number="4.8.5" class="anchored" data-anchor-id="applications-1"><span class="header-section-number">4.8.5</span> Applications</h3>
+<p>Despite its limitations, the HHL algorithm has potential applications in various fields:</p>
+<ol type="1">
+<li><p><strong>Finite Element Analysis:</strong> Solving partial differential equations using finite element methods often involves solving large, sparse linear systems.</p></li>
+<li><p><strong>Fluid Dynamics:</strong> Simulating fluid flow can require solving linear systems to determine the velocity and pressure fields.</p></li>
+<li><p><strong>Circuit Analysis:</strong> Analyzing electrical circuits involves solving linear systems to determine the currents and voltages in the circuit.</p></li>
+<li><p><strong>Machine Learning:</strong> Some machine learning algorithms, such as linear regression and support vector machines, involve solving linear systems.</p></li>
+</ol>
+</section>
+<section id="conclusion" class="level3" data-number="4.8.6">
+<h3 data-number="4.8.6" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">4.8.6</span> Conclusion</h3>
+<p>The HHL algorithm <span class="citation" data-cites="HarrowLloyd2009">&nbsp;[<a href="references.html#ref-HarrowLloyd2009" role="doc-biblioref">7</a>]</span> is a significant achievement in quantum algorithm design, demonstrating the potential for exponential speedups in solving linear systems of equations. While it has limitations and requires specific conditions to be met, it opens up new possibilities for tackling computationally challenging problems in science and engineering. Understanding its assumptions and limitations is crucial for assessing its applicability to specific problems and for developing future quantum algorithms that can overcome these challenges.</p>
+<!-- 8.1 Linear Systems Problem
+8.2 Quantum Solution Approach
+8.3 Applications and Limitations -->
+</section>
+</section>
+<section id="hybrid-quantum-classical-algorithms" class="level2" data-number="4.9">
+<h2 data-number="4.9" class="anchored" data-anchor-id="hybrid-quantum-classical-algorithms"><span class="header-section-number">4.9</span> Hybrid Quantum-Classical Algorithms</h2>
+<section id="variational-quantum-eigensolver-vqe" class="level3" data-number="4.9.1">
+<h3 data-number="4.9.1" class="anchored" data-anchor-id="variational-quantum-eigensolver-vqe"><span class="header-section-number">4.9.1</span> Variational Quantum Eigensolver (VQE)</h3>
+<p>The Variational Quantum Eigensolver (VQE) is a hybrid quantum-classical algorithm used to find the ground state (minimum energy) of a quantum system. Many problems in quantum chemistry, materials science, and condensed matter physics involve finding the ground state energy of a molecule or material, which is classically intractable for large systems. VQE leverages a quantum computer to prepare a trial wave function (called an “ansatz”) <span class="math inline">\(|\psi(\theta)\rangle\)</span> and measure its energy <span class="math inline">\(\langle \psi(\theta) | H | \psi(\theta) \rangle\)</span>, where <span class="math inline">\(H\)</span> is the Hamiltonian of the system, and <span class="math inline">\(\theta\)</span> represents a set of adjustable parameters. A classical optimization algorithm then adjusts the parameters <span class="math inline">\(\theta\)</span> of the ansatz to minimize the energy. The key idea is to variationally find the eigenvector corresponding to the smallest eigenvalue, which represents the ground state.</p>
+</section>
+<section id="quantum-approximate-optimization-algorithm-qaoa" class="level3" data-number="4.9.2">
+<h3 data-number="4.9.2" class="anchored" data-anchor-id="quantum-approximate-optimization-algorithm-qaoa"><span class="header-section-number">4.9.2</span> Quantum Approximate Optimization Algorithm (QAOA)</h3>
+<p>The Quantum Approximate Optimization Algorithm (QAOA) is another hybrid quantum-classical algorithm designed to find approximate solutions to combinatorial optimization problems. These are problems where the goal is to find the best solution from a finite set of possibilities (e.g., the traveling salesman problem, graph partitioning). QAOA uses a quantum computer to explore the solution space and a classical computer to optimize the parameters that control the quantum evolution. The algorithm alternates between applying operators related to the problem’s cost function and a mixing operator, with the goal of converging to a state that encodes a good solution. Like VQE, QAOA relies on variational techniques, where the parameters of a quantum circuit are optimized using classical methods.</p>
+</section>
+</section>
+<section id="overview-and-comparison-with-classical" class="level2" data-number="4.10">
+<h2 data-number="4.10" class="anchored" data-anchor-id="overview-and-comparison-with-classical"><span class="header-section-number">4.10</span> Overview and comparison with classical</h2>
+<p>Here’s a table summarizing the classical and quantum complexities of the algorithms discussed, along with whether they are deterministic or probabilistic. These can all be more precisely defined by number of gates and other factors not mentioned here, for more details see the <a href="https://quantumalgorithmzoo.org/">Quantum Algorithm Zoo</a>:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 24%">
+<col style="width: 24%">
+<col style="width: 12%">
+<col style="width: 18%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Algorithm</th>
+<th style="text-align: left;">Classical Complexity (Deterministic)</th>
+<th style="text-align: left;">Classical Complexity (Probabilistic)</th>
+<th style="text-align: left;">Quantum Complexity</th>
+<th style="text-align: left;">Deterministic or Probabilistic</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Deutsch’s Algorithm</td>
+<td style="text-align: left;">2 queries</td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;">1 query</td>
+<td style="text-align: left;">Deterministic</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Deutsch-Jozsa Algorithm</td>
+<td style="text-align: left;"><span class="math inline">\(\mathcal{O}(2^{n-1})\)</span></td>
+<td style="text-align: left;">1 query</td>
+<td style="text-align: left;"><span class="math inline">\(\mathcal{O}(1)\)</span></td>
+<td style="text-align: left;">Deterministic</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Bernstein-Vazirani Algorithm</td>
+<td style="text-align: left;">n queries</td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;">1 query</td>
+<td style="text-align: left;">Deterministic</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Simon’s Algorithm</td>
+<td style="text-align: left;"><span class="math inline">\(\mathcal{O}(2^{n/2})\)</span></td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;"><span class="math inline">\(\mathcal{O}(n)\)</span></td>
+<td style="text-align: left;">Probabilistic</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Quantum Phase Estimation (QPE)</td>
+<td style="text-align: left;">Exponential (worst-case)</td>
+<td style="text-align: left;">Exponential (worst-case)</td>
+<td style="text-align: left;"><span class="math inline">\(\mathcal{O}(m)\)</span> controlled operations for m bits</td>
+<td style="text-align: left;">Probabilistic</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Grover’s Algorithm</td>
+<td style="text-align: left;"><span class="math inline">\(\mathcal{O}(N)\)</span></td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;"><span class="math inline">\(\mathcal{O}(\sqrt{N})\)</span></td>
+<td style="text-align: left;">Probabilistic</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Shor’s Algorithm</td>
+<td style="text-align: left;"><span class="math inline">\(\mathcal{O}(\text{exp}(N))\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\mathcal{O}(\text{exp}(N))\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\mathcal{O}(\text{poly}(N))\)</span></td>
+<td style="text-align: left;">Probabilistic</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">HHL Algorithm</td>
+<td style="text-align: left;"><span class="math inline">\(\mathcal{O}(N^3)\)</span> or <span class="math inline">\(\mathcal{O}(N^\omega)\)</span></td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;"><span class="math inline">\(\mathcal{O}(\text{log}(N))\)</span></td>
+<td style="text-align: left;">Probabilistic</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Notes:</strong></p>
+<ul>
+<li><strong>N:</strong> Input size (e.g., number of items in a database for Grover’s, number to be factored for Shor’s, dimension of the matrix for HHL).</li>
+<li><strong>n:</strong> Number of qubits.</li>
+<li><strong>t:</strong> Number of qubits in the control register for QPE, related to desired accuracy.</li>
+<li><strong>exp(N):</strong> Exponential in N.</li>
+<li><strong>poly(N):</strong> Polynomial in N.</li>
+<li><strong>HHL Conditions:</strong> The HHL algorithm’s exponential speedup is contingent on several factors: the matrix <span class="math inline">\(A\)</span> being sparse, efficient state preparation of <span class="math inline">\(\ket{b}\)</span>, and a low condition number.</li>
+<li><strong>Probabilistic vs.&nbsp;Deterministic:</strong> Deterministic algorithms always produce the correct answer. Probabilistic algorithms have a chance of error, but the probability of error can be made arbitrarily small by repeating the algorithm.</li>
+<li><strong>Speedup:</strong> This column indicates the type of speedup the quantum algorithm offers compared to the best-known classical algorithm.</li>
+</ul>
+<p>This table provides a general overview. The precise complexities and speedups can vary depending on the specific implementation and problem instance.</p>
+
+
+<div id="refs" class="references csl-bib-body" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-Deutsch1985" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">D. Deutsch, <a href="https://doi.org/10.1098/rspa.1985.0070">Quantum theory, the <span>Church</span>–<span>Turing</span> principle and the universal quantum computer</a>, Proceedings of the Royal Society of London. A. Mathematical and Physical Sciences <strong>400</strong>, 97 (1985).</div>
+</div>
+<div id="ref-DeutschJozsa1992" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">D. Deutsch and R. Jozsa, <a href="https://doi.org/10.1098/rspa.1992.0167">Rapid solution of problems by quantum computation</a>, Proceedings of the Royal Society of London. Series A: Mathematical and Physical Sciences <strong>439</strong>, 553 (1992).</div>
+</div>
+<div id="ref-BernsteinVazirani1997" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">E. Bernstein and U. Vazirani, <a href="https://doi.org/10.1137/S0097539796300921">Quantum <span>Complexity Theory</span></a>, SIAM Journal on Computing <strong>26</strong>, 1411 (1997).</div>
+</div>
+<div id="ref-Simon1997" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">D. R. Simon, <a href="https://doi.org/10.1137/S0097539796298637">On the <span>Power</span> of <span>Quantum Computation</span></a>, SIAM Journal on Computing <strong>26</strong>, 1474 (1997).</div>
+</div>
+<div id="ref-Grover1996" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[5] </div><div class="csl-right-inline">L. K. Grover, <em><a href="https://doi.org/10.1145/237814.237866">A Fast Quantum Mechanical Algorithm for Database Search</a></em>, in <em>Proceedings of the Twenty-Eighth Annual <span>ACM</span> Symposium on <span>Theory</span> of Computing - <span>STOC</span> ’96</em> (ACM Press, Philadelphia, Pennsylvania, United States, 1996), pp. 212–219.</div>
+</div>
+<div id="ref-Shor1994" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[6] </div><div class="csl-right-inline">P. W. Shor, <em><a href="https://doi.org/10.1109/SFCS.1994.365700">Algorithms for Quantum Computation: Discrete Logarithms and Factoring</a></em>, in <em>Proceedings 35th <span>Annual Symposium</span> on <span>Foundations</span> of <span>Computer Science</span></em> (IEEE Comput. Soc. Press, Santa Fe, NM, USA, 1994), pp. 124–134.</div>
+</div>
+<div id="ref-HarrowLloyd2009" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[7] </div><div class="csl-right-inline">A. W. Harrow, A. Hassidim, and S. Lloyd, <a href="https://doi.org/10.1103/PhysRevLett.103.150502">Quantum <span>Algorithm</span> for <span>Linear Systems</span> of <span>Equations</span></a>, Physical Review Letters <strong>103</strong>, 150502 (2009).</div>
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./multiple_qubits.html" class="pagination-link" aria-label="Multiple Qubits">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Multiple Qubits</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./interlude.html" class="pagination-link" aria-label="Interlude: Hardwire requirements">
+        <span class="nav-page-text">Interlude: Hardwire requirements</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
