@@ -1,0 +1,58 @@
+# Interlude: Hardwire requirements {.unnumbered}
+
+Before we hop into the platforms where we might be able to perform these algorithms to solve problems, we need to specify what we want.
+
+## DiVincenzo's Criteria for Quantum Computation
+
+In 2000, David DiVincenzo outlined a set of criteria @DiVincenzo2000 that any physical system must meet to be considered a viable quantum computer. These criteria serve as a benchmark for evaluating different quantum computing platforms and guiding research efforts. The criteria can be summarized as follows:
+
+1.  **Scalable qubits:** A practical quantum computer must be able to scale to a large number of qubits. The number of qubits required depends on the complexity of the problem being solved, but fault-tolerant quantum computation generally requires thousands or even millions of qubits.
+
+2.  **Initialization:** The ability to initialize the qubits to a known state, such as $\ket{0}^{\otimes n}$, is crucial. This provides a well-defined starting point for quantum algorithms.
+
+3.  **Long coherence times:** Qubits must maintain their quantum coherence for a sufficiently long time to allow complex quantum operations to be performed. Decoherence, the loss of quantum information to the environment, is a major obstacle to quantum computation.  Coherence times must be much longer than the gate operation times.
+
+4.  **Universal gate set:** A universal set of quantum gates is required to perform arbitrary quantum computations. A universal gate set is a small set of gates that can be combined to approximate any other quantum gate. Examples include the Hadamard gate, the CNOT gate, and single-qubit rotation gates.
+
+5.  **Measurement:** The ability to accurately measure the state of the qubits is essential for extracting the results of a quantum computation. Measurements must be reliable and have high fidelity.
+
+In addition to these five criteria, DiVincenzo also proposed two criteria for quantum communication:
+
+6.  **Interconvertible quantum and classical bits:** The ability to convert quantum information into classical information and vice versa is important for interfacing with classical computers and communication networks.
+
+7.  **Faithful transmission of qubits:** The ability to transmit qubits reliably between different locations is essential for building distributed quantum computers and quantum networks.
+
+Meeting these criteria is a significant challenge, and different quantum computing platforms are at various stages of development with respect to each criterion. Superconducting qubits, trapped ions, neutral atoms, quantum dots, and topological qubits are among the leading candidates for building practical quantum computers. Each platform has its own strengths and weaknesses, and ongoing research is focused on overcoming the challenges associated with each approach @DeLeonSteuerman2021.
+
+## Measurement-Based Quantum Computation
+
+It's worth noting that some quantum computing platforms employ a different paradigm called measurement-based quantum computation (MBQC). Unlike the gate-based approach we've primarily discussed, MBQC relies on creating a highly entangled resource state, often a cluster state, and then performing computation by making a series of single-qubit measurements. The specific measurements performed and their order determine the quantum algorithm being executed. While the underlying physics and qubit requirements are similar, the programming and control aspects of MBQC differ significantly from gate-based quantum computation.
+
+## Magic State Distillation
+
+Achieving a universal gate set is crucial for implementing arbitrary quantum algorithms. While some quantum computing platforms can directly implement a universal gate set, others have a limited set of native gates. In such cases, additional resources and techniques are required to achieve universality. One common approach is to use *magic state distillation*.
+
+### The Need for Magic States
+
+A restricted gate set, such as those that are Clifford gates, can perform a limited set of quantum computations efficiently. Clifford gates consist of Hadamard, CNOT, and phase gates. The Gottesman-Knill theorem states that quantum circuits consisting only of Clifford gates, preparation of computational basis states (e.g., $\ket{0}$), and measurement in the computational basis can be efficiently simulated on a classical computer. Therefore, to achieve true quantum supremacy, we need non-Clifford gates.
+
+Magic state distillation is a technique used to create high-fidelity *magic states*, which can then be used along with Clifford gates to implement non-Clifford gates, such as the $T$ gate (also known as the $\pi/8$ gate). The $T$ gate adds a phase of $\pi/4$ to the $\ket{1}$ state:
+
+$$
+T = \begin{pmatrix}
+1 & 0 \\
+0 & e^{i\pi/4}
+\end{pmatrix}
+$$
+
+A magic state, often denoted as $\ket{A}$, is a specific quantum state that, when combined with Clifford gates through a process called *state injection*, allows for the implementation of non-Clifford gates.
+
+By adding the T gate to the Clifford gates, we obtain a universal gate set.
+
+### Resource Overhead and Error Correction
+
+Magic state distillation introduces significant resource overhead in terms of the number of physical qubits and quantum gates required. Generating high-fidelity magic states is a computationally intensive process, often requiring multiple rounds of distillation and significant post-selection to obtain the desired fidelity. This overhead can be a limiting factor in the overall performance and scalability of quantum algorithms.
+
+Furthermore, magic state distillation is often intertwined with quantum error correction. Since the distillation process itself is susceptible to errors, robust error correction schemes are necessary to protect the fragile quantum information during distillation. The interplay between magic state distillation and error correction adds another layer of complexity and resource requirements.
+
+Despite these challenges, for many quantum computing platforms with restricted native gate sets, magic state distillation remains the most viable path to achieving universality and unlocking the full potential of fault-tolerant quantum computation. Ongoing research focuses on developing more efficient distillation protocols and error correction codes to reduce the resource overhead and improve the overall performance of quantum algorithms.

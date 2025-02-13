@@ -10,7 +10,8 @@ book:
     - intro.qmd
     - qubit.qmd
     - multiple_qubits.qmd
-    # - basic_algorithms.qmd
+    - basic_algorithms.qmd
+    - interlude.qmd
     # - superconducting_qubits.qmd
     # - ion_trap_qubits.qmd
     # - photonic_qubits.qmd
@@ -19,7 +20,8 @@ book:
     - references.qmd
 
 bibliography: references.bib
-csl: https://www.zotero.org/styles/american-physics-society
+# csl: https://www.zotero.org/styles/american-physics-society
+csl: styles/american-physics-society.csl
 
 filters:
   - tikz

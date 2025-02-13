@@ -539,9 +539,9 @@ Example: For the Bell state $\ket{\Phi^+} = \frac{1}{\sqrt{2}}(\ket{00} + \ket{1
 :::
 
 ::: {.callout-tip}
-## Three qubits can be entangled in two inequivalent ways @Dur2000
+## Three qubits can be entangled in two inequivalent ways 
 
-Three-qubit entanglement introduces fundamentally new features not present in two-qubit systems. The most famous example is the GHZ state (named after Greenberger, Horne, and Zeilinger @GreenbergerZeilinger1990):
+Three-qubit entanglement introduces fundamentally new features not present in two-qubit systems @Dur2000. The most famous example is the GHZ state (named after Greenberger, Horne, and Zeilinger @GreenbergerZeilinger1990):
 
 $$
 |\text{GHZ}\rangle = \frac{1}{\sqrt{2}}(|000\rangle + |111\rangle)
