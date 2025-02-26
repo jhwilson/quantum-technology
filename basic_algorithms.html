@@ -1000,15 +1000,16 @@ Example
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Let’s walk through an example to make this clearer. Imagine the hidden string is <span class="math inline">\(s = 110\)</span> and the input size is <span class="math inline">\(n=3\)</span>. This means the function has the property <span class="math inline">\(f(x) = f(x \oplus 110)\)</span>. Simon’s algorithm will give us vectors <span class="math inline">\(y_i\)</span> that satisfy <span class="math inline">\(s \cdot y_i = 0 \pmod{2}\)</span>.</p>
-<p>For instance, we might get <span class="math inline">\(y_1 = 001\)</span> and <span class="math inline">\(y_2 = 010\)</span> after running the quantum part of the algorithm a couple of times. These vectors correspond to the following equations:</p>
-<p><span class="math inline">\(s_1 \cdot 0 + s_2 \cdot 0 + s_3 \cdot 1 = 0 \pmod{2}\)</span> <span class="math inline">\(s_1 \cdot 0 + s_2 \cdot 1 + s_3 \cdot 0 = 0 \pmod{2}\)</span></p>
-<p>Which simplifies to:</p>
-<p><span class="math inline">\(s_3 = 0\)</span> <span class="math inline">\(s_2 = 0\)</span></p>
-<p>To find all the bits of <span class="math inline">\(s\)</span>, we need one more <em>linearly independent</em> equation. Let’s say we then get <span class="math inline">\(y_3 = 100\)</span>. This would imply <span class="math inline">\(s_1 = 0\)</span>, which is wrong! This tells us that we need to run the quantum part of the algorithm again to get a different <span class="math inline">\(y_3\)</span> that gives us new information. The key is that the new <span class="math inline">\(y_3\)</span> needs to be linearly independent from <span class="math inline">\(y_1\)</span> and <span class="math inline">\(y_2\)</span>.</p>
-<p>Instead, suppose we get <span class="math inline">\(y_3 = 111\)</span>. Then:</p>
-<p><span class="math inline">\(s_1 + s_2 + s_3 = 0 \pmod{2}\)</span></p>
-<p>Since we already know <span class="math inline">\(s_3 = 0\)</span> and <span class="math inline">\(s_2 = 1\)</span>, we can substitute those values in: <span class="math inline">\(s_1 + 1 + 0 = 0 \pmod{2}\)</span>. This means <span class="math inline">\(s_1 = 1\)</span>. So, we’ve found the hidden string: <span class="math inline">\(s = 110\)</span>.</p>
+<p>Let’s work through an example of Simon’s algorithm for <span class="math inline">\(n=3\)</span> qubits. Suppose the hidden string is <span class="math inline">\(s = 110\)</span> (though we don’t know this yet).</p>
+<p>For a hidden string <span class="math inline">\(s = 110\)</span>, the valid measurements that satisfy <span class="math inline">\(s \cdot y = 0 \pmod{2}\)</span> are <span class="math inline">\(y \in \{001, 110, 111\}\)</span>.</p>
+<p>After running steps 2-6 of Simon’s algorithm once, we might measure <span class="math inline">\(y_1 = 001\)</span> in the first register. This gives us our first equation: <span class="math display">\[s \cdot y_1 = 0 \pmod{2}\]</span></p>
+<p>Substituting <span class="math inline">\(y_1 = 001\)</span>, we get: <span class="math display">\[s_1 \cdot 0 + s_2 \cdot 0 + s_3 \cdot 1 = 0 \pmod{2}\]</span> <span class="math display">\[s_3 = 0\]</span></p>
+<p>So we’ve learned that the third bit of our hidden string is 0.</p>
+<p>Running the algorithm a second time, we might measure <span class="math inline">\(y_2 = 110\)</span>. This gives us our second equation: <span class="math display">\[s \cdot y_2 = 0 \pmod{2}\]</span></p>
+<p>Substituting <span class="math inline">\(y_2 = 110\)</span>, we get: <span class="math display">\[s_1 \cdot 1 + s_2 \cdot 1 + s_3 \cdot 0 = 0 \pmod{2}\]</span> <span class="math display">\[s_1 + s_2 = 0 \pmod{2}\]</span></p>
+<p>Since <span class="math inline">\(s_1 + s_2 = 0 \pmod{2}\)</span>, either both <span class="math inline">\(s_1\)</span> and <span class="math inline">\(s_2\)</span> are 0, or both are 1. Given that <span class="math inline">\(s \neq 000\)</span> (by the promise that <span class="math inline">\(f\)</span> is two-to-one) and <span class="math inline">\(s_3 = 0\)</span>, we must have <span class="math inline">\(s_1 = s_2 = 1\)</span>.</p>
+<p>Therefore, <span class="math inline">\(s = 110\)</span>, which is indeed our hidden string.</p>
+<p>This example demonstrates how Simon’s algorithm allows us to efficiently determine the hidden string by collecting and solving a system of linear equations.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
