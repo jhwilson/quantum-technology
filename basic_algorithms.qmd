@@ -706,25 +706,32 @@ The quantum circuit for Simon's algorithm involves the following steps:
 
 ::: {.callout-note icon="false"}
 ## Example
-Let's walk through an example to make this clearer. Imagine the hidden string is $s = 110$ and the input size is $n=3$. This means the function has the property $f(x) = f(x \oplus 110)$. Simon's algorithm will give us vectors $y_i$ that satisfy $s \cdot y_i = 0 \pmod{2}$.
+Let's work through an example of Simon's algorithm for $n=3$ qubits. Suppose the hidden string is $s = 110$ (though we don't know this yet).
 
-For instance, we might get $y_1 = 001$ and $y_2 = 010$ after running the quantum part of the algorithm a couple of times. These vectors correspond to the following equations:
+For a hidden string $s = 110$, the valid measurements that satisfy $s \cdot y = 0 \pmod{2}$ are $y \in \{001, 110, 111\}$.
 
-$s_1 \cdot 0 + s_2 \cdot 0 + s_3 \cdot 1 = 0 \pmod{2}$
-$s_1 \cdot 0 + s_2 \cdot 1 + s_3 \cdot 0 = 0 \pmod{2}$
+After running steps 2-6 of Simon's algorithm once, we might measure $y_1 = 001$ in the first register. This gives us our first equation:
+$$s \cdot y_1 = 0 \pmod{2}$$
 
-Which simplifies to:
+Substituting $y_1 = 001$, we get:
+$$s_1 \cdot 0 + s_2 \cdot 0 + s_3 \cdot 1 = 0 \pmod{2}$$
+$$s_3 = 0$$
 
-$s_3 = 0$
-$s_2 = 0$
+So we've learned that the third bit of our hidden string is 0.
 
-To find all the bits of $s$, we need one more *linearly independent* equation. Let's say we then get $y_3 = 100$. This would imply $s_1 = 0$, which is wrong! This tells us that we need to run the quantum part of the algorithm again to get a different $y_3$ that gives us new information. The key is that the new $y_3$ needs to be linearly independent from $y_1$ and $y_2$.
+Running the algorithm a second time, we might measure $y_2 = 110$. This gives us our second equation:
+$$s \cdot y_2 = 0 \pmod{2}$$
 
-Instead, suppose we get $y_3 = 111$. Then:
+Substituting $y_2 = 110$, we get:
+$$s_1 \cdot 1 + s_2 \cdot 1 + s_3 \cdot 0 = 0 \pmod{2}$$
+$$s_1 + s_2 = 0 \pmod{2}$$
 
-$s_1 + s_2 + s_3 = 0 \pmod{2}$
+Since $s_1 + s_2 = 0 \pmod{2}$, either both $s_1$ and $s_2$ are 0, or both are 1. Given that $s \neq 000$ (by the promise that $f$ is two-to-one) and $s_3 = 0$, we must have $s_1 = s_2 = 1$. 
 
-Since we already know $s_3 = 0$ and $s_2 = 1$, we can substitute those values in: $s_1 + 1 + 0 = 0 \pmod{2}$. This means $s_1 = 1$. So, we've found the hidden string: $s = 110$.
+Therefore, $s = 110$, which is indeed our hidden string.
+
+This example demonstrates how Simon's algorithm allows us to efficiently determine the hidden string by collecting and solving a system of linear equations.
+
 :::
 
 ::: {.callout-note}
