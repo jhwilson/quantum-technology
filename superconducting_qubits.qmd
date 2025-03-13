@@ -1,1 +1,286 @@
 # Superconducting qubits
+
+Superconducting qubits represent one of the most promising and widely pursued platforms for quantum computing. These qubits leverage the unique properties of superconducting circuits to create controllable quantum systems to realize the quantum computing ideas we've explored in previous chapters.
+
+## What are superconducting qubits?
+
+Superconducting qubits are artificial quantum systems built from electrical circuits that include Josephson junctions - superconducting materials separated by a thin insulating barrier. When cooled to extremely low temperatures (typically below 100 mK), these circuits exhibit quantum behavior, allowing them to serve as qubits.
+
+Unlike natural quantum systems such as atoms or ions, superconducting qubits are macroscopic objects - their physical dimensions can be on the order of hundreds of micrometers, making them visible to the naked eye. This macroscopic nature offers both advantages and challenges: they can be fabricated using modified integrated circuit technology, but are also more susceptible to environmental noise and decoherence.
+
+### Types of superconducting qubits
+
+There are several varieties of superconducting qubits, each with distinct characteristics and enabled by the amount of control these circuits have:
+
+- **Transmon qubits**: A modified charge qubit designed to reduce sensitivity to charge noise, currently the most widely used superconducting qubit design.
+- **Flux qubits**: Encode information in the direction of current flow, offering high anharmonicity.
+
+Other designs include fluxonium and 0-$\pi$ qubits.
+
+In this chapter, we'll explore how these qubits work, how they're controlled and measured, and how they implement the abstract quantum operations we've studied in previous chapters. We'll particularly focus on the transmon qubit, which has become the workhorse of many superconducting quantum processors due to its improved coherence properties.
+
+## From electric circuits to a quantum harmonic oscillator
+
+One of the key insights to develop our superconducting qubit is to make a connection with LC circuits and the harmonic oscillator. This allows us to develop out the quantum version of these circuits which we can explore in detail.
+
+### The LC circuit
+
+<!-- ```{.tikz}
+%%| filename: lc-circuit
+%%| caption: A simple LC circuit showing the inductor L, capacitor C, and their respective voltage drops.
+%%| additionalPackages: \usepackage{circuitikz}
+\begin{circuitikz}
+\draw
+(0,0) -- (3,0)
+(0,3) -- (3,3)
+(0,0) to[L, l^=$L$, color=red, v<=$V_L$] (0,3)
+(3,0) to[C, l^=$C$, name=c, color=red, v=$V_C$] (3,3);
+\node at (c.60)[above]{$+$};
+\node at (c.300)[above]{$+$};
+\node at (c.120)[below]{$-$};
+\node at (c.240)[below]{$-$};
+\draw [-latex](1,-0.25)--(2,-0.25)node[midway,below]{$I$};
+\draw [latex-](1,3.25)--(2,3.25)node[midway,above]{$I$};
+\end{circuitikz}
+``` -->
+![A simple LC circuit showing the inductor L, capacitor C, and their respective voltage drops.](images/tikz/lc-circuit.svg)
+
+
+Consider a simple LC circuit composed of an inductor $L$ and a capacitor $C$. Suppose we start by giving the capacitor some initial charge $Q_0$. This initial charge causes a voltage across the capacitor plates, given approximately by $V_C = \tfrac{Q}{C}$. With time, this charge flows through the inductor; as current builds, it creates a magnetic field in the inductor, thereby storing energy in that field. Eventually, the capacitor’s voltage nears zero (the capacitor becomes discharged), but the current through the inductor continues due to its stored magnetic energy. This current then recharges the capacitor in the opposite polarity, and the energy flows between the capacitor’s electric field and the inductor’s magnetic field.
+
+This back-and-forth exchange of energy repeats, creating an oscillation—just like a mass on a spring. In an LC circuit, the voltage drop across the inductor (given by $L dI/dt$) must match the voltage on the capacitor ($Q/C$). By summing these drops to zero around the loop, we arrive at the differential equation 
+$$
+L \frac{dI}{dt} + \frac{Q}{C} = 0,
+$$
+where $I = \tfrac{dQ}{dt}$. Switching from the capacitor’s charge to an analogous “position” variable (the charge $Q$) and identifying the current with its time derivative, we recover the classic second-order differential equation and see the parallel between an LC circuit and the mass-spring system.
+$$
+\frac{d^2 Q}{dt^2} = -\frac1{LC} Q,
+$$
+where now $\omega = \frac1{LC}$, and if we
+solve this differential equation, we can use the standard approach for second-order linear differential equations with constant coefficients. The general solution has the form:
+
+$$
+Q(t) = A \cos(\omega t) + B \sin(\omega t),
+$$
+
+where $A$ and $B$ are constants determined by the initial conditions. If we assume that at $t=0$, the charge is $Q(0) = Q_0$ and the current is $I(0) = 0$ (meaning the capacitor is initially charged but no current is flowing), then:
+
+$$
+Q(0) = A = Q_0
+$$
+
+And since $I(t) = \frac{dQ}{dt}$:
+
+$$
+I(0) = \omega B = 0 \implies B = 0
+$$
+
+Therefore, the solution becomes:
+
+$$
+Q(t) = Q_0 \cos(\omega t)
+$$
+
+This represents a simple harmonic oscillation of the charge with angular frequency $\omega = \frac{1}{\sqrt{LC}}$. The current can be found by taking the time derivative:
+
+$$
+I(t) = \frac{dQ}{dt} = -Q_0 \omega \sin(\omega t) = -\frac{Q_0}{\sqrt{LC}} \sin(\omega t)
+$$
+
+These equations show that the charge and current oscillate sinusoidally, with the current lagging the charge by a phase of $\pi/2$, exactly as we would expect in a classical harmonic oscillator.
+
+::: {.callout-note}
+## Historical Note: Circuit Analogies in Physics
+
+The analogy between LC circuits and mechanical oscillators has a rich history dating back to the late 19th century. James Clerk Maxwell and Oliver Heaviside were among the first to formalize these connections. In the 1940s and 1950s, analog computers built from electrical circuits were used to simulate complex mechanical and fluid systems, solving differential equations that were otherwise intractable. These "electronic differential analyzers" could model everything from vibrating structures to nuclear reactions. The RLC circuit (adding resistance) became particularly important as it could simulate damped oscillators with friction. This tradition of using circuits as analog models continues today in the field of neuromorphic computing, where circuits mimic neural dynamics, and of course, in quantum computing with superconducting circuits.
+:::
+
+### Quantum Mechanical Analogy
+
+To make the connection to quantum mechanics more explicit, we can identify the analogous variables between the LC circuit and the quantum harmonic oscillator:
+
+- The charge $Q$ on the capacitor corresponds to the position $x$ of the quantum oscillator
+- The magnetic flux $\Phi = LI$ through the inductor corresponds to the momentum $p$ of the oscillator
+
+This mapping becomes clear when we examine the energy stored in the circuit:
+
+$$
+E_{LC} = \frac{Q^2}{2C} + \frac{\Phi^2}{2L} = \frac{Q^2}{2C} + \frac{L I^2}{2}
+$$
+
+The first term represents the electrostatic energy stored in the capacitor, while the second term represents the magnetic energy stored in the inductor.
+
+Compare this to the energy of a quantum harmonic oscillator:
+
+$$
+E_{oscillator} = \frac{1}{2}m\omega^2 x^2 + \frac{p^2}{2m}
+$$
+
+The correspondence becomes:
+
+$$
+\frac{Q^2}{2C} \leftrightarrow \frac{1}{2}m\omega^2 x^2 \quad \text{(potential energy)}
+$$
+
+$$
+\frac{L I^2}{2} \leftrightarrow \frac{p^2}{2m} \quad \text{(kinetic energy)}
+$$
+
+From these relations, we can identify:
+
+- $Q \leftrightarrow x$
+- $\Phi = LI \leftrightarrow p$
+- $C \leftrightarrow \frac{1}{m\omega^2}$
+- $L \leftrightarrow m$
+
+This mapping allows us to translate the quantum harmonic oscillator formalism directly to the LC circuit, which becomes crucial when we quantize the circuit to create superconducting qubits. The commutation relation $[\hat{x},\hat{p}] = i\hbar$ in quantum mechanics translates to $[\hat{Q},\hat{\Phi}] = i\hbar$ for the LC circuit variables.
+
+::: {.callout-tip}
+## Understanding the Quantum Commutator
+
+The commutation relation $[\hat{Q},\hat{\Phi}] = i\hbar$ is fundamental to the quantum behavior of the LC circuit. Let's explore what this means:
+
+1. **Definition**: The commutator $[\hat{Q},\hat{\Phi}] = \hat{Q}\hat{\Phi} - \hat{\Phi}\hat{Q}$ measures the failure of these operators to commute.
+
+2. **Physical meaning**: In classical physics, variables like position and momentum can be measured simultaneously with arbitrary precision. In quantum mechanics, the non-zero commutator implies that $\hat{Q}$ and $\hat{\Phi}$ cannot be precisely known simultaneously - this is a manifestation of Heisenberg's uncertainty principle.
+
+3. **Operator perspective**: When $Q$ and $\Phi$ become quantum operators, they act on the circuit's wavefunction. The charge operator $\hat{Q}$ can be expressed as $\hat{Q} = i\sqrt{\frac{\hbar}{2}}\sqrt{\frac{L}{C}}(\hat{a}^\dagger - \hat{a})$, while the flux operator $\hat{\Phi}$ becomes $\hat{\Phi} = \sqrt{\frac{\hbar}{2}}\sqrt{\frac{L}{C}}(\hat{a}^\dagger + \hat{a})$, where $\hat{a}$ and $\hat{a}^\dagger$ are the lowering and raising operators.
+
+4. **Uncertainty relation**: This commutation relation directly leads to the uncertainty principle: $\Delta Q \cdot \Delta \Phi \geq \frac{\hbar}{2}$, meaning that the more precisely we know the charge, the less precisely we can know the flux, and vice versa.
+
+This quantum behavior is what allows us to create superposition states in superconducting circuits, forming the basis for superconducting qubits.
+:::
+
+::: {.callout-important}
+## Notation: Quantum Operators and the "Hat" Symbol
+
+Throughout our discussion of quantum circuits, we use the "hat" notation (e.g., $\hat{Q}$, $\hat{\Phi}$) to distinguish quantum operators from classical variables. This distinction is important:
+
+- A variable without a hat (e.g., $Q$, $\Phi$) represents a classical quantity with a definite value
+- A variable with a hat (e.g., $\hat{Q}$, $\hat{\Phi}$) represents a quantum operator that acts on wavefunctions
+
+Quantum operators correspond to observable quantities but, unlike classical variables, generally don't have definite values until measured. Instead, they represent the mathematical operations we perform on quantum states to calculate measurement probabilities and expectation values.
+:::
+
+Now that we've established the quantum operators for our circuit, we can write down the quantum Hamiltonian:
+
+$$
+\hat{H} = \frac{\hat{Q}^2}{2C} + \frac{\hat{\Phi}^2}{2L}
+$$
+
+This Hamiltonian is analogous to the quantum harmonic oscillator. We can rewrite it in terms of the raising and lowering operators $\hat{a}^\dagger$ and $\hat{a}$. Recall that:
+
+$$
+\hat{Q} = i\sqrt{\frac{\hbar}{2}}\sqrt{\frac{L}{C}}(\hat{a}^\dagger - \hat{a})
+$$
+
+$$
+\hat{\Phi} = \sqrt{\frac{\hbar}{2}}\sqrt{\frac{L}{C}}(\hat{a}^\dagger + \hat{a})
+$$
+
+Substituting these expressions into our Hamiltonian:
+
+$$
+\begin{align}
+\hat{H} &= \frac{1}{2C}\left(i\sqrt{\frac{\hbar}{2}}\sqrt{\frac{L}{C}}(\hat{a}^\dagger - \hat{a})\right)^2 + \frac{1}{2L}\left(\sqrt{\frac{\hbar}{2}}\sqrt{\frac{L}{C}}(\hat{a}^\dagger + \hat{a})\right)^2 \\
+&= \frac{\hbar}{4C}\frac{L}{C}(\hat{a}^\dagger - \hat{a})^2 + \frac{\hbar}{4L}\frac{L}{C}(\hat{a}^\dagger + \hat{a})^2 \\
+\end{align}
+$$
+
+After algebraic manipulation and using the commutation relation $[\hat{a},\hat{a}^\dagger] = 1$, we arrive at:
+
+$$
+\hat{H} = \hbar\omega\left(\hat{a}^\dagger\hat{a} + \frac{1}{2}\right)
+$$
+
+where $\omega = \frac{1}{\sqrt{LC}}$ is the resonant frequency of the circuit.
+
+::: {.callout-note}
+## Commutation Relation for Raising and Lowering Operators
+
+The commutation relation for the raising and lowering operators $\hat{a}^\dagger$ and $\hat{a}$ can be derived from the commutation relation between $\hat{Q}$ and $\hat{\Phi}$:
+
+$$
+[\hat{a}, \hat{a}^\dagger] = ?
+$$
+
+Starting with the expressions for $\hat{Q}$ and $\hat{\Phi}$ in terms of $\hat{a}$ and $\hat{a}^\dagger$:
+
+$$
+\hat{Q} = i\sqrt{\frac{\hbar}{2}}\sqrt{\frac{L}{C}}(\hat{a}^\dagger - \hat{a})
+$$
+
+$$
+\hat{\Phi} = \sqrt{\frac{\hbar}{2}}\sqrt{\frac{L}{C}}(\hat{a}^\dagger + \hat{a})
+$$
+
+We can solve for $\hat{a}$ and $\hat{a}^\dagger$:
+
+$$
+\hat{a} = \frac{1}{2\sqrt{\frac{\hbar}{2}}\sqrt{\frac{L}{C}}}\left(\hat{\Phi} - i\hat{Q}\right)
+$$
+
+$$
+\hat{a}^\dagger = \frac{1}{2\sqrt{\frac{\hbar}{2}}\sqrt{\frac{L}{C}}}\left(\hat{\Phi} + i\hat{Q}\right)
+$$
+
+Now we compute the commutator:
+
+$$
+\begin{align}
+[\hat{a}, \hat{a}^\dagger] &= \hat{a}\hat{a}^\dagger - \hat{a}^\dagger\hat{a} \\
+&= \frac{1}{4\frac{\hbar}{2}\frac{L}{C}}\left[(\hat{\Phi} - i\hat{Q})(\hat{\Phi} + i\hat{Q}) - (\hat{\Phi} + i\hat{Q})(\hat{\Phi} - i\hat{Q})\right] \\
+&= \frac{1}{4\frac{\hbar}{2}\frac{L}{C}}\left[\hat{\Phi}^2 + i\hat{\Phi}\hat{Q} - i\hat{Q}\hat{\Phi} + \hat{Q}^2 - \hat{\Phi}^2 - i\hat{\Phi}\hat{Q} + i\hat{Q}\hat{\Phi} - \hat{Q}^2\right] \\
+&= \frac{1}{4\frac{\hbar}{2}\frac{L}{C}}\left[2i(\hat{Q}\hat{\Phi} - \hat{\Phi}\hat{Q})\right] \\
+&= \frac{1}{4\frac{\hbar}{2}\frac{L}{C}}\left[2i(-i\hbar)\right] \\
+&= \frac{1}{4\frac{\hbar}{2}\frac{L}{C}} \cdot 2\hbar \\
+&= 1
+\end{align}
+$$
+
+Therefore, $[\hat{a}, \hat{a}^\dagger] = 1$, which is the canonical commutation relation for raising and lowering operators.
+:::
+
+
+### Solving the Quantum LC Circuit
+To solve this system, we use the energy eigenstates of the harmonic oscillator, denoted as $|n\rangle$, where $n = 0, 1, 2, ...$. These states have the following properties:
+
+1. $\hat{a}^\dagger|n\rangle = \sqrt{n+1}|n+1\rangle$ (raising operator)
+2. $\hat{a}|n\rangle = \sqrt{n}|n-1\rangle$ (lowering operator)
+3. $\hat{a}^\dagger\hat{a}|n\rangle = n|n\rangle$ (number operator)
+
+These properties can be derived using the commutation relation $[\hat{a}, \hat{a}^\dagger] = 1$.
+The energy eigenvalues are:
+
+$$
+E_n = \hbar\omega\left(n + \frac{1}{2}\right)
+$$
+
+This means the energy levels of our quantum LC circuit are:
+
+1. Ground state ($n=0$): $E_0 = \frac{\hbar\omega}{2}$ (zero-point energy)
+2. First excited state ($n=1$): $E_1 = \frac{3\hbar\omega}{2}$
+3. Second excited state ($n=2$): $E_2 = \frac{5\hbar\omega}{2}$
+4. ...
+
+And so on, with each subsequent energy level following the pattern $E_n = \hbar\omega(n + \frac{1}{2})$.
+
+And so on, with equal spacing of $\hbar\omega$ between adjacent levels.
+
+The wavefunctions in the charge basis can be expressed as:
+
+$$
+\psi_n(Q) = \frac{1}{\sqrt{2^n n!}}\left(\frac{C\omega}{\pi\hbar}\right)^{1/4} e^{-\frac{CQ^2}{2\hbar}} H_n\left(Q\sqrt{\frac{C\omega}{\hbar}}\right)
+$$
+
+where $H_n$ are the Hermite polynomials.
+
+This infinite ladder of equally spaced energy levels is characteristic of harmonic oscillators. However, to create a qubit, we need a nonlinear element that breaks this equal spacing - which is where the Josephson junction comes in, as we'll see next.
+
+::: {.callout-warning}
+## Under Construction
+This section is currently under construction. More content will be added in future updates.
+:::
+
+
+

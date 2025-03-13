@@ -12,7 +12,7 @@ book:
     - multiple_qubits.qmd
     - basic_algorithms.qmd
     - interlude.qmd
-    # - superconducting_qubits.qmd
+    - superconducting_qubits.qmd
     # - ion_trap_qubits.qmd
     # - photonic_qubits.qmd
     # - topological_qubits.qmd
