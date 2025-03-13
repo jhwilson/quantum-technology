@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Justin H. Wilson">
-<meta name="dcterms.date" content="2024-12-21">
 
-<title>Quantum Technology</title>
+<title>5&nbsp; Superconducting qubits – Quantum Technology</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -32,7 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./intro.html" rel="next">
+<link href="./references.html" rel="next">
+<link href="./interlude.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -81,6 +80,35 @@ window.MathJax = {
 };
 </script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -93,7 +121,7 @@ window.MathJax = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Preface</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./superconducting_qubits.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Superconducting qubits</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -123,7 +151,7 @@ window.MathJax = {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Preface</span></a>
   </div>
 </li>
@@ -159,7 +187,7 @@ window.MathJax = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./superconducting_qubits.html" class="sidebar-item-text sidebar-link">
+  <a href="./superconducting_qubits.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Superconducting qubits</span></span></a>
   </div>
 </li>
@@ -179,7 +207,16 @@ window.MathJax = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a></li>
+  <li><a href="#what-are-superconducting-qubits" id="toc-what-are-superconducting-qubits" class="nav-link active" data-scroll-target="#what-are-superconducting-qubits"><span class="header-section-number">5.1</span> What are superconducting qubits?</a>
+  <ul class="collapse">
+  <li><a href="#types-of-superconducting-qubits" id="toc-types-of-superconducting-qubits" class="nav-link" data-scroll-target="#types-of-superconducting-qubits"><span class="header-section-number">5.1.1</span> Types of superconducting qubits</a></li>
+  </ul></li>
+  <li><a href="#from-electric-circuits-to-a-quantum-harmonic-oscillator" id="toc-from-electric-circuits-to-a-quantum-harmonic-oscillator" class="nav-link" data-scroll-target="#from-electric-circuits-to-a-quantum-harmonic-oscillator"><span class="header-section-number">5.2</span> From electric circuits to a quantum harmonic oscillator</a>
+  <ul class="collapse">
+  <li><a href="#the-lc-circuit" id="toc-the-lc-circuit" class="nav-link" data-scroll-target="#the-lc-circuit"><span class="header-section-number">5.2.1</span> The LC circuit</a></li>
+  <li><a href="#quantum-mechanical-analogy" id="toc-quantum-mechanical-analogy" class="nav-link" data-scroll-target="#quantum-mechanical-analogy"><span class="header-section-number">5.2.2</span> Quantum Mechanical Analogy</a></li>
+  <li><a href="#solving-the-quantum-lc-circuit" id="toc-solving-the-quantum-lc-circuit" class="nav-link" data-scroll-target="#solving-the-quantum-lc-circuit"><span class="header-section-number">5.2.3</span> Solving the Quantum LC Circuit</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -188,26 +225,14 @@ window.MathJax = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Quantum Technology</h1>
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Superconducting qubits</span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Justin H. Wilson </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">December 21, 2024</p>
-    </div>
-  </div>
   
     
   </div>
@@ -217,13 +242,270 @@ window.MathJax = {
 </header>
 
 
-<section id="preface" class="level1 unnumbered">
-<h1 class="unnumbered">Preface</h1>
-<p>The goal for this text is to be a snapshot in time of quantum technologies: the good, the bad, and the ugly. As of 2024, there has been a large amount of industry interest and progress to develop quantum technologies, and a student approaching this industry should have the basic knowledge to understand <em>what</em> is trying to be achieved and <em>how</em> they are trying to achieve it. To cut through the PR of industry, this text offers the author’s personal perspective on what has been achieved, where things need to go, and the challenges to get there. This is not meant to be an authoritative guide on any one of the technologies presented here, but a jumping off point for the interested student.</p>
-<p>Finally, this is a Quarto book.</p>
-<p>To learn more about Quarto books visit <a href="https://quarto.org/docs/books" class="uri">https://quarto.org/docs/books</a>.</p>
+<p>Superconducting qubits represent one of the most promising and widely pursued platforms for quantum computing. These qubits leverage the unique properties of superconducting circuits to create controllable quantum systems to realize the quantum computing ideas we’ve explored in previous chapters.</p>
+<section id="what-are-superconducting-qubits" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="what-are-superconducting-qubits"><span class="header-section-number">5.1</span> What are superconducting qubits?</h2>
+<p>Superconducting qubits are artificial quantum systems built from electrical circuits that include Josephson junctions - superconducting materials separated by a thin insulating barrier. When cooled to extremely low temperatures (typically below 100 mK), these circuits exhibit quantum behavior, allowing them to serve as qubits.</p>
+<p>Unlike natural quantum systems such as atoms or ions, superconducting qubits are macroscopic objects - their physical dimensions can be on the order of hundreds of micrometers, making them visible to the naked eye. This macroscopic nature offers both advantages and challenges: they can be fabricated using modified integrated circuit technology, but are also more susceptible to environmental noise and decoherence.</p>
+<section id="types-of-superconducting-qubits" class="level3" data-number="5.1.1">
+<h3 data-number="5.1.1" class="anchored" data-anchor-id="types-of-superconducting-qubits"><span class="header-section-number">5.1.1</span> Types of superconducting qubits</h3>
+<p>There are several varieties of superconducting qubits, each with distinct characteristics and enabled by the amount of control these circuits have:</p>
+<ul>
+<li><strong>Transmon qubits</strong>: A modified charge qubit designed to reduce sensitivity to charge noise, currently the most widely used superconducting qubit design.</li>
+<li><strong>Flux qubits</strong>: Encode information in the direction of current flow, offering high anharmonicity.</li>
+</ul>
+<p>Other designs include fluxonium and 0-<span class="math inline">\(\pi\)</span> qubits.</p>
+<p>In this chapter, we’ll explore how these qubits work, how they’re controlled and measured, and how they implement the abstract quantum operations we’ve studied in previous chapters. We’ll particularly focus on the transmon qubit, which has become the workhorse of many superconducting quantum processors due to its improved coherence properties.</p>
+</section>
+</section>
+<section id="from-electric-circuits-to-a-quantum-harmonic-oscillator" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="from-electric-circuits-to-a-quantum-harmonic-oscillator"><span class="header-section-number">5.2</span> From electric circuits to a quantum harmonic oscillator</h2>
+<p>One of the key insights to develop our superconducting qubit is to make a connection with LC circuits and the harmonic oscillator. This allows us to develop out the quantum version of these circuits which we can explore in detail.</p>
+<section id="the-lc-circuit" class="level3" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="the-lc-circuit"><span class="header-section-number">5.2.1</span> The LC circuit</h3>
+<!-- ```{.tikz}
+%%| filename: lc-circuit
+%%| caption: A simple LC circuit showing the inductor L, capacitor C, and their respective voltage drops.
+%%| additionalPackages: \usepackage{circuitikz}
+\begin{circuitikz}
+\draw
+(0,0) -- (3,0)
+(0,3) -- (3,3)
+(0,0) to[L, l^=$L$, color=red, v<=$V_L$] (0,3)
+(3,0) to[C, l^=$C$, name=c, color=red, v=$V_C$] (3,3);
+\node at (c.60)[above]{$+$};
+\node at (c.300)[above]{$+$};
+\node at (c.120)[below]{$-$};
+\node at (c.240)[below]{$-$};
+\draw [-latex](1,-0.25)--(2,-0.25)node[midway,below]{$I$};
+\draw [latex-](1,3.25)--(2,3.25)node[midway,above]{$I$};
+\end{circuitikz}
+``` -->
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/tikz/lc-circuit.svg" class="img-fluid figure-img"></p>
+<figcaption>A simple LC circuit showing the inductor L, capacitor C, and their respective voltage drops.</figcaption>
+</figure>
+</div>
+<p>Consider a simple LC circuit composed of an inductor <span class="math inline">\(L\)</span> and a capacitor <span class="math inline">\(C\)</span>. Suppose we start by giving the capacitor some initial charge <span class="math inline">\(Q_0\)</span>. This initial charge causes a voltage across the capacitor plates, given approximately by <span class="math inline">\(V_C = \tfrac{Q}{C}\)</span>. With time, this charge flows through the inductor; as current builds, it creates a magnetic field in the inductor, thereby storing energy in that field. Eventually, the capacitor’s voltage nears zero (the capacitor becomes discharged), but the current through the inductor continues due to its stored magnetic energy. This current then recharges the capacitor in the opposite polarity, and the energy flows between the capacitor’s electric field and the inductor’s magnetic field.</p>
+<p>This back-and-forth exchange of energy repeats, creating an oscillation—just like a mass on a spring. In an LC circuit, the voltage drop across the inductor (given by <span class="math inline">\(L dI/dt\)</span>) must match the voltage on the capacitor (<span class="math inline">\(Q/C\)</span>). By summing these drops to zero around the loop, we arrive at the differential equation <span class="math display">\[
+L \frac{dI}{dt} + \frac{Q}{C} = 0,
+\]</span> where <span class="math inline">\(I = \tfrac{dQ}{dt}\)</span>. Switching from the capacitor’s charge to an analogous “position” variable (the charge <span class="math inline">\(Q\)</span>) and identifying the current with its time derivative, we recover the classic second-order differential equation and see the parallel between an LC circuit and the mass-spring system. <span class="math display">\[
+\frac{d^2 Q}{dt^2} = -\frac1{LC} Q,
+\]</span> where now <span class="math inline">\(\omega = \frac1{LC}\)</span>, and if we solve this differential equation, we can use the standard approach for second-order linear differential equations with constant coefficients. The general solution has the form:</p>
+<p><span class="math display">\[
+Q(t) = A \cos(\omega t) + B \sin(\omega t),
+\]</span></p>
+<p>where <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are constants determined by the initial conditions. If we assume that at <span class="math inline">\(t=0\)</span>, the charge is <span class="math inline">\(Q(0) = Q_0\)</span> and the current is <span class="math inline">\(I(0) = 0\)</span> (meaning the capacitor is initially charged but no current is flowing), then:</p>
+<p><span class="math display">\[
+Q(0) = A = Q_0
+\]</span></p>
+<p>And since <span class="math inline">\(I(t) = \frac{dQ}{dt}\)</span>:</p>
+<p><span class="math display">\[
+I(0) = \omega B = 0 \implies B = 0
+\]</span></p>
+<p>Therefore, the solution becomes:</p>
+<p><span class="math display">\[
+Q(t) = Q_0 \cos(\omega t)
+\]</span></p>
+<p>This represents a simple harmonic oscillation of the charge with angular frequency <span class="math inline">\(\omega = \frac{1}{\sqrt{LC}}\)</span>. The current can be found by taking the time derivative:</p>
+<p><span class="math display">\[
+I(t) = \frac{dQ}{dt} = -Q_0 \omega \sin(\omega t) = -\frac{Q_0}{\sqrt{LC}} \sin(\omega t)
+\]</span></p>
+<p>These equations show that the charge and current oscillate sinusoidally, with the current lagging the charge by a phase of <span class="math inline">\(\pi/2\)</span>, exactly as we would expect in a classical harmonic oscillator.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Historical Note: Circuit Analogies in Physics
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The analogy between LC circuits and mechanical oscillators has a rich history dating back to the late 19th century. James Clerk Maxwell and Oliver Heaviside were among the first to formalize these connections. In the 1940s and 1950s, analog computers built from electrical circuits were used to simulate complex mechanical and fluid systems, solving differential equations that were otherwise intractable. These “electronic differential analyzers” could model everything from vibrating structures to nuclear reactions. The RLC circuit (adding resistance) became particularly important as it could simulate damped oscillators with friction. This tradition of using circuits as analog models continues today in the field of neuromorphic computing, where circuits mimic neural dynamics, and of course, in quantum computing with superconducting circuits.</p>
+</div>
+</div>
+</section>
+<section id="quantum-mechanical-analogy" class="level3" data-number="5.2.2">
+<h3 data-number="5.2.2" class="anchored" data-anchor-id="quantum-mechanical-analogy"><span class="header-section-number">5.2.2</span> Quantum Mechanical Analogy</h3>
+<p>To make the connection to quantum mechanics more explicit, we can identify the analogous variables between the LC circuit and the quantum harmonic oscillator:</p>
+<ul>
+<li>The charge <span class="math inline">\(Q\)</span> on the capacitor corresponds to the position <span class="math inline">\(x\)</span> of the quantum oscillator</li>
+<li>The magnetic flux <span class="math inline">\(\Phi = LI\)</span> through the inductor corresponds to the momentum <span class="math inline">\(p\)</span> of the oscillator</li>
+</ul>
+<p>This mapping becomes clear when we examine the energy stored in the circuit:</p>
+<p><span class="math display">\[
+E_{LC} = \frac{Q^2}{2C} + \frac{\Phi^2}{2L} = \frac{Q^2}{2C} + \frac{L I^2}{2}
+\]</span></p>
+<p>The first term represents the electrostatic energy stored in the capacitor, while the second term represents the magnetic energy stored in the inductor.</p>
+<p>Compare this to the energy of a quantum harmonic oscillator:</p>
+<p><span class="math display">\[
+E_{oscillator} = \frac{1}{2}m\omega^2 x^2 + \frac{p^2}{2m}
+\]</span></p>
+<p>The correspondence becomes:</p>
+<p><span class="math display">\[
+\frac{Q^2}{2C} \leftrightarrow \frac{1}{2}m\omega^2 x^2 \quad \text{(potential energy)}
+\]</span></p>
+<p><span class="math display">\[
+\frac{L I^2}{2} \leftrightarrow \frac{p^2}{2m} \quad \text{(kinetic energy)}
+\]</span></p>
+<p>From these relations, we can identify:</p>
+<ul>
+<li><span class="math inline">\(Q \leftrightarrow x\)</span></li>
+<li><span class="math inline">\(\Phi = LI \leftrightarrow p\)</span></li>
+<li><span class="math inline">\(C \leftrightarrow \frac{1}{m\omega^2}\)</span></li>
+<li><span class="math inline">\(L \leftrightarrow m\)</span></li>
+</ul>
+<p>This mapping allows us to translate the quantum harmonic oscillator formalism directly to the LC circuit, which becomes crucial when we quantize the circuit to create superconducting qubits. The commutation relation <span class="math inline">\([\hat{x},\hat{p}] = i\hbar\)</span> in quantum mechanics translates to <span class="math inline">\([\hat{Q},\hat{\Phi}] = i\hbar\)</span> for the LC circuit variables.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Understanding the Quantum Commutator
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The commutation relation <span class="math inline">\([\hat{Q},\hat{\Phi}] = i\hbar\)</span> is fundamental to the quantum behavior of the LC circuit. Let’s explore what this means:</p>
+<ol type="1">
+<li><p><strong>Definition</strong>: The commutator <span class="math inline">\([\hat{Q},\hat{\Phi}] = \hat{Q}\hat{\Phi} - \hat{\Phi}\hat{Q}\)</span> measures the failure of these operators to commute.</p></li>
+<li><p><strong>Physical meaning</strong>: In classical physics, variables like position and momentum can be measured simultaneously with arbitrary precision. In quantum mechanics, the non-zero commutator implies that <span class="math inline">\(\hat{Q}\)</span> and <span class="math inline">\(\hat{\Phi}\)</span> cannot be precisely known simultaneously - this is a manifestation of Heisenberg’s uncertainty principle.</p></li>
+<li><p><strong>Operator perspective</strong>: When <span class="math inline">\(Q\)</span> and <span class="math inline">\(\Phi\)</span> become quantum operators, they act on the circuit’s wavefunction. The charge operator <span class="math inline">\(\hat{Q}\)</span> can be expressed as <span class="math inline">\(\hat{Q} = i\sqrt{\frac{\hbar}{2}}\sqrt{\frac{L}{C}}(\hat{a}^\dagger - \hat{a})\)</span>, while the flux operator <span class="math inline">\(\hat{\Phi}\)</span> becomes <span class="math inline">\(\hat{\Phi} = \sqrt{\frac{\hbar}{2}}\sqrt{\frac{L}{C}}(\hat{a}^\dagger + \hat{a})\)</span>, where <span class="math inline">\(\hat{a}\)</span> and <span class="math inline">\(\hat{a}^\dagger\)</span> are the lowering and raising operators.</p></li>
+<li><p><strong>Uncertainty relation</strong>: This commutation relation directly leads to the uncertainty principle: <span class="math inline">\(\Delta Q \cdot \Delta \Phi \geq \frac{\hbar}{2}\)</span>, meaning that the more precisely we know the charge, the less precisely we can know the flux, and vice versa.</p></li>
+</ol>
+<p>This quantum behavior is what allows us to create superposition states in superconducting circuits, forming the basis for superconducting qubits.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Notation: Quantum Operators and the “Hat” Symbol
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Throughout our discussion of quantum circuits, we use the “hat” notation (e.g., <span class="math inline">\(\hat{Q}\)</span>, <span class="math inline">\(\hat{\Phi}\)</span>) to distinguish quantum operators from classical variables. This distinction is important:</p>
+<ul>
+<li>A variable without a hat (e.g., <span class="math inline">\(Q\)</span>, <span class="math inline">\(\Phi\)</span>) represents a classical quantity with a definite value</li>
+<li>A variable with a hat (e.g., <span class="math inline">\(\hat{Q}\)</span>, <span class="math inline">\(\hat{\Phi}\)</span>) represents a quantum operator that acts on wavefunctions</li>
+</ul>
+<p>Quantum operators correspond to observable quantities but, unlike classical variables, generally don’t have definite values until measured. Instead, they represent the mathematical operations we perform on quantum states to calculate measurement probabilities and expectation values.</p>
+</div>
+</div>
+<p>Now that we’ve established the quantum operators for our circuit, we can write down the quantum Hamiltonian:</p>
+<p><span class="math display">\[
+\hat{H} = \frac{\hat{Q}^2}{2C} + \frac{\hat{\Phi}^2}{2L}
+\]</span></p>
+<p>This Hamiltonian is analogous to the quantum harmonic oscillator. We can rewrite it in terms of the raising and lowering operators <span class="math inline">\(\hat{a}^\dagger\)</span> and <span class="math inline">\(\hat{a}\)</span>. Recall that:</p>
+<p><span class="math display">\[
+\hat{Q} = i\sqrt{\frac{\hbar}{2}}\sqrt{\frac{L}{C}}(\hat{a}^\dagger - \hat{a})
+\]</span></p>
+<p><span class="math display">\[
+\hat{\Phi} = \sqrt{\frac{\hbar}{2}}\sqrt{\frac{L}{C}}(\hat{a}^\dagger + \hat{a})
+\]</span></p>
+<p>Substituting these expressions into our Hamiltonian:</p>
+<p><span class="math display">\[
+\begin{align}
+\hat{H} &amp;= \frac{1}{2C}\left(i\sqrt{\frac{\hbar}{2}}\sqrt{\frac{L}{C}}(\hat{a}^\dagger - \hat{a})\right)^2 + \frac{1}{2L}\left(\sqrt{\frac{\hbar}{2}}\sqrt{\frac{L}{C}}(\hat{a}^\dagger + \hat{a})\right)^2 \\
+&amp;= \frac{\hbar}{4C}\frac{L}{C}(\hat{a}^\dagger - \hat{a})^2 + \frac{\hbar}{4L}\frac{L}{C}(\hat{a}^\dagger + \hat{a})^2 \\
+\end{align}
+\]</span></p>
+<p>After algebraic manipulation and using the commutation relation <span class="math inline">\([\hat{a},\hat{a}^\dagger] = 1\)</span>, we arrive at:</p>
+<p><span class="math display">\[
+\hat{H} = \hbar\omega\left(\hat{a}^\dagger\hat{a} + \frac{1}{2}\right)
+\]</span></p>
+<p>where <span class="math inline">\(\omega = \frac{1}{\sqrt{LC}}\)</span> is the resonant frequency of the circuit.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Commutation Relation for Raising and Lowering Operators
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The commutation relation for the raising and lowering operators <span class="math inline">\(\hat{a}^\dagger\)</span> and <span class="math inline">\(\hat{a}\)</span> can be derived from the commutation relation between <span class="math inline">\(\hat{Q}\)</span> and <span class="math inline">\(\hat{\Phi}\)</span>:</p>
+<p><span class="math display">\[
+[\hat{a}, \hat{a}^\dagger] = ?
+\]</span></p>
+<p>Starting with the expressions for <span class="math inline">\(\hat{Q}\)</span> and <span class="math inline">\(\hat{\Phi}\)</span> in terms of <span class="math inline">\(\hat{a}\)</span> and <span class="math inline">\(\hat{a}^\dagger\)</span>:</p>
+<p><span class="math display">\[
+\hat{Q} = i\sqrt{\frac{\hbar}{2}}\sqrt{\frac{L}{C}}(\hat{a}^\dagger - \hat{a})
+\]</span></p>
+<p><span class="math display">\[
+\hat{\Phi} = \sqrt{\frac{\hbar}{2}}\sqrt{\frac{L}{C}}(\hat{a}^\dagger + \hat{a})
+\]</span></p>
+<p>We can solve for <span class="math inline">\(\hat{a}\)</span> and <span class="math inline">\(\hat{a}^\dagger\)</span>:</p>
+<p><span class="math display">\[
+\hat{a} = \frac{1}{2\sqrt{\frac{\hbar}{2}}\sqrt{\frac{L}{C}}}\left(\hat{\Phi} - i\hat{Q}\right)
+\]</span></p>
+<p><span class="math display">\[
+\hat{a}^\dagger = \frac{1}{2\sqrt{\frac{\hbar}{2}}\sqrt{\frac{L}{C}}}\left(\hat{\Phi} + i\hat{Q}\right)
+\]</span></p>
+<p>Now we compute the commutator:</p>
+<p><span class="math display">\[
+\begin{aligned}
+[\hat{a}, \hat{a}^\dagger] &amp;= \hat{a}\hat{a}^\dagger - \hat{a}^\dagger\hat{a} \\
+&amp;= \frac{1}{4\frac{\hbar}{2}\frac{L}{C}}\left[(\hat{\Phi} - i\hat{Q})(\hat{\Phi} + i\hat{Q}) - (\hat{\Phi} + i\hat{Q})(\hat{\Phi} - i\hat{Q})\right] \\
+&amp;= \frac{1}{4\frac{\hbar}{2}\frac{L}{C}}\left[\hat{\Phi}^2 + i\hat{\Phi}\hat{Q} - i\hat{Q}\hat{\Phi} + \hat{Q}^2 - \hat{\Phi}^2 - i\hat{\Phi}\hat{Q} + i\hat{Q}\hat{\Phi} - \hat{Q}^2\right] \\
+&amp;= \frac{1}{4\frac{\hbar}{2}\frac{L}{C}}\left[2i(\hat{Q}\hat{\Phi} - \hat{\Phi}\hat{Q})\right] \\
+&amp;= \frac{1}{4\frac{\hbar}{2}\frac{L}{C}}\left[2i(-i\hbar)\right] \\
+&amp;= \frac{1}{4\frac{\hbar}{2}\frac{L}{C}} \cdot 2\hbar \\
+&amp;= 1
+\end{aligned}
+\]</span></p>
+<p>Therefore, <span class="math inline">\([\hat{a}, \hat{a}^\dagger] = 1\)</span>, which is the canonical commutation relation for raising and lowering operators.</p>
+</div>
+</div>
+</section>
+<section id="solving-the-quantum-lc-circuit" class="level3" data-number="5.2.3">
+<h3 data-number="5.2.3" class="anchored" data-anchor-id="solving-the-quantum-lc-circuit"><span class="header-section-number">5.2.3</span> Solving the Quantum LC Circuit</h3>
+<p>To solve this system, we use the energy eigenstates of the harmonic oscillator, denoted as <span class="math inline">\(|n\rangle\)</span>, where <span class="math inline">\(n = 0, 1, 2, ...\)</span>. These states have the following properties:</p>
+<ol type="1">
+<li><span class="math inline">\(\hat{a}^\dagger|n\rangle = \sqrt{n+1}|n+1\rangle\)</span> (raising operator)</li>
+<li><span class="math inline">\(\hat{a}|n\rangle = \sqrt{n}|n-1\rangle\)</span> (lowering operator)</li>
+<li><span class="math inline">\(\hat{a}^\dagger\hat{a}|n\rangle = n|n\rangle\)</span> (number operator)</li>
+</ol>
+<p>These properties can be derived using the commutation relation <span class="math inline">\([\hat{a}, \hat{a}^\dagger] = 1\)</span>. The energy eigenvalues are:</p>
+<p><span class="math display">\[
+E_n = \hbar\omega\left(n + \frac{1}{2}\right)
+\]</span></p>
+<p>This means the energy levels of our quantum LC circuit are:</p>
+<ol type="1">
+<li>Ground state (<span class="math inline">\(n=0\)</span>): <span class="math inline">\(E_0 = \frac{\hbar\omega}{2}\)</span> (zero-point energy)</li>
+<li>First excited state (<span class="math inline">\(n=1\)</span>): <span class="math inline">\(E_1 = \frac{3\hbar\omega}{2}\)</span></li>
+<li>Second excited state (<span class="math inline">\(n=2\)</span>): <span class="math inline">\(E_2 = \frac{5\hbar\omega}{2}\)</span></li>
+<li>…</li>
+</ol>
+<p>And so on, with each subsequent energy level following the pattern <span class="math inline">\(E_n = \hbar\omega(n + \frac{1}{2})\)</span>.</p>
+<p>And so on, with equal spacing of <span class="math inline">\(\hbar\omega\)</span> between adjacent levels.</p>
+<p>The wavefunctions in the charge basis can be expressed as:</p>
+<p><span class="math display">\[
+\psi_n(Q) = \frac{1}{\sqrt{2^n n!}}\left(\frac{C\omega}{\pi\hbar}\right)^{1/4} e^{-\frac{CQ^2}{2\hbar}} H_n\left(Q\sqrt{\frac{C\omega}{\hbar}}\right)
+\]</span></p>
+<p>where <span class="math inline">\(H_n\)</span> are the Hermite polynomials.</p>
+<p>This infinite ladder of equally spaced energy levels is characteristic of harmonic oscillators. However, to create a qubit, we need a nonlinear element that breaks this equal spacing - which is where the Josephson junction comes in, as we’ll see next.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Under Construction
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This section is currently under construction. More content will be added in future updates.</p>
+</div>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -790,10 +1072,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./interlude.html" class="pagination-link" aria-label="Interlude: Hardwire requirements">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Interlude: Hardwire requirements</span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./intro.html" class="pagination-link" aria-label="Introduction">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./references.html" class="pagination-link" aria-label="References">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
