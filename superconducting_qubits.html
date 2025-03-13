@@ -216,6 +216,8 @@ window.Quarto = {
   <li><a href="#the-lc-circuit" id="toc-the-lc-circuit" class="nav-link" data-scroll-target="#the-lc-circuit"><span class="header-section-number">5.2.1</span> The LC circuit</a></li>
   <li><a href="#quantum-mechanical-analogy" id="toc-quantum-mechanical-analogy" class="nav-link" data-scroll-target="#quantum-mechanical-analogy"><span class="header-section-number">5.2.2</span> Quantum Mechanical Analogy</a></li>
   <li><a href="#solving-the-quantum-lc-circuit" id="toc-solving-the-quantum-lc-circuit" class="nav-link" data-scroll-target="#solving-the-quantum-lc-circuit"><span class="header-section-number">5.2.3</span> Solving the Quantum LC Circuit</a></li>
+  <li><a href="#charging-energy-and-reduced-flux" id="toc-charging-energy-and-reduced-flux" class="nav-link" data-scroll-target="#charging-energy-and-reduced-flux"><span class="header-section-number">5.2.4</span> Charging Energy and Reduced Flux</a></li>
+  <li><a href="#the-need-for-anharmonicity" id="toc-the-need-for-anharmonicity" class="nav-link" data-scroll-target="#the-need-for-anharmonicity"><span class="header-section-number">5.2.5</span> The Need for Anharmonicity</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -489,7 +491,61 @@ E_n = \hbar\omega\left(n + \frac{1}{2}\right)
 \psi_n(Q) = \frac{1}{\sqrt{2^n n!}}\left(\frac{C\omega}{\pi\hbar}\right)^{1/4} e^{-\frac{CQ^2}{2\hbar}} H_n\left(Q\sqrt{\frac{C\omega}{\hbar}}\right)
 \]</span></p>
 <p>where <span class="math inline">\(H_n\)</span> are the Hermite polynomials.</p>
-<p>This infinite ladder of equally spaced energy levels is characteristic of harmonic oscillators. However, to create a qubit, we need a nonlinear element that breaks this equal spacing - which is where the Josephson junction comes in, as we’ll see next.</p>
+<p>To make the connection to superconducting qubits clearer, we can rewrite our quantum LC oscillator Hamiltonian in terms of more physically relevant quantities: the charging energy and the reduced flux.</p>
+</section>
+<section id="charging-energy-and-reduced-flux" class="level3" data-number="5.2.4">
+<h3 data-number="5.2.4" class="anchored" data-anchor-id="charging-energy-and-reduced-flux"><span class="header-section-number">5.2.4</span> Charging Energy and Reduced Flux</h3>
+<p>The Hamiltonian of our quantum LC circuit is:</p>
+<p><span class="math display">\[
+\hat{H} = \frac{\hat{Q}^2}{2C} + \frac{\hat{\Phi}^2}{2L}
+\]</span></p>
+<p>Let’s introduce the following quantities:</p>
+<ol type="1">
+<li><strong>Charging Energy</strong>: <span class="math inline">\(E_C = \frac{e^2}{2C}\)</span>, where <span class="math inline">\(e\)</span> is the elementary charge. This represents the energy needed to add a single electron to the capacitor.</li>
+<li><strong>Flux Quantum</strong>: <span class="math inline">\(\Phi_0 = \frac{h}{2e}\)</span>, the superconducting flux quantum.</li>
+<li><strong>Reduced Flux</strong>: <span class="math inline">\(\hat{\varphi} = \frac{2\pi\hat{\Phi}}{\Phi_0}\)</span>, a dimensionless quantity.</li>
+<li><strong>Number Operator</strong>: <span class="math inline">\(\hat{n} = \frac{\hat{Q}}{2e}\)</span>, which counts the number of Cooper pairs.</li>
+</ol>
+<p>With these definitions, we can rewrite our operators:</p>
+<p><span class="math display">\[
+\hat{Q} = 2e\hat{n}
+\]</span></p>
+<p><span class="math display">\[
+\hat{\Phi} = \frac{\Phi_0}{2\pi}\hat{\varphi}
+\]</span></p>
+<p>Substituting these into our Hamiltonian:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\hat{H} &amp;= \frac{(2e\hat{n})^2}{2C} + \frac{\left(\frac{\Phi_0}{2\pi}\hat{\varphi}\right)^2}{2L} \\
+&amp;= \frac{4e^2\hat{n}^2}{2C} + \frac{\Phi_0^2\hat{\varphi}^2}{8\pi^2L} \\
+&amp;= 4E_C\hat{n}^2 + \frac{\Phi_0^2}{8\pi^2L}\hat{\varphi}^2
+\end{aligned}
+\]</span></p>
+<p>We can further define the inductive energy <span class="math inline">\(E_L = \frac{\Phi_0^2}{4\pi^2L}\)</span>, which gives us:</p>
+<p><span class="math display">\[
+\hat{H} = 4E_C\hat{n}^2 + \frac{E_L}{2}\hat{\varphi}^2
+\]</span></p>
+<p>This form of the Hamiltonian is particularly useful because:</p>
+<ol type="1">
+<li>It expresses the energy in terms of discrete Cooper pairs (<span class="math inline">\(\hat{n}\)</span>)</li>
+<li>It uses the reduced flux (<span class="math inline">\(\hat{\varphi}\)</span>), which has a direct physical interpretation in superconducting circuits</li>
+<li>The energy scales <span class="math inline">\(E_C\)</span> and <span class="math inline">\(E_L\)</span> can be engineered by circuit design</li>
+</ol>
+<p>The commutation relation between these operators becomes:</p>
+<p><span class="math display">\[
+[\hat{\varphi}, \hat{n}] = i
+\]</span></p>
+<p>This formulation helps us understand the quantum LC circuit in terms of charge and flux quanta, which is essential for developing superconducting qubits. The harmonic oscillator energy levels in this notation are:</p>
+<p><span class="math display">\[
+E_n = \hbar\omega\left(n + \frac{1}{2}\right) = \sqrt{8E_CE_L}\left(n + \frac{1}{2}\right)
+\]</span></p>
+<p>where <span class="math inline">\(\omega = \frac{1}{\sqrt{LC}} = \sqrt{\frac{8E_CE_L}{\hbar^2}}\)</span>.</p>
+</section>
+<section id="the-need-for-anharmonicity" class="level3" data-number="5.2.5">
+<h3 data-number="5.2.5" class="anchored" data-anchor-id="the-need-for-anharmonicity"><span class="header-section-number">5.2.5</span> The Need for Anharmonicity</h3>
+<p>This infinite ladder of equally spaced energy levels is characteristic of harmonic oscillators. While this system is quantum mechanical, it’s unsuitable for quantum computing because we cannot selectively address just two energy levels. If we tried to use the lowest two levels (<span class="math inline">\(\ket{0}\)</span> and <span class="math inline">\(\ket{1}\)</span>) as our qubit states, any operation that excites <span class="math inline">\(\ket{0}\)</span> to <span class="math inline">\(\ket{1}\)</span> would also excite <span class="math inline">\(\ket{1}\)</span> to <span class="math inline">\(\ket{2}\)</span>, <span class="math inline">\(\ket{2}\)</span> to <span class="math inline">\(\ket{3}\)</span>, and so on, making it impossible to maintain a two-level system.</p>
+<p>What we need is anharmonicity - unequal spacing between energy levels - so that the transition energy <span class="math inline">\(E_{0\rightarrow 1}\)</span> (from <span class="math inline">\(\ket{0}\)</span> to <span class="math inline">\(\ket{1}\)</span>) differs from <span class="math inline">\(E_{1\rightarrow 2}\)</span> (from <span class="math inline">\(\ket{1}\)</span> to <span class="math inline">\(\ket{2}\)</span>). This allows us to selectively address only the <span class="math inline">\(\ket{0}\)</span> and <span class="math inline">\(\ket{1}\)</span> states with appropriately tuned control pulses.</p>
+<p>To achieve this anharmonicity, we must introduce a nonlinear element into our circuit - which is precisely what the Josephson junction provides, as we’ll explore in the next section.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
