@@ -47,17 +47,17 @@ format:
           }
         };
         </script>
-  pdf:
-    documentclass: scrreprt
-    fontsize: 10pt
-    pdf-engine: lualatex
-    keep-tex: false
-    pdf-engine-opts: 
-      - --shell-escape
-    include-in-header: 
-      text: |
-        \usepackage{braket}
-        \DeclareMathOperator{\tr}{tr}
+  # pdf:
+  #   documentclass: scrreprt
+  #   fontsize: 10pt
+  #   pdf-engine: lualatex
+  #   keep-tex: false
+  #   pdf-engine-opts: 
+  #     - --shell-escape
+  #   include-in-header: 
+  #     text: |
+  #       \usepackage{braket}
+  #       \DeclareMathOperator{\tr}{tr}
 
 tikz:
   cache: true

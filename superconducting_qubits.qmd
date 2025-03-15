@@ -56,7 +56,7 @@ where $I = \tfrac{dQ}{dt}$. Switching from the capacitor’s charge to an analog
 $$
 \frac{d^2 Q}{dt^2} = -\frac1{LC} Q,
 $$
-where now $\omega = \frac1{LC}$, and if we
+where now $\omega^2 = \frac1{LC}$, and if we
 solve this differential equation, we can use the standard approach for second-order linear differential equations with constant coefficients. The general solution has the form:
 
 $$
@@ -144,7 +144,7 @@ The commutation relation $[\hat{Q},\hat{\Phi}] = i\hbar$ is fundamental to the q
 
 2. **Physical meaning**: In classical physics, variables like position and momentum can be measured simultaneously with arbitrary precision. In quantum mechanics, the non-zero commutator implies that $\hat{Q}$ and $\hat{\Phi}$ cannot be precisely known simultaneously - this is a manifestation of Heisenberg's uncertainty principle.
 
-3. **Operator perspective**: When $Q$ and $\Phi$ become quantum operators, they act on the circuit's wavefunction. The charge operator $\hat{Q}$ can be expressed as $\hat{Q} = i\sqrt{\frac{\hbar}{2}}\sqrt{\frac{L}{C}}(\hat{a}^\dagger - \hat{a})$, while the flux operator $\hat{\Phi}$ becomes $\hat{\Phi} = \sqrt{\frac{\hbar}{2}}\sqrt{\frac{L}{C}}(\hat{a}^\dagger + \hat{a})$, where $\hat{a}$ and $\hat{a}^\dagger$ are the lowering and raising operators.
+3. **Operator perspective**: When $Q$ and $\Phi$ become quantum operators, they act on the circuit's wavefunction. The charge operator $\hat{Q}$ can be expressed as $\hat{Q} = i\sqrt{\frac{\hbar}{2}}\left(\frac{C}{L}\right)^{1/4}(\hat{a}^\dagger - \hat{a})$, while the flux operator $\hat{\Phi}$ becomes $\hat{\Phi} = \sqrt{\frac{\hbar}{2}}\left(\frac{L}{C}\right)^{1/4}(\hat{a}^\dagger + \hat{a})$, where $\hat{a}$ and $\hat{a}^\dagger$ are the lowering and raising operators.
 
 4. **Uncertainty relation**: This commutation relation directly leads to the uncertainty principle: $\Delta Q \cdot \Delta \Phi \geq \frac{\hbar}{2}$, meaning that the more precisely we know the charge, the less precisely we can know the flux, and vice versa.
 
@@ -169,21 +169,20 @@ $$
 $$
 
 This Hamiltonian is analogous to the quantum harmonic oscillator. We can rewrite it in terms of the raising and lowering operators $\hat{a}^\dagger$ and $\hat{a}$. Recall that:
+$$
+\hat{Q} = i\sqrt{\frac{\hbar}{2}}\left(\frac{C}{L}\right)^{1/4}(\hat{a}^\dagger - \hat{a})
+$$
 
 $$
-\hat{Q} = i\sqrt{\frac{\hbar}{2}}\sqrt{\frac{L}{C}}(\hat{a}^\dagger - \hat{a})
-$$
-
-$$
-\hat{\Phi} = \sqrt{\frac{\hbar}{2}}\sqrt{\frac{L}{C}}(\hat{a}^\dagger + \hat{a})
+\hat{\Phi} = \sqrt{\frac{\hbar}{2}}\left(\frac{L}{C}\right)^{1/4}(\hat{a}^\dagger + \hat{a})
 $$
 
 Substituting these expressions into our Hamiltonian:
 
 $$
 \begin{align}
-\hat{H} &= \frac{1}{2C}\left(i\sqrt{\frac{\hbar}{2}}\sqrt{\frac{L}{C}}(\hat{a}^\dagger - \hat{a})\right)^2 + \frac{1}{2L}\left(\sqrt{\frac{\hbar}{2}}\sqrt{\frac{L}{C}}(\hat{a}^\dagger + \hat{a})\right)^2 \\
-&= \frac{\hbar}{4C}\frac{L}{C}(\hat{a}^\dagger - \hat{a})^2 + \frac{\hbar}{4L}\frac{L}{C}(\hat{a}^\dagger + \hat{a})^2 \\
+\hat{H} &= \frac{1}{2C}\left(i\sqrt{\frac{\hbar}{2}}\left(\frac{C}{L}\right)^{1/4}(\hat{a}^\dagger - \hat{a})\right)^2 + \frac{1}{2L}\left(\sqrt{\frac{\hbar}{2}}\left(\frac{L}{C}\right)^{1/4}(\hat{a}^\dagger + \hat{a})\right)^2 \\
+&= -\frac{\hbar}{4C}\left(\frac{C}{L}\right)^{1/2}(\hat{a}^\dagger - \hat{a})^2 + \frac{\hbar}{4L}\left(\frac{L}{C}\right)^{1/2}(\hat{a}^\dagger + \hat{a})^2 \\
 \end{align}
 $$
 
@@ -207,35 +206,52 @@ $$
 Starting with the expressions for $\hat{Q}$ and $\hat{\Phi}$ in terms of $\hat{a}$ and $\hat{a}^\dagger$:
 
 $$
-\hat{Q} = i\sqrt{\frac{\hbar}{2}}\sqrt{\frac{L}{C}}(\hat{a}^\dagger - \hat{a})
+\hat{Q} = i\sqrt{\frac{\hbar}{2}}\left(\frac{C}{L}\right)^{1/4}(\hat{a}^\dagger - \hat{a})
 $$
 
 $$
-\hat{\Phi} = \sqrt{\frac{\hbar}{2}}\sqrt{\frac{L}{C}}(\hat{a}^\dagger + \hat{a})
+\hat{\Phi} = \sqrt{\frac{\hbar}{2}}\left(\frac{L}{C}\right)^{1/4}(\hat{a}^\dagger + \hat{a})
 $$
 
 We can solve for $\hat{a}$ and $\hat{a}^\dagger$:
 
 $$
-\hat{a} = \frac{1}{2\sqrt{\frac{\hbar}{2}}\sqrt{\frac{L}{C}}}\left(\hat{\Phi} - i\hat{Q}\right)
+\hat{a} = \frac{1}{2}\left[\left(\frac{L}{C}\right)^{1/4}\frac{\hat{\Phi}}{\sqrt{\frac{\hbar}{2}}} - i\left(\frac{L}{C}\right)^{-1/4}\frac{\hat{Q}}{i\sqrt{\frac{\hbar}{2}}}\right]
 $$
 
 $$
-\hat{a}^\dagger = \frac{1}{2\sqrt{\frac{\hbar}{2}}\sqrt{\frac{L}{C}}}\left(\hat{\Phi} + i\hat{Q}\right)
+\hat{a}^\dagger = \frac{1}{2}\left[\left(\frac{L}{C}\right)^{1/4}\frac{\hat{\Phi}}{\sqrt{\frac{\hbar}{2}}} + i\left(\frac{L}{C}\right)^{-1/4}\frac{\hat{Q}}{i\sqrt{\frac{\hbar}{2}}}\right]
 $$
 
 Now we compute the commutator:
-
 $$
-\begin{align}
+\begin{aligned}
 [\hat{a}, \hat{a}^\dagger] &= \hat{a}\hat{a}^\dagger - \hat{a}^\dagger\hat{a} \\
-&= \frac{1}{4\frac{\hbar}{2}\frac{L}{C}}\left[(\hat{\Phi} - i\hat{Q})(\hat{\Phi} + i\hat{Q}) - (\hat{\Phi} + i\hat{Q})(\hat{\Phi} - i\hat{Q})\right] \\
-&= \frac{1}{4\frac{\hbar}{2}\frac{L}{C}}\left[\hat{\Phi}^2 + i\hat{\Phi}\hat{Q} - i\hat{Q}\hat{\Phi} + \hat{Q}^2 - \hat{\Phi}^2 - i\hat{\Phi}\hat{Q} + i\hat{Q}\hat{\Phi} - \hat{Q}^2\right] \\
-&= \frac{1}{4\frac{\hbar}{2}\frac{L}{C}}\left[2i(\hat{Q}\hat{\Phi} - \hat{\Phi}\hat{Q})\right] \\
-&= \frac{1}{4\frac{\hbar}{2}\frac{L}{C}}\left[2i(-i\hbar)\right] \\
-&= \frac{1}{4\frac{\hbar}{2}\frac{L}{C}} \cdot 2\hbar \\
+&= \frac{1}{4}\left[\left(\left(\frac{L}{C}\right)^{1/4}\frac{\hat{\Phi}}{\sqrt{\frac{\hbar}{2}}} - i\left(\frac{L}{C}\right)^{-1/4}\frac{\hat{Q}}{i\sqrt{\frac{\hbar}{2}}}\right)\left(\left(\frac{L}{C}\right)^{1/4}\frac{\hat{\Phi}}{\sqrt{\frac{\hbar}{2}}} + i\left(\frac{L}{C}\right)^{-1/4}\frac{\hat{Q}}{i\sqrt{\frac{\hbar}{2}}}\right) \right. \\
+&\quad \left. - \left(\left(\frac{L}{C}\right)^{1/4}\frac{\hat{\Phi}}{\sqrt{\frac{\hbar}{2}}} + i\left(\frac{L}{C}\right)^{-1/4}\frac{\hat{Q}}{i\sqrt{\frac{\hbar}{2}}}\right)\left(\left(\frac{L}{C}\right)^{1/4}\frac{\hat{\Phi}}{\sqrt{\frac{\hbar}{2}}} - i\left(\frac{L}{C}\right)^{-1/4}\frac{\hat{Q}}{i\sqrt{\frac{\hbar}{2}}}\right)\right] \\
+\end{aligned}
+$$
+
+Let's define simpler variables to make this calculation more manageable:
+$$
+\begin{aligned}
+A &= \left(\frac{L}{C}\right)^{1/4}\frac{\hat{\Phi}}{\sqrt{\frac{\hbar}{2}}} \\
+B &= \left(\frac{L}{C}\right)^{-1/4}\frac{\hat{Q}}{i\sqrt{\frac{\hbar}{2}}}
+\end{aligned}
+$$
+
+Then our commutator becomes:
+$$
+\begin{aligned}
+[\hat{a}, \hat{a}^\dagger] &= \frac{1}{4}[(A - iB)(A + iB) - (A + iB)(A - iB)] \\
+&= \frac{1}{4}[A^2 + iAB - iBA + B^2 - A^2 - iAB + iBA - B^2] \\
+&= \frac{1}{4}[2i(BA - AB)] \\
+&= \frac{i}{2}[\hat{B}, \hat{A}] \\
+&= \frac{i}{2} \cdot \left(\frac{L}{C}\right)^{-1/4} \cdot \left(\frac{L}{C}\right)^{1/4} \cdot \frac{1}{\frac{\hbar}{2}} \cdot \frac{1}{i} \cdot [\hat{Q}, \hat{\Phi}] \\
+&= \frac{i}{2} \cdot \frac{2}{\hbar} \cdot \frac{1}{i} \cdot (i\hbar) \\
+&= \frac{i}{2} \cdot \frac{2}{\hbar} \cdot \hbar \\
 &= 1
-\end{align}
+\end{aligned}
 $$
 
 Therefore, $[\hat{a}, \hat{a}^\dagger] = 1$, which is the canonical commutation relation for raising and lowering operators.
@@ -275,7 +291,254 @@ $$
 
 where $H_n$ are the Hermite polynomials.
 
-This infinite ladder of equally spaced energy levels is characteristic of harmonic oscillators. However, to create a qubit, we need a nonlinear element that breaks this equal spacing - which is where the Josephson junction comes in, as we'll see next.
+To make the connection to superconducting qubits clearer, we can rewrite our quantum LC oscillator Hamiltonian in terms of more physically relevant quantities: the charging energy and the reduced flux.
+
+### Charging Energy and Reduced Flux
+
+The Hamiltonian of our quantum LC circuit is:
+
+$$
+\hat{H} = \frac{\hat{Q}^2}{2C} + \frac{\hat{\Phi}^2}{2L}
+$$
+
+Let's introduce the following quantities:
+
+1. **Charging Energy**: $E_C = \frac{e^2}{2C}$, where $e$ is the elementary charge. This represents the energy needed to add a single electron to the capacitor.
+2. **Flux Quantum**: $\Phi_0 = \frac{h}{2e}$, the superconducting flux quantum.
+3. **Reduced Flux**: $\hat{\varphi} = \frac{2\pi\hat{\Phi}}{\Phi_0}$, a dimensionless quantity.
+4. **Number Operator**: $\hat{n} = \frac{\hat{Q}}{2e}$, which counts the number of Cooper pairs.
+
+With these definitions, we can rewrite our operators:
+
+$$
+\hat{Q} = 2e\hat{n}
+$$
+
+$$
+\hat{\Phi} = \frac{\Phi_0}{2\pi}\hat{\varphi}
+$$
+
+Substituting these into our Hamiltonian:
+
+$$
+\begin{aligned}
+\hat{H} &= \frac{(2e\hat{n})^2}{2C} + \frac{\left(\frac{\Phi_0}{2\pi}\hat{\varphi}\right)^2}{2L} \\
+&= \frac{4e^2\hat{n}^2}{2C} + \frac{\Phi_0^2\hat{\varphi}^2}{8\pi^2L} \\
+&= 4E_C\hat{n}^2 + \frac{\Phi_0^2}{8\pi^2L}\hat{\varphi}^2
+\end{aligned}
+$$
+
+We can further define the inductive energy $E_L = \frac{\Phi_0^2}{4\pi^2L}$, which gives us:
+
+$$
+\hat{H} = 4E_C\hat{n}^2 + \frac{E_L}{2}\hat{\varphi}^2
+$$
+
+This form of the Hamiltonian is particularly useful because:
+
+1. It expresses the energy in terms of discrete Cooper pairs ($\hat{n}$)
+2. It uses the reduced flux ($\hat{\varphi}$), which has a direct physical interpretation in superconducting circuits
+3. The energy scales $E_C$ and $E_L$ can be engineered by circuit design
+
+The commutation relation between these operators becomes:
+
+$$
+[\hat{\varphi}, \hat{n}] = i
+$$
+
+This formulation helps us understand the quantum LC circuit in terms of charge and flux quanta, which is essential for developing superconducting qubits. The harmonic oscillator energy levels in this notation are:
+
+$$
+E_n = \hbar\omega\left(n + \frac{1}{2}\right) = \sqrt{8E_CE_L}\left(n + \frac{1}{2}\right)
+$$
+
+where $\omega = \frac{1}{\sqrt{LC}} = \sqrt{\frac{8E_CE_L}{\hbar^2}}$.
+
+### The Need for Anharmonicity
+
+This infinite ladder of equally spaced energy levels is characteristic of harmonic oscillators. While this system is quantum mechanical, it's unsuitable for quantum computing because we cannot selectively address just two energy levels. If we tried to use the lowest two levels ($\ket{0}$ and $\ket{1}$) as our qubit states, any operation that excites $\ket{0}$ to $\ket{1}$ would also excite $\ket{1}$ to $\ket{2}$, $\ket{2}$ to $\ket{3}$, and so on, making it impossible to maintain a two-level system.
+
+What we need is anharmonicity - unequal spacing between energy levels - so that the transition energy $E_{0\rightarrow 1}$ (from $\ket{0}$ to $\ket{1}$) differs from $E_{1\rightarrow 2}$ (from $\ket{1}$ to $\ket{2}$). This allows us to selectively address only the $\ket{0}$ and $\ket{1}$ states with appropriately tuned control pulses.
+
+To achieve this anharmonicity, we must introduce a nonlinear element into our circuit - which is precisely what the Josephson junction provides, as we'll explore in the next section.
+
+## The artificial atom
+
+To create a qubit from our quantum circuit, we need to transform the harmonic oscillator into an artificial atom with discrete, _addressable_ energy levels. This requires introducing anharmonicity - unequal spacing between energy levels - into our system. In the following sections, we'll explore how the Josephson junction provides the necessary nonlinearity to achieve this anharmonicity. By incorporating this element into our circuit, we can engineer an artificial atom with customizable properties, where the lowest two energy levels can be isolated and controlled as a qubit. This approach leverages the macroscopic quantum behavior of superconducting circuits to create a scalable platform for quantum information processing.
+
+::: {.callout-note}
+## The Dual Role of Superconductivity
+
+Superconductivity plays two crucial roles in our quantum circuits:
+
+1. **Zero Resistance**: Superconducting materials conduct electricity with absolutely no resistance, allowing quantum states to persist without energy dissipation. This property is essential for maintaining quantum coherence in our circuits.
+
+2. **Josephson Effect**: Superconductivity enables the Josephson effect, which occurs when two superconductors are separated by a thin insulating barrier. Cooper pairs can tunnel through this barrier coherently, creating a nonlinear element that's essential for introducing anharmonicity into our quantum system.
+
+Without superconductivity, we would neither have the low-loss environment needed for quantum operations nor the nonlinear element (Josephson junction) required to create addressable energy levels for our qubit.
+:::
+
+
+
+### The Josephson Junction
+
+To create our artificial atom, we need to introduce nonlinearity into our quantum circuit. This is achieved through the Josephson junction - a superconducting device consisting of two superconductors separated by a thin insulating barrier.
+
+The Josephson junction is governed by two key relations:
+
+1. The DC Josephson effect, relating the supercurrent through the junction to the phase difference:
+   $$I = I_c \sin\varphi$$
+   where $I_c$ is the critical current and $\varphi$ is the phase difference across the junction.
+
+2. The AC Josephson effect, relating the voltage across the junction to the rate of change of the phase:
+   $$V = \frac{\Phi_0}{2\pi}\frac{d\varphi}{dt}$$
+
+The energy stored in a Josephson junction is given by:
+$$E_J(\varphi) = -E_J\cos\varphi$$
+where $E_J = \frac{\Phi_0 I_c}{2\pi}$ is the Josephson energy.
+
+::: {.callout-tip}
+## Deriving the Josephson Junction Energy
+
+We can derive the energy stored in a Josephson junction by considering the work done when a current flows through it:
+
+$$W = \int P dt = \int VI dt = \int V \frac{dQ}{dt} dt = \int V dQ$$
+
+Using the AC Josephson relation, $V = \frac{\Phi_0}{2\pi}\frac{d\varphi}{dt}$, we can substitute:
+
+$$W = \int \frac{\Phi_0}{2\pi}\frac{d\varphi}{dt} dQ$$
+
+Since $I = \frac{dQ}{dt}$ and $I = I_c \sin\varphi$ from the DC Josephson relation:
+
+$$W = \int \frac{\Phi_0}{2\pi}\frac{d\varphi}{dt} \cdot I_c \sin\varphi \cdot dt = \frac{\Phi_0 I_c}{2\pi} \int \sin\varphi \, d\varphi$$
+
+Integrating, we get:
+
+$$W = -\frac{\Phi_0 I_c}{2\pi} \cos\varphi + \text{constant}$$
+
+The energy stored in the junction is therefore:
+
+$$E_J(\varphi) = -E_J\cos\varphi$$
+
+where $E_J = \frac{\Phi_0 I_c}{2\pi}$ is the Josephson energy. This nonlinear energy-phase relationship is what gives the Josephson junction its crucial anharmonic properties.
+:::
+
+
+### The Transmon Qubit
+
+By replacing the inductor in our LC circuit with a Josephson junction, we create a nonlinear oscillator. The Hamiltonian becomes:
+
+$$\hat{H} = 4E_C\hat{n}^2 - E_J\cos\hat{\varphi}$$
+
+This is fundamentally different from the harmonic oscillator because the $\cos\hat{\varphi}$ term introduces anharmonicity. We can expand this cosine term:
+
+$$\cos\hat{\varphi} \approx 1 - \frac{\hat{\varphi}^2}{2} + \frac{\hat{\varphi}^4}{24} - ...$$
+
+Substituting this into our Hamiltonian:
+
+$$\hat{H} \approx 4E_C\hat{n}^2 - E_J\left(1 - \frac{\hat{\varphi}^2}{2} + \frac{\hat{\varphi}^4}{24} - ...\right)$$
+
+Rearranging:
+
+$$\hat{H} \approx -E_J + 4E_C\hat{n}^2 + \frac{E_J}{2}\hat{\varphi}^2 - \frac{E_J}{24}\hat{\varphi}^4 + ...$$
+
+The first term is just a constant energy offset. The second and third terms resemble our harmonic oscillator Hamiltonian. The fourth term introduces anharmonicity - it makes the energy levels unequally spaced.
+
+In practice, the ratio between the Josephson energy $E_J$ and the charging energy $E_C$ plays a crucial role in determining the properties of superconducting qubits. The superconducting qubit community has converged toward circuit designs with $E_J \gg E_C$ for several important reasons.
+
+#### The $E_J/E_C$ Ratio and Charge Sensitivity
+
+When $E_J \leq E_C$, as in the earlier Cooper-pair box charge qubit designs, the qubit becomes highly sensitive to charge noise. This sensitivity leads to shorter coherence times and less reliable qubit operation. In contrast, operating in the $E_J \gg E_C$ regime significantly reduces this charge sensitivity.
+
+#### Charge Dispersion and Energy Levels
+
+To understand why the $E_J \gg E_C$ regime is advantageous, we need to examine how the energy levels depend on the offset charge $n_g$. The offset charge represents the effect of the electrostatic environment on the qubit, including stray charges that can fluctuate over time.
+
+The Hamiltonian with an offset charge $n_g$ is:
+
+$$\hat{H} = 4E_C(\hat{n} - n_g)^2 - E_J\cos\hat{\varphi}$$
+
+In the charge basis, we can compute the energy eigenvalues by diagonalizing this Hamiltonian. The resulting energy bands $E_m(n_g)$ depend on both the quantum number $m$ and the offset charge $n_g$.
+
+For a Cooper-pair box (where $E_J \lesssim E_C$), the energy levels as a function of $n_g$ look like:
+
+- When $E_J \ll E_C$: The energy bands are approximately parabolas centered at integer values of $n_g$, with small anticrossings at half-integer values.
+- When $E_J \approx E_C$: The bands flatten somewhat, but still show significant dependence on $n_g$.
+
+In both cases, the energy difference between the ground and first excited states varies significantly with $n_g$, making the qubit frequency highly sensitive to charge fluctuations.
+
+As we increase the ratio $E_J/E_C$, the dependence of energy levels on $n_g$ becomes exponentially suppressed. The energy bands flatten out, and the variation in energy with $n_g$ (called charge dispersion) decreases exponentially:
+
+$$\epsilon_m \approx (\text{some factors}) \times e^{-\sqrt{8E_J/E_C}}$$
+
+This equation shows that the charge sensitivity decreases exponentially as the ratio $E_J/E_C$ increases. The important takeaway is that making $E_J$ much larger than $E_C$ dramatically reduces the qubit's sensitivity to charge noise.
+
+This exponential suppression of charge sensitivity comes with a trade-off, however. As we increase the $E_J/E_C$ ratio by reducing $E_C$ (typically by adding a larger shunt capacitor), the anharmonicity 
+
+$$\alpha \approx -E_C + (\text{constant}) \frac{E_C^2}{E_J} + \cdots $$
+
+also decreases in magnitude. This creates a fundamental design tension:
+
+- Higher $E_J/E_C$ → Better charge noise immunity → Lower anharmonicity
+- Lower $E_J/E_C$ → Worse charge noise immunity 
+
+Since the anharmonicity determines how well we can selectively address the $|0\rangle$ to $|1\rangle$ transition without exciting higher energy levels, it cannot be too small without risking leakage out of the computational subspace during control operations. In practice, transmon designs typically aim for an anharmonicity of around 200-300 MHz, which is sufficient for selective control while maintaining good charge noise immunity with $E_J/E_C$ ratios of 50-100.
+
+This exponential suppression of charge sensitivity is the key advantage of the transmon regime. By operating with $E_J/E_C \approx 50-100$, we can reduce charge noise sensitivity by several orders of magnitude compared to the Cooper-pair box, while still maintaining sufficient anharmonicity for qubit operations.
+
+
+#### Definition of the Transmon Qubit
+
+The transmon (transmission-line shunted plasma oscillation qubit) is a type of superconducting qubit that consists of a Josephson junction shunted by a large capacitor. This design specifically operates in the regime where $E_J \gg E_C$, typically with ratios between 50 and 100. The large shunting capacitor $C_s \gg C_J$ reduces the charging energy $E_C$, making the qubit exponentially less sensitive to charge noise while maintaining sufficient anharmonicity to operate as a qubit.
+
+To access the $E_J \gg E_C$ regime, the preferred approach is to make the charging energy $E_C$ small by shunting the Josephson junction with a large capacitor, $C_s \gg C_J$. This design is the foundation of the transmon qubit. In this limit, the superconducting phase $\varphi$ becomes approximately a good quantum number, meaning the quantum fluctuations of $\varphi$ represented by the wavefunction are small.
+
+::: {.callout-note}
+## Energy Level Discreteness and the $E_J/E_C$ Balance
+
+While operating in the $E_J \gg E_C$ regime reduces charge sensitivity, it's important to note that the energy level spacing still depends on $E_C$. As $E_J/E_C$ increases, the phase $\varphi$ becomes a better quantum number, but the energy levels also become more closely spaced (since $\alpha \approx -E_C$).
+
+This creates a careful balancing act in transmon design: we want $E_J/E_C$ large enough to suppress charge noise, but not so large that the energy levels become too closely spaced to distinguish and address individually. If the anharmonicity becomes too small, it becomes difficult to selectively drive transitions between only two levels without exciting higher states, compromising our ability to treat the system as a qubit.
+
+Typical transmon designs strike this balance with $E_J/E_C$ ratios between 50 and 100, providing sufficient charge noise insensitivity while maintaining adequate level separation for reliable qubit operations.
+:::
+
+
+#### Anharmonicity in the Transmon
+
+The negative coefficient of the quartic term in our expanded Hamiltonian indicates that the anharmonicity $\alpha = E_{12} - E_{01}$ (the difference between consecutive energy level spacings) is negative. This means that the energy required to excite from the first excited state to the second excited state is less than that required to excite from the ground state to the first excited state.
+
+In practical transmon designs, the anharmonicity $\alpha \approx -E_C$ is usually engineered to be around 100-300 MHz. The qubit frequency $\omega_q = \sqrt{8E_J E_C}/h - E_C/h$ typically falls in the range of 3-6 GHz. To effectively suppress charge sensitivity, the energy ratio is made sufficiently large, with $E_J/E_C \geq 50$ being common.
+
+#### The Transmon as a Weakly Anharmonic Oscillator
+
+Due to this design, the transmon qubit is fundamentally a weakly anharmonic oscillator (AHO). While we often treat it as a quantum two-level system for simplicity, it's important to remember that higher energy levels physically exist and can be accessed. In fact, these higher levels have proven useful in implementing more efficient gate operations in some quantum computing protocols.
+### The Duffing Oscillator Representation
+
+The transmon Hamiltonian can be rewritten in a form that makes its nature as a weakly anharmonic oscillator more explicit. Using the creation and annihilation operators from the harmonic oscillator formalism, we can express the transmon Hamiltonian as a Duffing oscillator:
+
+$$\hat{H} = \hbar\omega_q \hat{a}^\dagger\hat{a} + \frac{\alpha}{2}\hat{a}^\dagger\hat{a}^\dagger\hat{a}\hat{a}$$
+
+Here, $\omega_q$ is the qubit frequency (approximately $\sqrt{8E_J E_C}/\hbar - E_C/\hbar$), and $\alpha$ is the anharmonicity (approximately $-E_C/\hbar$). The first term represents the harmonic part of the oscillator, while the second term introduces the anharmonicity that makes the energy levels unequally spaced.
+
+This representation clearly shows that the transmon is essentially a harmonic oscillator with a perturbation that shifts the energy levels. The negative anharmonicity means that as we climb the energy ladder, each successive transition requires slightly less energy than the previous one.
+
+### Effective Two-Level System Hamiltonian
+
+Although the transmon is a multi-level system, when we restrict our focus to the lowest two energy levels (ground state $|0\rangle$ and first excited state $|1\rangle$), we can represent it as an effective two-level system or qubit. In this subspace, the Hamiltonian takes the form:
+
+$$\hat{H}_\text{qubit} = -\frac{\hbar\omega_q}{2}Z$$
+
+where $\hat{\sigma}_z$ is the Pauli-Z operator. This is the standard form for a qubit Hamiltonian in the energy eigenbasis, with the energy difference between the $|0\rangle$ and $|1\rangle$ states being $\hbar\omega_q$.
+
+It's important to note that this two-level approximation is valid only when:
+
+1. The control pulses used to manipulate the qubit are sufficiently selective in frequency to avoid exciting higher energy levels
+2. The pulse shapes are designed to minimize leakage to higher states
+3. The system temperature is low enough that thermal excitation to higher states is negligible
+
+The presence of higher energy levels in the transmon, while often ignored in the two-level approximation, can lead to effects like leakage errors during gate operations. Advanced control techniques must account for these higher levels to achieve high-fidelity quantum operations.
+
 
 ::: {.callout-warning}
 ## Under Construction
