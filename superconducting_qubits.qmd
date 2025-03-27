@@ -539,6 +539,468 @@ It's important to note that this two-level approximation is valid only when:
 
 The presence of higher energy levels in the transmon, while often ignored in the two-level approximation, can lead to effects like leakage errors during gate operations. Advanced control techniques must account for these higher levels to achieve high-fidelity quantum operations.
 
+### Tunable qubits
+
+One of the most powerful features we can add to a transmon qubit is the ability to tune its frequency. This tunability gives us precise control over how qubits interact with each other, which is crucial for quantum computing.
+
+::: {.callout-note}
+## What Does "In Resonance" Mean?
+
+In quantum mechanics, two systems are "in resonance" when they have the same energy difference between their states. Think of two musical tuning forks - when they have the same frequency, striking one can cause the other to vibrate. Similarly, when two qubits are in resonance, they can exchange quantum information efficiently.
+
+Being able to control when qubits are in resonance is crucial because:
+
+1. We can bring qubits into resonance when we want them to work together
+2. We can take them out of resonance when we want them to work independently
+3. We can prevent unwanted interactions between multiple qubits by giving them different frequencies
+:::
+
+The most common way to make a tunable transmon is to replace its single Josephson junction with two junctions in parallel, forming a loop. This structure is called a DC SQUID (Superconducting QUantum Interference Device). By applying a magnetic field through this loop, we can control how the device behaves.
+
+When we use two identical junctions, the phases across them ($\varphi_1$ and $\varphi_2$) are related to the magnetic flux $\Phi$ through the loop by:
+
+$$\varphi_1 - \varphi_2 + 2\pi k = 2\pi\frac{\Phi}{\Phi_0},$$
+
+for an integer $k$. Here, $\Phi_0 = h/2e$ is the magnetic flux quantum - a fundamental constant in superconductivity that appears frequently in these systems.
+
+This arrangement changes the effective Josephson energy of our circuit. Instead of being fixed, it now depends on the magnetic flux:
+
+$$E_J(\Phi) = 2E_{J}\left|\cos\left(\pi\frac{\Phi}{\Phi_0}\right)\right|$$
+
+where $E_{J}$ is the Josephson energy of each individual junction. This leads to a modified transmon Hamiltonian:
+
+$$\hat{H} = 4E_C\hat{n}^2 - 2E_{J}\left|\cos\left(\pi\frac{\Phi}{\Phi_0}\right)\right|\cos\hat{\varphi}$$
+
+As a result, we can tune the qubit's frequency by changing the magnetic flux:
+
+$$\omega_q(\Phi) \approx \sqrt{\frac{8E_C}{\hbar^2}2E_{J}\left|\cos\left(\pi\frac{\Phi}{\Phi_0}\right)\right|} - \frac{E_C}{\hbar}$$
+
+While this tunability is valuable, it comes with a drawback: sensitivity to fluctuations in the magnetic field, called flux noise. We can measure this sensitivity by looking at how much the frequency changes when we slightly change the flux:
+
+$$\left|\frac{\partial\omega_q}{\partial\Phi}\right|$$
+
+The qubit is most stable when the flux is a whole number multiple of $\Phi_0$, where small changes in flux have minimal effect on the frequency. However, we often need to operate at other flux values where the qubit becomes more sensitive to noise.
+
+**A Better Design: The Asymmetric SQUID**: To address this problem, we can make one junction larger than the other in our SQUID. This asymmetric design changes the effective Josephson energy to:
+
+$$E_J(\Phi) = E_{J\Sigma}\sqrt{d^2 + (1-d^2)\cos^2\left(\pi\frac{\Phi}{\Phi_0}\right)}$$
+
+Here, $E_{J\Sigma} = E_{J1} + E_{J2}$ is the total Josephson energy of both junctions, and $d = (E_{J1} - E_{J2})/(E_{J1} + E_{J2})$ measures how different the junctions are. This design makes the qubit less sensitive to flux noise while still allowing us to tune its frequency.
+
+When we have multiple qubits on the same chip, we need to carefully manage their frequencies to prevent unwanted interactions. This becomes especially important when performing two-qubit operations like the controlled-phase gate, where we deliberately bring two qubits into resonance. We'll explore these quantum operations and the precise timing and frequency control they require in later sections.
+
+### The Flux Qubit and Fluxonium
+
+While we've focused on using charge as our quantum variable in the transmon, we could alternatively use flux. Recall our quantum LC oscillator - the flux and charge variables were conjugate to each other, much like position and momentum. Just as we can encode quantum information in charge states, we can encode it in persistent currents flowing clockwise or counterclockwise in a superconducting loop.
+
+This alternative approach becomes particularly interesting when we consider the limitations of the transmon. While the transmon's reduced charge sensitivity makes it robust against noise, its relatively small negative anharmonicity (typically around -200 MHz) can lead to unwanted excitations to higher energy states during operations.
+
+::: {.callout-note}
+## Anharmonicity and Control Speed
+
+With limited anharmonicity, we face a fundamental trade-off in qubit control. Fast control pulses have broad frequency content that can inadvertently excite transitions to higher states ($|2\rangle$, $|3\rangle$, etc.). To avoid this, we must use longer, gentler pulses that are more frequency-selective. However, these slower pulses mean our quantum operations take more time. Even with careful pulse shaping, some small leakage to higher states may be unavoidable due to the uncertainty principle - very short pulses must have some frequency spread. This balance between operation speed and unwanted excitations is a key consideration in qubit design.
+:::
+
+The flux qubit offers a different approach. In its basic form, it consists of a superconducting loop interrupted by three Josephson junctions - one smaller junction with Josephson energy $E_J$ and two larger junctions, each with energy $\alpha E_J$ where $\alpha > 1$. The approximate Hamiltonian is:
+
+$$
+\hat{H} = 4E_C\hat{n}^2 - E_J(\cos(2\hat{\varphi}+2\pi f) + 2\alpha\cos(\hat{\varphi}))
+$$
+
+where $f = \Phi/\Phi_0$ is the reduced flux through the loop. To minimize flux noise sensitivity, we typically operate at $f = 1/2 + k$.
+
+The potential energy landscape of this system can exhibit either single-well or double-well behavior, depending on the parameter $\alpha$:
+
+1. Double-Well Regime ($\alpha > 2$): This creates the "persistent-current flux qubit". The two lowest energy states correspond to clockwise and counterclockwise persistent currents in the loop. These states have minimal overlap, leading to very large anharmonicity (often several GHz) and potentially longer relaxation times.
+
+2. Single-Well Regime ($\alpha < 2$): Similar to the transmon but with positive anharmonicity, making it less susceptible to leakage to higher states during operations. This is often implemented as the "capacitively shunted flux qubit".
+
+The fluxonium qubit takes this concept further by adding an array of many larger Josephson junctions (typically N ≈ 50-100 junctions) in series with the small junction. These larger junctions act together as a "superinductance" - effectively a very large inductor with low dissipation. When we add this array, we get an additional inductive energy term in our Hamiltonian:
+
+$$
+\hat{H} = 4E_C\hat{n}^2 + \frac{1}{2}E_L\hat{\varphi}^2 - E_J\cos(\hat{\varphi} + 2\pi f)
+$$
+
+Let's break down what each term means physically:
+
+- The first term ($4E_C\hat{n}^2$) is our familiar charging energy from before
+- The middle term ($\frac{1}{2}E_L\hat{\varphi}^2$) is the inductive energy from our junction array
+- The last term ($-E_J\cos(\hat{\varphi} + 2\pi f)$) is the Josephson energy of the small junction
+
+The inductive energy $E_L$ comes from the array of N junctions acting together. Each junction in the array has a Josephson energy $\alpha E_J$ (where $\alpha > 1$) larger than our small junction energy $E_J$. When we connect N of them in series, the effective inductive energy becomes $E_L = \frac{\alpha E_J}{N}$. This linear scaling with N allows us to create very large inductances by using many junctions in series, hence the term "superinductance".
+
+::: {.callout-note}
+## Plasmon vs Fluxon States
+
+The fluxonium exhibits two types of excitations:
+
+- Plasmon states: Small oscillations within a potential well, similar to LC oscillator states
+- Fluxon states: Quantum tunneling between different wells, corresponding to different numbers of flux quanta threading the loop
+
+The junction array provides a large kinetic inductance, which helps protect against charge noise while maintaining strong anharmonicity. This makes the fluxonium particularly promising for achieving long coherence times.
+:::
+
+The fluxonium combines advantages of both charge-based and flux-based qubits: it inherits protection against charge noise from its superinductance (the junction array) while maintaining the strong anharmonicity characteristic of flux qubits. This makes it an increasingly attractive option for quantum computing applications, though its more complex structure presents additional engineering challenges.
+
+To better understand the fluxonium's behavior, let's expand the potential term in the Hamiltonian around $\varphi = 0$ (with $f=1/2$ for simplicity):
+
+$$
+-E_J\cos(\hat{\varphi} + \pi) = E_J\cos(\hat{\varphi}) = E_J\left(1 - \frac{\hat{\varphi}^2}{2} + \frac{\hat{\varphi}^4}{24} - ...\right)
+$$
+
+The total potential energy, including both the inductive and Josephson terms, becomes:
+
+$$
+V(\hat{\varphi}) = \frac{1}{2}E_L\hat{\varphi}^2 + E_J\left(1 - \frac{\hat{\varphi}^2}{2} + \frac{\hat{\varphi}^4}{24} - ...\right)
+$$
+
+Collecting terms up to fourth order:
+
+$$
+V(\hat{\varphi}) \approx E_J + \frac{1}{2}(E_L - E_J)\hat{\varphi}^2 + \frac{E_J}{24}\hat{\varphi}^4
+$$
+
+This fourth-order expansion reveals the competition between the quadratic term (which determines the well shape) and the quartic term (which introduces anharmonicity). The behavior depends on the relative magnitudes of $E_L$ and $E_J$:
+
+1. When $E_L - E_J > 0$, the quadratic term is positive, resulting in a single-well potential
+2. When $E_L - E_J < 0$, the quadratic term is negative while the quartic term remains positive, creating a double-well potential
+
+The anharmonicity can be estimated by treating the quartic term as a perturbation. For the single-well case, the unperturbed states are harmonic oscillator states with frequency $\omega_0 = \sqrt{(E_L - E_J)/E_C}$. The first-order correction to the energy levels due to the quartic term gives an anharmonicity of approximately:
+
+$$
+\alpha = (E_{12} - E_{01}) \approx \frac{E_J}{24}\left(\frac{E_C}{E_L - E_J}\right)^{1/2}
+$$
+
+This shows that the fluxonium can achieve substantial anharmonicity (comparable to or exceeding that of the transmon) while maintaining protection against both charge and flux noise through appropriate choice of $E_L$, $E_J$, and $E_C$.
+
+
+::: {.callout-tip}
+## Similar Analysis for Flux Qubits
+
+A similar potential analysis can be performed for the flux qubit, which has a Hamiltonian of the form:
+
+$$
+\hat{H} = 4E_C\hat{n}^2 - E_J\cos(2\hat{\varphi} + 2\pi f) - 2E_J\alpha\cos(\hat{\varphi})
+$$
+
+where $\alpha$ is the ratio of the Josephson energies of the two junctions. Expanding around $f=1/2$ and $\varphi=0$ yields:
+
+$$
+V(\hat{\varphi}) \approx \text{const} - E_J(2-\alpha)\hat{\varphi}^2 - \left( \frac{2}{3} - \frac{\alpha}{12}\right)\hat{\varphi}^4
+$$
+
+This reveals how the double-well potential emerges when $\alpha > 2$, with the barrier height controlled by $\alpha$. The key difference from the fluxonium is that the flux qubit lacks the inductive energy term, making it more susceptible to flux noise.
+:::
+
+## Coupling Qubits
+
+To perform quantum computations, we need our qubits to interact with each other in controlled ways - this is how we create quantum gates. Let's explore the two main ways we can manipulate superconducting qubits.
+
+### Direct Coupling Between Qubits
+
+Just like classical circuits can be connected through components, superconducting qubits can be coupled through:
+
+1. **Capacitive Coupling**: Connecting qubits through capacitors allows them to interact via electric fields
+2. **Inductive Coupling**: Using inductors or shared magnetic flux lines creates magnetic coupling
+3. **Direct Junction Coupling**: Sharing Josephson junctions between qubits
+
+The interaction Hamiltonian typically takes the form:
+
+$$
+H_{\text{int}} = g(\hat{a}_1^\dagger\hat{a}_2 + \hat{a}_1\hat{a}_2^\dagger)
+$$
+
+where $g$ is the coupling strength and $\hat{a}_i$ are the qubit operators.
+
+### Microwave Control: "Driving" the Qubits
+
+We can also manipulate qubits using carefully designed microwave pulses. This is like playing a very precise musical instrument:
+
+$$
+H_{\text{drive}}(t) = \Omega(t)\cos(\omega t + \phi)(\hat{a} + \hat{a}^\dagger)
+$$
+
+where:
+
+- $\Omega(t)$ is the pulse amplitude (how strong)
+- $\omega$ is the frequency (what note)
+- $\phi$ is the phase (timing)
+
+::: {.callout-note}
+## Common Pulse Sequences
+
+1. **π-pulse**: Flips a qubit from |0⟩ to |1⟩ (or vice versa)
+2. **π/2-pulse**: Creates superposition states
+3. **DRAG pulses**: Specially shaped pulses that reduce leakage to unwanted states
+:::
+
+### Creating Gates Through Pulse Engineering
+
+Modern quantum computers use both coupling and pulses to create gates:
+
+1. **Single-Qubit Gates**: 
+   - Implemented using microwave pulses
+   - Example: X gate = single π-pulse
+   - Example: H gate = π/2-pulse with specific phase
+
+2. **Two-Qubit Gates**:
+   - Use combination of coupling and pulses
+   - Example: CNOT = coupling + specific pulse sequence
+   - Example: iSWAP = natural evolution under coupling + control pulses
+
+**The Art of Pulse Sequences**
+Think of quantum gates like a choreographed dance:
+
+1. Start with basic "moves" (primitive gates)
+2. Combine them in specific sequences
+3. Optimize timing and shapes
+4. Account for real hardware constraints
+
+::: {.callout-important}
+## Key Considerations for Pulse Design
+
+- **Bandwidth**: Pulses must fit within system limitations
+- **Crosstalk**: Avoid affecting neighboring qubits
+- **Decoherence**: Complete operations before quantum information is lost
+- **Calibration**: Regular tuning of pulse parameters
+:::
+
+
+
+
+::: {.callout-warning}
+## Section Under Construction
+This section on coupling qubits is currently under development and may be incomplete or subject to revision.
+:::
+
+### Capacitive Coupling Between Qubits
+
+Another fundamental coupling mechanism between superconducting qubits is capacitive coupling, where the interaction arises from the voltage difference between the qubits. The interaction energy for two qubits coupled through a capacitance $C_g$ is:
+
+$$
+E_{\text{int}} = C_gV_1V_2
+$$
+
+Since the voltage operators are proportional to the charge operators ($\hat{V} = \frac{2e}{C}\hat{n}$), this leads to an interaction Hamiltonian of the form:
+
+$$
+H_{\text{int}} = \frac{4e^2C_g}{C_1C_2}\hat{n}_1\hat{n}_2
+$$
+
+The full Hamiltonian for two capacitively coupled qubits becomes:
+
+$$
+\begin{aligned}
+H &= H_1 + H_2 + H_{\text{int}} \\
+&= 4E_{C1}\hat{n}_1^2 + 4E_{C2}\hat{n}_2^2 + \frac{1}{2}E_{L1}\hat{\varphi}_1^2 + \frac{1}{2}E_{L2}\hat{\varphi}_2^2 \\
+&\quad - E_{J1}\cos(\hat{\varphi}_1) - E_{J2}\cos(\hat{\varphi}_2) + \frac{4e^2C_g}{C_1C_2}\hat{n}_1\hat{n}_2
+\end{aligned}
+$$
+
+**Transformation to Creation/Annihilation Operators**
+We can express the charge and phase operators in terms of creation and annihilation operators:
+
+$$
+\begin{aligned}
+\hat{n}_j &= in_{\text{zpf},j}(a_j^\dagger - a_j) \\
+\hat{\varphi}_j &= \varphi_{\text{zpf},j}(a_j^\dagger + a_j)
+\end{aligned}
+$$
+
+where $n_{\text{zpf},j}$ and $\varphi_{\text{zpf},j}$ are the zero-point fluctuations. Substituting these into the interaction term:
+
+$$
+H_{\text{int}} = \frac{4e^2C_g}{C_1C_2}n_{\text{zpf},1}n_{\text{zpf},2}(a_1^\dagger - a_1)(a_2^\dagger - a_2)
+$$
+
+#### Projection onto the Qubit Subspace
+When we project the interaction Hamiltonian onto the computational basis states $|0\rangle$ and $|1\rangle$ of each qubit, we can express it in terms of Pauli operators. Let's work through this projection:
+
+For a single qubit, the creation and annihilation operators have the following matrix elements in the {$|0\rangle$, $|1\rangle$} basis:
+
+$$
+a = \begin{pmatrix} 
+0 & 1 \\
+0 & 0
+\end{pmatrix}, \quad
+a^\dagger = \begin{pmatrix}
+0 & 0 \\
+1 & 0
+\end{pmatrix}
+$$
+
+Therefore, the combination $(a^\dagger - a)$ gives:
+
+$$
+(a^\dagger - a) = \begin{pmatrix}
+0 & -1 \\
+1 & 0
+\end{pmatrix} = iY
+$$
+
+The interaction term $(a_1^\dagger - a_1)(a_2^\dagger - a_2)$ thus becomes:
+
+$$
+H_{\text{int}} = g(iY^{(1)})(iY^{(2)}) = -gY^{(1)}Y^{(2)}
+$$
+
+where $g = \frac{4e^2C_g}{C_1C_2}n_{\text{zpf},1}n_{\text{zpf},2}$ is the coupling strength.
+
+Using the relation $Y = \frac{1}{i}(\sigma_+ - \sigma_-)$, we can rewrite this as:
+
+$$
+H_{\text{int}} = g(\sigma_1^+\sigma_2^- + \sigma_1^-\sigma_2^+)
+$$
+
+This is the familiar "flip-flop" interaction that conserves the total excitation number, allowing excitations to be exchanged between the qubits.
+
+::: {.callout-note}
+## Inductive Coupling and XX Interactions
+
+While capacitive coupling gives rise to YY interactions between qubits, inductive coupling naturally produces XX interactions. This is because the current operator is proportional to X rather than Y. The interaction Hamiltonian takes the form:
+
+$$
+H_{\text{int}} = gX^{(1)}X^{(2)}
+$$
+
+where $g$ is proportional to the mutual inductance. Having access to both XX and YY interactions through different coupling mechanisms provides greater flexibility in quantum gate implementation and allows for the engineering of various types of qubit-qubit interactions.
+:::
+
+
+
+
+#### Coupling Through a Resonator
+
+Rather than directly coupling qubits, we can engineer interactions by coupling qubits to a common resonator. The Jaynes-Cummings Hamiltonian for each qubit-resonator system is:
+
+$$
+H = \omega_r a^\dagger a + \frac{\omega_q}{2}\sigma^z + g(a^\dagger\sigma^- + a\sigma^+)
+$$
+
+In the dispersive limit where $|\Delta| = |\omega_q - \omega_r| \gg g$, we can eliminate the direct qubit-resonator coupling through a unitary transformation, yielding an effective qubit-qubit interaction:
+
+$$
+H_{\text{eff}} \approx \frac{g_1g_2}{\Delta}(\sigma_1^+\sigma_2^- + \sigma_1^-\sigma_2^+)
+$$
+
+This cavity-mediated coupling allows us to couple qubits separated by macroscopic distances (~1 cm) while maintaining strong interaction strengths, a significant advantage over direct coupling methods that require physical proximity (~1 mm).
+
+
+### Inductive Coupling Between Qubits
+
+The coupling between superconducting qubits can be achieved through various mechanisms, with inductive coupling being one of the most fundamental and versatile approaches. This coupling mechanism relies on the interaction between currents flowing through the qubits and their mutual inductance.
+
+#### Mutual Inductance and Kinetic Inductance
+
+When two circuits are placed in proximity, a current flowing in one circuit induces a magnetic flux in the other through mutual inductance $M$. The interaction energy is given by:
+
+$$
+E_{\text{int}} = MI_{\text{i}}I_{\text{ii}}
+$$
+
+In superconducting circuits, we benefit from an additional contribution to inductance known as kinetic inductance. Unlike geometric inductance, which arises from magnetic field energy storage, kinetic inductance stems from the kinetic energy of Cooper pairs. The total inductance is:
+
+$$
+L_{\text{total}} = L_{\text{geometric}} + L_{\text{kinetic}}
+$$
+
+This kinetic inductance can be significantly larger than geometric inductance in thin superconducting films, providing stronger coupling strengths than would be possible with purely electromagnetic interactions. The kinetic inductance contribution scales as:
+
+$$
+L_{\text{kinetic}} \propto \frac{m}{n_{\text{s}}e^2}
+$$
+
+where $n_s$ is the Cooper pair density.
+
+#### Coupled Fluxonium Hamiltonian
+
+For two inductively coupled fluxonium qubits, the interaction Hamiltonian arises from the mutual inductance between the currents:
+
+$$
+H_{int} = MI_1I_2 = M\left(\frac{\Phi_0}{2\pi}\right)^2\sin(\hat{\varphi}_1)\sin(\hat{\varphi}_2)
+$$
+
+The full Hamiltonian for the coupled system is:
+
+$$
+\begin{aligned}
+H &= H_1 + H_2 + H_{int} \\
+&= 4E_{C1}\hat{n}_1^2 + 4E_{C2}\hat{n}_2^2 + \frac{1}{2}E_{L1}\hat{\varphi}_1^2 + \frac{1}{2}E_{L2}\hat{\varphi}_2^2 \\
+&\quad - E_{J1}\cos(\hat{\varphi}_1) - E_{J2}\cos(\hat{\varphi}_2) + M\left(\frac{\Phi_0}{2\pi}\right)^2\sin(\hat{\varphi}_1)\sin(\hat{\varphi}_2)
+\end{aligned}
+$$
+
+#### Energy Level Structure and Coupling
+
+In the fluxonium regime where $E_L \ll E_J$, the potential forms a deep well around $\varphi = 0$. For small oscillations, we can expand the sine terms:
+
+$$
+\sin(\hat{\varphi}) \approx \hat{\varphi} - \frac{\hat{\varphi}^3}{6}
+$$
+
+The interaction term becomes:
+
+$$
+H_{int} \approx M\left(\frac{\Phi_0}{2\pi}\right)^2(\hat{\varphi}_1 - \frac{\hat{\varphi}_1^3}{6})(\hat{\varphi}_2 - \frac{\hat{\varphi}_2^3}{6})
+$$
+
+When projected onto the two lowest energy states of each fluxonium, the phase operator $\hat{\varphi}$ has diagonal matrix elements due to the asymmetry of the wavefunctions in the anharmonic potential:
+
+$$
+\langle g|\hat{\varphi}|g\rangle = -\langle e|\hat{\varphi}|e\rangle
+$$
+
+This leads naturally to the longitudinal coupling:
+
+$$
+H_{int} \approx \hbar g_{12}\sigma_z^{(1)}\sigma_z^{(2)}
+$$
+
+where $g_{12}$ is proportional to the mutual inductance $M$ and the matrix elements of $\hat{\varphi}$ in the qubit basis.
+
+::: {.callout-important}
+## Operating Point for Longitudinal Coupling
+
+While the fluxonium operates in a regime with deep wells ($E_L \ll E_J$), it's crucial to note that pure longitudinal coupling requires a small but non-zero flux bias away from $\varphi = 0$. This is because:
+
+1. At exactly $\varphi = 0$, the ground and excited states have symmetric wavefunctions, making $\langle g|\hat{\varphi}|g\rangle = \langle e|\hat{\varphi}|e\rangle = 0$
+2. A small flux bias breaks this symmetry, creating distinct average flux states
+3. Due to the deep well regime, even a small bias ($\varphi \sim 0.1$) is sufficient to achieve significant coupling
+4. The states remain well-localized due to the large $E_J$, maintaining coherence
+
+This subtle but essential tuning enables the desired $\sigma_z^{(1)}\sigma_z^{(2)}$ coupling while preserving the qubit's favorable noise properties.
+:::
+
+
+#### Advantages and Applications
+
+This coupling mechanism offers several benefits:
+
+1. **Pure Phase Coupling**: Enables entanglement without energy exchange
+2. **Quantum Annealing**: Natural implementation of Ising-type interactions
+   $$H_{Ising} = \sum_{i,j} J_{ij}\sigma_z^{(i)}\sigma_z^{(j)}$$
+3. **Decoherence Resistance**: Less susceptible to charge noise
+4. **Scalability**: Compatible with circuit QED architectures
+
+#### Tunable Coupling via Mediator Qubit
+
+The coupling strength can be made tunable by introducing an intermediate rf-SQUID between the qubits. The effective coupling becomes:
+
+$$
+g_{eff} = g_{12}(\Phi_x) = g_0\cos(\pi\Phi_x/\Phi_0)
+$$
+
+where $\Phi_x$ is the external flux through the mediator SQUID.
+
+Trade-offs of this approach include:
+
+- Enhanced coupling control
+- Additional control line complexity
+- Potential decoherence through the mediator
+- Increased circuit footprint
+
+
+
 
 ::: {.callout-warning}
 ## Under Construction
